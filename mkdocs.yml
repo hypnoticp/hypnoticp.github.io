@@ -8,18 +8,18 @@ copyright: Copyright &copy; 2024 hypnotic # 左下角的版权声明
 # [Navigtion]
 nav:
   - Home: index.md
-  - Java: 
-    - java/index.md
-    - 设计模式: java/设计模式/index.md
-  - Dokcer:
-    - docker/index.md
+  - Code_audit:
+    - Code_audit/index.md
+    - 设计模式: Code_audit/设计模式/index.md
+  - Vulnerability_analysis:
+    - Vulnerability_analysis/index.md
  #   - Installation: guide/installation.md
  #   - Basics: guide/basics.md
  #   - Configuration: guide/config.md
-  - K8s:
-    - k8s/index.md
-  - 教程:
-    - 教程/mkdocs.md
+  - Tools:
+    - Tools/index.md
+  - CTF:
+    - CTF/index.md
   - About: about.md
 
 #[UI]
