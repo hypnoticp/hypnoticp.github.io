@@ -113,7 +113,7 @@ extra_javascript:
 extra_css:
   - stylesheets/extra.css
 
-
+use_directory_urls: false
 extra:
   generator: false  #删除页脚显示“使用 MkDocs 材料制造”
  # social:
