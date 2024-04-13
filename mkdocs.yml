@@ -19,6 +19,8 @@ nav:
     - Tools/index.md
   - CTF:
     - CTF/index.md
+  - SRC:
+    - SRC/index.md
   - About: about.md
 
 #[UI]
@@ -70,8 +72,8 @@ theme:
     
   icon: 
     repo: fontawesome/brands/github #右上角图标
-repo_name: leoalasiga.github.io # 右上角的名
-repo_url: https://github.com/leoalasiga/leoalasiga.github.io.git # 右上角点击跳转的链接
+repo_name: hypnoticp.github.io # 右上角的名
+repo_url: https://github.com/hypnoticp/hypnoticp.github.io.git # 右上角点击跳转的链接
 
 
 markdown_extensions:
