@@ -21,6 +21,8 @@ nav:
     - CTF/index.md
   - SRC:
     - SRC/index.md
+  - Security_devices:
+    - Security_devices/index.md
   - Shell_Scripts:
     - Shell_Scripts/index.md
   - About: about.md

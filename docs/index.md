@@ -8,4 +8,5 @@
 + [Tools](Tools/index.md)
 + [CTF](CTF/index.md)
 + [Shell_Scripts](Shell_Scripts/index.md)
++ [Security_devices](Security_devices/index.md)
 + [SRC](SRC/index.md)
