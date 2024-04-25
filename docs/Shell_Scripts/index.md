@@ -4,4 +4,3 @@
 + [Day1](Day1/index.md)
 + [Day2](Day2/index.md)
 
-
