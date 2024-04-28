@@ -31,9 +31,9 @@ nav:
 theme:
   favicon: icons/favicon.png # 浏览器页面标签图标
   name: material
-  language: zh # 一些提示性的文字会变成中文
+  language: zh # 一些提示性的文字会变成中文   Ma Shan Zheng
   font:
-    text: Ubuntu
+    text: Ma Shan Zheng  # Ubuntu
     code: Ubuntu Mono
   features:
     - header.autohide  #自动隐藏
