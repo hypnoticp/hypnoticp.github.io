@@ -33,7 +33,7 @@ theme:
   name: material
   language: zh # 一些提示性的文字会变成中文   Ma Shan Zheng
   font:
-    text: Ma Shan Zheng  # Ubuntu
+    text: Ubuntu  # Ubuntu
     code: Ubuntu Mono
   features:
     - header.autohide  #自动隐藏
