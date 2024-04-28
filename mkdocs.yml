@@ -29,6 +29,7 @@ nav:
 
 #[UI]
 theme:
+  favicon: icons/favicon.png # 浏览器页面标签图标
   name: material
   language: zh # 一些提示性的文字会变成中文
   font:
