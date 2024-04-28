@@ -1,5 +1,6 @@
 ## Welcome to Hypnotic
-<span class="meta">Posted by Hypnotic on February 13, 2024 <span id="busuanzi_container_page_pv" style='display:none'> | view <span id="busuanzi_value_page_pv"></span> times</span></span> 
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span class="meta">Posted by Hypnotic on February 13, 2024 <span id="busuanzi_container_page_pv" > | view <span id="busuanzi_value_site_pv"></span> times</span></span> 
 
 
 # 目录
