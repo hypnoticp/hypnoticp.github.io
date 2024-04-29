@@ -6,4 +6,5 @@
 + [Day3](Day3/index.md)
 + [Day4](Day4/index.md)
 + [Day5](Day5/index.md)
++ [Day6](Day6/index.md)
 
