@@ -8,4 +8,5 @@
 + [Day5](Day5/index.md)
 + [Day6](Day6/index.md)
 + [Day7](Day7/index.md)
++ [Day8](Day8/index.md)
 
