@@ -17,3 +17,4 @@
 + [Windows-Bastard](Windows-Bastard/index.md)
 + [Windows-Celestial](Windows-Celestial/index.md)
 + [Linux-Redcross](Linux-Redcross/index.md)
++ [Windows-SecNotes](Windows-SecNotes/index.md)
