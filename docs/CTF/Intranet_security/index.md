@@ -12,3 +12,5 @@
 横向移动:口令HASH喷射,边界应用,委派攻击,Exchange攻防,Kerberos攻击,域控漏洞等
 权限维持:系统后门,WEB后门(内存马),票据注入,Rookit技术,Linux维持技术
 痕迹处理:日志清除,破坏日志记录功能
+
++ [域渗透攻防](Domain_AD/index.md)
