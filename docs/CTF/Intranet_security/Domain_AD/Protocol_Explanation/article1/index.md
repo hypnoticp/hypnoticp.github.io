@@ -1,7 +1,7 @@
 # 目录
 
 ```
-NTML协议详解
+NTLM协议详解
     SSP和SSPI的概念
         1.SSPI
         2.SSP
@@ -9,7 +9,7 @@ NTML协议详解
         加密流程
     NTLM Hash 加密算法
         1.NTLM Hash 加密流程
-        2.Windows系统存储的NTML Hash
+        2.Windows系统存储的NTLM Hash
     NTLM 协议认证
         1.工作组环境下的 NTLM 认证
             工作组环境下的 NTLM 抓包分析
@@ -24,9 +24,9 @@ NTML协议详解
         3.Net-NTLM v1 Hash 破解
 ```
 
-# NTML协议详解
+# NTLM协议详解
 
-NTML(New Technolopy LAN Manager)身份验证协议是微软用于**Windows身份验证**的主要协议之一。早期SMB协议以明文口令的形式在网络上传输，因此产生了安全性问题。后来出现了`LM(LAN Manager)`身份验证协议，它是如此的简单以至于很容易被破解。后来微软提出了NTML身份验证协议，以及更新的NTML V2版本。**NTML协议既可以为工作组中的机器提供身份验证，也可以用于域环境身份验证。NTML协议可以为SMB,HTTP,LDAP,SMTP等上层微软应用提供身份验证。**
+NTLM(New Technolopy LAN Manager)身份验证协议是微软用于**Windows身份验证**的主要协议之一。早期SMB协议以明文口令的形式在网络上传输，因此产生了安全性问题。后来出现了`LM(LAN Manager)`身份验证协议，它是如此的简单以至于很容易被破解。后来微软提出了NTLM身份验证协议，以及更新的NTLM V2版本。**NTLM协议既可以为工作组中的机器提供身份验证，也可以用于域环境身份验证。NTLM协议可以为SMB,HTTP,LDAP,SMTP等上层微软应用提供身份验证。**
 
 ## SSP和SSPI的概念
 
@@ -53,7 +53,7 @@ SSPI接口定义了与安全有关的功能函数，用来获取验证，信息�
 - Schannel SSP：Windows 2000 中引入(Schannel.dll)，Windows Vista 中更新为支持更强的 AES 加密和 ECC[6]该提供者使用 SSL/TLS 记录来加密数据有效载荷。
 - PKU2U SSP：Windows 7 中引入(pku2u.dll) ， 在不隶属域的系统之间提供使用数字证书的对等身份验证。
 
-因为SSPI中定义了与Session Security有关的API。所以上层应用利用任何SSP与远程的服务进行了身份验证后，此SSP都会为本次连接生成一个随机Key。这个随机Key被称为**Session Key**。上层应用在经过身份验证后，可以选择性地使用这个Key对之后发往服务端或接受自服务端的数据进行签名或加密。在系统层面，SSP就是一个dll，用来验证身份验证等安全功能。不同的SSP，实现的身份验证机制是不一样的。比如NTML SSP 实现的就是一种*<u>基于质询/响应身份验证机制</u>*，而Kerberos SSP实现的就是*<u>基于Ticket票据的身份验证机制</u>*。我们可以编写自己的SSP，然后注册到操作系统中，让操作系统支持我们自定义的身份验证方法。
+因为SSPI中定义了与Session Security有关的API。所以上层应用利用任何SSP与远程的服务进行了身份验证后，此SSP都会为本次连接生成一个随机Key。这个随机Key被称为**Session Key**。上层应用在经过身份验证后，可以选择性地使用这个Key对之后发往服务端或接受自服务端的数据进行签名或加密。在系统层面，SSP就是一个dll，用来验证身份验证等安全功能。不同的SSP，实现的身份验证机制是不一样的。比如NTLM SSP 实现的就是一种*<u>基于质询/响应身份验证机制</u>*，而Kerberos SSP实现的就是*<u>基于Ticket票据的身份验证机制</u>*。我们可以编写自己的SSP，然后注册到操作系统中，让操作系统支持我们自定义的身份验证方法。
 
 SSP、SSPI 和各种应用的关系如图 1-1 所示。
 
@@ -280,13 +280,13 @@ python3 -c 'import hashlib,binascii; print("NTLM_Hash:"+binascii.hexlify(hashlib
 
 ![截图](93959a7838851266f289f31908057c91.png)
 
-### 2.Windows系统存储的NTML Hash
+### 2.Windows系统存储的NTLM Hash
 
-用户的密码经过NTML Hash加密后存储在`%SystemRoot%\system32\config\SAM`文件里面
+用户的密码经过NTLM Hash加密后存储在`%SystemRoot%\system32\config\SAM`文件里面
 
 ![截图](883d3f154d9621293c52fee3d0c70ed2.png)
 
-当用户输入密码进行本地认证的过程中，所有的操作都是在本地进行的。**系统将用户输入的密码转换成NTML Hash，然后与SAM文件中的NTLM Hash进行比较，相同说明密码正确，反之错误。**当用户注销，重启，锁屏后，操作系统会让`winlogon.exe`显示登陆界面，也就是输入框。当winlogon.exe接受输入后，将密码交给`lsass.exe`进程。lsass.exe进程中会存一份明文密码，将明文密码加密成NTLM Hash，与SAM数据库进行比较认证。我们使用mimikatz就是从lsass.exe进程中抓取明文密码或者密码哈希。使用mimikatz抓取lsass内存中的凭据如图。
+当用户输入密码进行本地认证的过程中，所有的操作都是在本地进行的。**系统将用户输入的密码转换成NTLM Hash，然后与SAM文件中的NTLM Hash进行比较，相同说明密码正确，反之错误。**当用户注销，重启，锁屏后，操作系统会让`winlogon.exe`显示登陆界面，也就是输入框。当winlogon.exe接受输入后，将密码交给`lsass.exe`进程。lsass.exe进程中会存一份明文密码，将明文密码加密成NTLM Hash，与SAM数据库进行比较认证。我们使用mimikatz就是从lsass.exe进程中抓取明文密码或者密码哈希。使用mimikatz抓取lsass内存中的凭据如图。
 
 ![截图](ae1385545b2fa4aa4d83762de9e8359f.png)
 
@@ -435,7 +435,7 @@ hashcat.exe -m 5600 hash.txt pass.txt
 
 ### 4.NTLM v1 和 NTLM v2 的区别
 
-NTLM v1身份认证协议和NTLM v2身份认证协议是NTML 身份认证协议的不同版本。目前使用最多的是NTLM v2版本。NTLM v1与NTLM v2最显著的区别就是Challenge质询值不同和加密算法不同，共同之处就是都是使用的是NTLM Hash进行加密。
+NTLM v1身份认证协议和NTLM v2身份认证协议是NTLM 身份认证协议的不同版本。目前使用最多的是NTLM v2版本。NTLM v1与NTLM v2最显著的区别就是Challenge质询值不同和加密算法不同，共同之处就是都是使用的是NTLM Hash进行加密。
 
 #### Challenge 质询值：
 
