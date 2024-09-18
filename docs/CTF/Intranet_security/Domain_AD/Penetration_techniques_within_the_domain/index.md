@@ -8,3 +8,4 @@
 + [Kerberoasting 攻击](article4/index.md)
 + [委派攻击](article5/index.md)
 + [NTLM Relay 攻击](article6/index.md)
++ [修改 DCSync ACL 攻击](article7/index.md)
