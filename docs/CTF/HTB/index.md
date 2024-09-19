@@ -22,3 +22,4 @@
 + [Windows-chatterbox](Windows-chatterbox/index.md)
 + [CFS三层靶机](CFS三层靶机/index.md)
 + [铁三域控](铁三域控/index.md)
++ [红日靶场2](红日靶场2/index.md)
