@@ -25,3 +25,4 @@
 + [红日靶场1](红日靶场1/index.md)
 + [红日靶场2](红日靶场2/index.md)
 + [红日靶场7](红日靶场7/index.md)
++ [Windows-Blazorized](Windows-Blazorized/index.md)
