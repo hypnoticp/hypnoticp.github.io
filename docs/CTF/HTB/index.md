@@ -28,3 +28,4 @@
 + [Windows-Blazorized](Windows-Blazorized/index.md)
 + [Linux-Sightless](Linux-Sightless/index.md)
 + [Linux-Me and My Girlfriend](Linux-Me-and-My-Girlfriend/index.md)
++ [Linux-Baisc-Pentesting](Linux-Baisc-Pentesting/index.md)
