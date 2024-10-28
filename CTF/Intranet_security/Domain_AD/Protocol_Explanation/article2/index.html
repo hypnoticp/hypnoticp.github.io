@@ -1,0 +1,1063 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="the notes record by hypnotic">
+      
+      
+        <meta name="author" content="hypnotic">
+      
+      
+        <link rel="canonical" href="https://hypnoticp.github.io/CTF/Intranet_security/Domain_AD/Protocol_Explanation/article2/index.html">
+      
+      
+      
+      
+      <link rel="icon" href="../../../../../icons/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>Kerberos 协议详解 - hypnotic的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#kerberos" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../../index.html" title="hypnotic的博客" class="md-header__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            hypnotic的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Kerberos 协议详解
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Code_audit/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Code_audit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Vulnerability_analysis/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Vulnerability_analysis
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Tools/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../index.html" class="md-tabs__link">
+          
+  
+    
+  
+  CTF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../SRC/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  SRC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Security_devices/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Security_devices
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Shell_Scripts/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Shell_Scripts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about.html" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../../index.html" title="hypnotic的博客" class="md-nav__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    hypnotic的博客
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Code_audit/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Code_audit
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Vulnerability_analysis/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vulnerability_analysis
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Tools/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CTF
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../SRC/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    SRC
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Security_devices/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Security_devices
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Shell_Scripts/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell_Scripts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="kerberos">Kerberos 协议详解<a class="headerlink" href="#kerberos" title="Permanent link">&para;</a></h1>
+<p>Kerberos协议是由麻省理工学院提出的一种网络身份验证协议，提供了一种在开放的非安全网络中认证识别用户身份信息的方法。它旨在通过使用密钥加密技术为客户端/服务端应用程序提供强身份验证。Kerberos 是西方神话中守卫地狱之门的三头犬的名字。之所以使用这个名字是因为 <strong><em>Kerberos 需要三方的共同参与才能完成一次认证流程</em></strong>。目前主流使用的 Kerberos 版本为KerberosV5 版本，Windows、Linux 和 Mac OS 均支持 Kerberos 协议。</p>
+<p><img alt="截图" src="36d91b5f9745c44ca4140d0c55e94821.png" /></p>
+<p><img alt="截图" src="c49855453cabc6f0ca6b154216c1f711.png" /></p>
+<p><img alt="截图" src="523ebd21b0282bc6df484f9a1dda0516.png" /></p>
+<h2 id="kerberos_1">Kerberos 基础<a class="headerlink" href="#kerberos_1" title="Permanent link">&para;</a></h2>
+<p>在 Kerberos 协议中，主要有以下三个角色：</p>
+<ul>
+<li>访问服务的客户端：Kerberos 客户端是代表需要访问资源的用户进行操作的应用程序，例如打开文件、查询数据库或打印文档。每个 Kerberos 客户端在访问资源之前都会请求身份验证。</li>
+<li>提供服务的服务端：域内提供服务的服务端，服务端都有一个独一的SPN。</li>
+<li>提供认证服务的 KDC(Key Distribution Center，密钥分发中心)：KDC 密钥发行中心是一种网络服务，它向活动目录域内的用户和计算机提供会话票据和临时会话密钥，其服务帐户为 <code>krbtgt</code>。KDC 作为活动目录域服务ADDS 的一部分运行在每个域控制器上。</li>
+</ul>
+<p>这里说一下 krbtgt 帐户，该用户是在创建活动目录时系统自动创建的一个账号，其作用是 <strong>KDC 密钥发行中心的服务账号</strong>，其密码是<em>系统随机生成</em>的，无法正常登陆主机。</p>
+<p>如图所示，可以看到 krbtgt 帐户的信息。</p>
+<p><img alt="截图" src="8e4cd17468f437ba9bc11499a8fda902.png" /></p>
+<p>Kerberos是一种<strong>基于票据Ticket的认证方式</strong>。客户端想要访问服务端的某个服务，首先需要购买服务端认可的<strong>ST服务票据(Service Ticket)</strong>.也就是说，客户端在访问服务之前需要先购买好票，等待服务验票之后才能访问。但是这张票并不能直接购买，需要一张<strong>TGT认购权证(Ticket Granting Ticket)</strong>.也就是说，客户端在买票之前必须先获得一张TGT认购权证。<strong><em>TGT认购权证和ST服务票据均是由KDC(密钥分发中心)发放</em></strong>；因为KDC是运行在域控制器上的，所以说<u>TGT认购权证和ST服务票据均是由域控发放的</u>。</p>
+<p>Kerberos 使用 TCP/UDP 88 端口进行认证，使用 TCP/UDP 464 端口进行密码重设。</p>
+<p>如图所示，可以看到域控制器 AD01 上开放的 88 和 464 端口。</p>
+<p><img alt="截图" src="73042bf601bba170d51539d0fd2d0d72.png" /></p>
+<p>Kerberos 中一些名词的简称及含义：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>简称                全拼
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>DC                  Domain Controller，域控
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>krbtgt              KDC 密钥发行中心服务账户
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>KDC                 Key Distribution Center：密钥分发中心，由域控担任
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>AD                  Active Directory：活动目录，里面包含域内用户数据库
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>AS                  Authentication Service：认证服务
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>TGT                 Ticket Granting Ticket：TGT 认购权证，由 KDC 的 AS 认证服务发放
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>TGS                 Ticket Granting Service：票据授予服务
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>ST                  Service Ticket：ST 服务票据，由 KDC 的 TGS 票据授予服务发放
+</code></pre></div>
+<p>Kerberos 协议有两个基础认证模块：<code>AS_REQ &amp; AS_REP 和 TGS_REQ &amp;TGS_REP</code> ，以及微软扩展的两个认证模块 <code>S4U</code> 和 <code>PAC</code> 。S4U 是微软为了实现委派而扩展的模块，分为 <code>S4U2Self</code> 和 <code>S4U2Proxy</code> 。在 Kerberos 最初设计的流程里只说明了如何证明客户端的真实身份，但是并没有说明客户端是否有权限访问该服务，因为在域中不同权限的用户能够访问的资源是不同的。因此微软为了解决权限这个问题，引入了 <code>PAC (Privilege Attribute Certificate，特权属性证书)</code>的概念。</p>
+<p>在分析 AS_REQ &amp; AS_REP 和 TGS_REQ &amp; TGS_REP 之前，我们先来看看什么是 PAC。</p>
+<h2 id="pac">PAC 特权属性证书<a class="headerlink" href="#pac" title="Permanent link">&para;</a></h2>
+<p><code>PAC (Privilege Attribute Certificate，特权属性证书)</code>，其中所包含的是各种授权信息、附加凭据信息、配置文件和策略信息等。例如用户所属的用户组， 用户所具有的权限等。在最初的 RFC1510 中规定的标准 Kerberos 认证过程中并没有PAC，微软在自己的产品中所实现的 Kerberos 流程加入了 PAC 的概念，<strong>因为在域中不同权限的用户能够访问的资源是不同的，因此微软设计 PAC 用来辨别用户身份和权限.</strong></p>
+<p>在一个正常的 Kerberos 认证流程中，KDC 返回的 TGT 认购权证和 ST 服务票据中都是带有 PAC 的。这样做的好处就是在以后对资源的访问中， 服务端再接收到客户请求的时候不再需要借助 KDC 的帮助提供完整的授权信息来完成对用户权限的判断， 而<strong>只需要根据请求中所包含的 PAC 信息直接与本地资源的 ACL 相比较做出裁决</strong>。</p>
+<h3 id="pac-kerberos">PAC 在 kerberos 中的优缺点<a class="headerlink" href="#pac-kerberos" title="Permanent link">&para;</a></h3>
+<p>那么 PAC 的存在究竟给我们的验证过程带来了哪些优点，亦或是缺点呢？</p>
+<p>正如上面所提到的那样，PAC 的引入其实带来了很多的优点。客户端在访问网络资源的时候服务端不再需要向 KDC 查询授权信息， 而是直接在本地进行 PAC 信息与 ACL 的比较。从而节约了网络资源。</p>
+<p>如图所示， 在没有 PAC 的情况下，Server 与 KDC 之间必须进行用户授权信息的查询与返回 ：</p>
+<p><img alt="截图" src="b2cba32ee61d93b4fdd695e84aa12e84.png" /></p>
+<p>当引入 PAC 之后则变成了如图所示：</p>
+<p><img alt="截图" src="4d0fe8d25ddfea55f1425e20bb672599.png" /></p>
+<p>但是，PAC 的引入并不是百利而无一害的，PAC 在用户的认证阶段引入会导致认证耗时过长。Windows Kerberos 客户端会通过 RPC 调用 KDC 上的函数来验证 PAC 信息，这时候用户会观察到在服务器端与 KDC 之间的 RPC 包流量的增加。而另一方面， 由于 PAC 是微软特有的一个特性，所以启用了 PAC 的域中将不支持装有其他操作系统的服务器， 制约了域配置的灵活性。并且在 2014 年，由于 PAC 的安全性导致产生了一个域内极其严重的提权漏洞 <code>MS14-068</code></p>
+<h2 id="kerberos_2">Kerberos协议流程<a class="headerlink" href="#kerberos_2" title="Permanent link">&para;</a></h2>
+<p>大致流程如下：</p>
+<p><img alt="截图" src="3cb8674614f2e21b0c0a96afc4538d43.png" /></p>
+<p>参与的角色有：</p>
+<ul>
+<li>Client: Application Client 应用客户端</li>
+<li>AS: Authentication Server 用来认证用户身份,认证服务器，专门用来认证客户端的身份并发放客户用于访问TGS的<strong>TGT(票据授予票据)</strong></li>
+<li>TGS: Ticket-Granting Service 用来授权服务访问,票据授予服务器，用来发放整个认证过程以及客户端访问服务端时所需的<strong>服务授予票据(ticket)</strong></li>
+<li>SS: Service Server 用户所请求的服务</li>
+<li>客户端(Client)：发送请求的一方</li>
+<li>服务端(Server)：接收请求的一方</li>
+<li>密钥分发中心(Key distribution KDC),密钥分发中心又分为两个部分，分别是：AS,TGS.</li>
+</ul>
+<p>Kerberos协议的应用流程可以概括为以下几步:</p>
+<ol>
+<li>用户登录域并向域控制器的认证服务(AS)发送用户名与域名,请求 Ticket Granting Ticket(TGT)。</li>
+<li>AS使用用户密码(或NTLM哈希)进行加密运算,生成TGT并返回用户。TGT中包含用户与TGS之间的会话密钥。</li>
+<li>用户访问应用或资源时,向域控制器的票证授予服务(TGS)提交TGT以及应用服务器的ID,请求服务票证(ST)。</li>
+<li>TGS验证TGT有效性,使用TGT中的会话密钥对用户与应用服务器之间的新会话密钥加密,生成ST并返回用户。</li>
+<li>用户向应用服务器提交ST以验证身份。应用服务器使用TGS提供的会话密钥解密ST,获取会话密钥并验证用户身份。</li>
+<li>应用服务器针对该用户的这次访问生成访问令牌(Access Token),并将其包含在响应消息返回用户。</li>
+<li>用户随后每次访问应用服务器都需要提供 Access Token 进行身份验证。应用服务器解密令牌,使用会话密钥验证用户身份并对请求授权。</li>
+<li>Access Token 和 ST 在一定时间后过期,用户需重新向TGS申请新的ST来继续访问。TGS发出新的ST时也重新生成会话密钥。</li>
+<li>用户定期更换密码时,所有TGT、ST、Access Token等也随之无效,用户需重新认证并申请,以确保安全。</li>
+</ol>
+<p>打个比方，整个过程就是：你想坐飞机，但是机场告诉你必须有机票（TGT）才可以登机，接着你去购票处（AS）出示身份证（Client name）购买了一张机票（TGT），你拿着机票登机，在检票处（TGS）出示机票，服务人员告诉了你的座位号（Ticket），然后就可以坐到自己的位置上。</p>
+<p>我们可以通过以下几个例子来形象理解Kerberos协议的应用流程:</p>
+<ol>
+<li>TGT获取:这就像到电影院买票,先去售票处买一张可以观看所有电影的通用票。TGT就像这个通用电影票,可以访问Kerberos领域内的所有服务。</li>
+<li>ST申请:这就像通用票允许进入电影院,但每个电影场次都需要买对应的电影票方可入场。ST就像观看各个电影的门票,每个服务都需要对应的ST方可访问。</li>
+<li>会话密钥:这就像电影开始时放映员会发放3D眼镜,只有带上特定电影的3D眼镜才能正常观看。Kerberos的会话密钥就像3D眼镜,只有使用正确的密钥才能解密通信内容。</li>
+<li>更新机制:这就像电影院会定期更新电影列表,旧票无法使用;3D眼镜也需要定期更换。Kerberos的更新机制就像这些措施,可以定期更新TGT、ST、令牌等,使过期信息无法使用。</li>
+<li>密码更换:这就像电影院换票系统时需要观众全部办理新的会员卡。Kerberos的密码更换会使之前的认证信息全部无效,必须全部重新申请。</li>
+<li>细粒度访问控制:这就像不同电影有不同的票价和观众限制。Kerberos为每个服务生成不同的ST,就像每个电影有不同的门票,实现了详细的访问控制。</li>
+<li>单点登录:这就像会员卡可以观看电影院内全部电影。TGT实现了单点登录,一个认证后可以访问Kerberos领域内的全部服务。</li>
+</ol>
+<h2 id="kerberos_3">Kerberos 实验<a class="headerlink" href="#kerberos_3" title="Permanent link">&para;</a></h2>
+<p>为了更直观的分析 Kerberos 协议，接下来我们用普通域帐户 xie/hack 使用<code>impacket</code> 工具请求 win10 机器的 cifs 服务票据 ，然后远程 SMB 连接，在该过程中使用 WireShark 进行抓包。</p>
+<p>实验环境如下：</p>
+<ul>
+<li>用户(xie/hack)：10.211.55.2</li>
+<li>域内主机(Win10)： 10.211.55.16</li>
+<li>域控(AD01)： 10.211.55.4</li>
+</ul>
+<p>impacket 使用命令如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>#使用 hack 账号密码请求 win10 的 cifs 服务的 ST 服务票据
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python3 getST.py -dc-ip 10.211.55.4 -spn cifs/win10.xie.com xie.com/hack:P@ss1234
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>#导入该 ST 服务票据
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>export KRB5CCNAME=hack.ccache
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>#使用 smb 远程连接 win10
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>python3 smbexec.py -no-pass -k win10.xie.com
+</code></pre></div>
+<p>如图所示，可以看到在请求了服务票据后，成功远程 SMB 连接 win10 机器。</p>
+<p><img alt="截图" src="4e647758c78401782ae4321082e61711.png" /></p>
+<p>在这个过程中，我们使用 WireShark 抓包，来进一步的分析 Kerberos 协议。如图所示，是该过程的抓包图：</p>
+<p><img alt="截图" src="885945203496f851a29cc762200143f1.png" /></p>
+<p>整个 Kerberos 认证流程如图所示：</p>
+<p><img alt="截图" src="dd3d6da7c260951c78dacb75c63abf9b.png" /></p>
+<p>下面我们来具体分析 Kerberos 认证流程的每个步骤：</p>
+<h3 id="as-req-as-rep">AS-REQ &amp; AS-REP<a class="headerlink" href="#as-req-as-rep" title="Permanent link">&para;</a></h3>
+<p>我们先来看看 AS-REQ&amp;AS-REP 请求部分，也就是 WireShark 抓的第一、二个包，如图所示：</p>
+<p><img alt="截图" src="244e1577fb35bc85b50302b5883df6bb.png" /></p>
+<p>如图所示，是一个简易的 AS-REQ&amp;AS-REP 请求过程图，便于我们直观的了解AS-REQ&amp;AS-REP 请求过程。</p>
+<p><img alt="截图" src="6baf03bb3f68f744ad803f9c91d1a710.png" /></p>
+<h4 id="1as-req">1.AS-REQ 请求包分析<a class="headerlink" href="#1as-req" title="Permanent link">&para;</a></h4>
+<p>AS-REQ：当域内某个用户想要访问域内某个服务时，于是输入用户名和密码，本机就会向 KDC 的 AS 认证服务发送一个 AS-REQ 认证请求。该请求包中包含如下信息：</p>
+<p><img alt="截图" src="af2d2b158e220c07784e2d00e070cf74.png" /></p>
+<ul>
+<li>请求的用户名(cname)。</li>
+<li>域名(realm)。</li>
+<li>Authenticator：一个抽象的概念，代表一个验证。这里是用户密钥加密的时间戳。</li>
+<li>请求的服务名(sname)：AS-REQ 这个阶段请求的服务都是 krbtgt。</li>
+<li>加密类型(etype)。</li>
+<li>以及一些其他信息：如版本号，消息类型，票据有效时间，是否包含PAC，协商选项等。</li>
+</ul>
+<h4 id="2as-rep">2.AS-REP 回复包分析<a class="headerlink" href="#2as-rep" title="Permanent link">&para;</a></h4>
+<p>AS-REP：当 KDC 的 AS 认证服务接收到客户端发来的 AS-REQ 请求后，从活动目录数据库中取出该用户的密钥，然后用该密钥对请求包中的<code>Authenticator</code>预认证部分进行解密，如果解密成功，并且时间戳在有效的范围内，则证明请求者提供的用户密钥正确。KDC 的 AS 认证服务在成功认证客户端的身份之后，发送AS-REP 响应包给客户端。AS-REP 响应包中主要包括如下信息：</p>
+<p><img alt="截图" src="cde1f079d9b970d245c443041e89727e.png" /></p>
+<ul>
+<li>请求的用户名(cname)。</li>
+<li>域名(crealm)。</li>
+<li>TGT 认购权证：包含明文的版本号，域名，请求的服务名，以及加密部分enc-part。加密部分用 krbtgt 密钥加密。加密部分包含<code>Logon SessionKey</code>、用户名、域名、认证时间、认证到期时间和 <code>authorization-data</code>。<code>authorization-data</code>中包含最重要的 PAC 特权属性证书(包含用户的 RID，用户所在组的 RID) 等。</li>
+<li>enc_Logon Session Key：使用用户密钥加密 <code>Logon Session Key</code> 后的值，其作用是用于确保客户端和 KDC 下阶段之间通信安全。也就是 AS- REP 中最外层的 <code>enc-part</code>。</li>
+<li>以及一些其他信息：如版本号，消息类型等。</li>
+</ul>
+<h3 id="tgs-req-tgs-rep">TGS-REQ &amp; TGS-REP<a class="headerlink" href="#tgs-req-tgs-rep" title="Permanent link">&para;</a></h3>
+<p>我们再来看看 TGS-REQ&amp;TGS-REP 请求部分，也就是 WireShark 抓的第三、四个包，如图所示：</p>
+<p><img alt="截图" src="fe6b1bce9580c447aff3b45a2ae62520.png" /></p>
+<p>如图所示，是一个简易的 TGS-REQ&amp;TGS-REP 请求过程图，便于我们直观的了解 TGS-REQ&amp;TGS-REP 请求过程。</p>
+<p><img alt="截图" src="4f6925a9644f718c10ae58775fb4be4f.png" /></p>
+<h2 id="kerberos_4">Kerberos 协议的安全问题<a class="headerlink" href="#kerberos_4" title="Permanent link">&para;</a></h2>
+<p><img alt="截图" src="e14767717c511fc62ca338ecd0a93aec.png" /></p>
+<p>在 AS-REQ 请求阶段，是用用户密码 Hash 或 AES Key 加密的时间戳。因此当只获得了用户密码 Hash 时，也可以发起 AS-REQ 请求，所以也就造成了 <strong>PTH 哈希传递攻击</strong>；当只获得用户密码的 AES Key 时，也可以发起 AS-REQ 请求，所以也就造成了 <strong>PTK 密钥传递攻击</strong>。</p>
+<p>而 AS-REQ 请求包中 cname 字段的值代表用户名，这个值存在和不存在，返回的包有差异，所以可以用于枚举域内用户名，这种攻击方式被称为 <strong>域内用户枚举攻击 (当未获取到有效域用户权限时，可以使用这个方法枚举域内用户)</strong>。并且当用户名存在，密码正确和密码错误时，返回的包也不一样，所以可以进行用户名密码爆破。但是在实战中，渗透测试人员通常都会使用一种被称为 <strong>密码喷洒（Password Spraying）</strong>的攻击方式来进行测试和攻击。对密码进行喷洒式的攻击，这个叫法很形象，因为它属于自动化密码猜测的一种。这种针对所有用户的自动密码喷洒通常是为了避免帐户被锁定，因为针对同一个用户的连续密码猜测会导致帐户被锁定。所以只有对所有用户同时执行特定的密码登录尝试，才能增加破解的概率，消除帐户被锁定的概率。普通的爆破就是用户名固定，爆破密码，但是<u><em>密码喷洒是用固定的密码去跑所有的用户名</em></u>。</p>
+<p>在 AS-REP 阶段，由于返回的 TGT 认购权证是<em><u>由 krbtgt 用户的密码 Hash 加密</u></em>的，因此如果我们拥有 krbtgt 的密码 hash 就可以自己制作一个 TGT 认购权证，这种攻击方式被称为<strong>黄金票据攻击</strong>。同样，在 TGS-REP 阶段，TGS_REP 里面的 ST 服务票据是<u><em>使用服务的 hash 进行加密</em></u>的，如果我们拥有服务的 hash，就可以签发任意用户的 ST 服务票据，这个票据也被称为白银票据，这种攻击方式被称为<strong>白银票据攻击</strong>。相较于黄金票据，白银票据使用要访问服务的 hash，而不是krbtgt 的 hash。</p>
+<p>在 AS-REP 阶段，Login session key 是用用户密码 Hash 加密的。对于域用户，如果设置了“Do not require Kerberos preauthentication”不需要预认证选项，此时攻击者向域控制器的 88 端口发送 AS_REQ 请求，此时域控不会做任何验证就将 TGT 认购权证 和 该用户 Hash 加密的 Login Session Key 返回。因此，攻击者就可以对获取到的 用户 Hash 加密的 Login Session Key 进行离线破解，如果破解成功，就能得到该用户的密码明文，这种攻击方式被称为 <strong>AS-REPRoasting 攻击</strong>。</p>
+<p>在 TGS-REP 阶段，由于 ST 服务票据是用服务 Hash 加密的。因此，如果我们能获取到 ST 服务票据，就可以对该 ST 服务票据进行利息破解，得到服务的Hash，这种攻击方式被称为 <strong>Kerberoasting 攻击</strong>。这个问题存在的另外一个因素是因为用户向 KDC 发起 TGS_REQ 请求，不管用户对服务有没有访问权限，只要TGT 认购权证正确，那么 KDC 都会返回 ST 服务票据。其实 AS_REQ 里面的服务就是 krbtgt，也就是说这个攻击方式同样可以用于爆破 AS_REP 里面的 TGT 认购权证，但是之所以没见到这种攻击方式是因为 krbtgt 的密码是随机生成的，爆破不出来。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 hypnotic
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["header.autohide", "navigation.instant", "navigation.tracking", "content.code.annotate", "toc.integrate", "toc.follow", "navigation.path", "navigation.top", "navigation.tabs", "navigation.prune", "navigation.footer", "navigation.tabs.sticky", "navigation.sections", "content.code.copy", "navigation.indexes", "search.share", "search.suggest", "search.highlight"], "search": "../../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../../../javascripts/extra.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

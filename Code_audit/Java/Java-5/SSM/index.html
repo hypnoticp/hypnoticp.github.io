@@ -1,0 +1,1109 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="the notes record by hypnotic">
+      
+      
+        <meta name="author" content="hypnotic">
+      
+      
+        <link rel="canonical" href="https://hypnoticp.github.io/Code_audit/Java/Java-5/SSM/index.html">
+      
+      
+      
+      
+      <link rel="icon" href="../../../../icons/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>Java EE 开发框架安全审计 - hypnotic的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#java-ee" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../index.html" title="hypnotic的博客" class="md-header__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            hypnotic的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Java EE 开发框架安全审计
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Code_audit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../Vulnerability_analysis/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Vulnerability_analysis
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../Tools/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../CTF/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  CTF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../SRC/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  SRC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../Security_devices/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Security_devices
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../Shell_Scripts/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Shell_Scripts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../about.html" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../index.html" title="hypnotic的博客" class="md-nav__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    hypnotic的博客
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Code_audit
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../Vulnerability_analysis/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vulnerability_analysis
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../Tools/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../CTF/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CTF
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../SRC/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    SRC
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../Security_devices/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Security_devices
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../Shell_Scripts/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell_Scripts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../about.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="java-ee">Java EE 开发框架安全审计<a class="headerlink" href="#java-ee" title="Permanent link">&para;</a></h1>
+<h2 id="_1">开发框架审计技巧<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h3 id="ssm">SSM 框架审计技巧<a class="headerlink" href="#ssm" title="Permanent link">&para;</a></h3>
+<h4 id="1ssm">1.SSM 框架简介<a class="headerlink" href="#1ssm" title="Permanent link">&para;</a></h4>
+<p><strong>SSM 框架，即 Spring MVC+Spring+MyBatis 这 3 个开源框架整合在一起的缩写</strong>。在 SSM 框架之前，生产环境中多采用 SSH 框架（由 Struts2+Spring+Hibernate 这 3个开源框架整合而成）。后因 Struts2 爆出众多高危漏洞，导致目前 SSM 逐渐代替 SSH成为主流开发框架的选择。</p>
+<ol>
+<li>Spring MVC ：Spring MVC 是一种基于Java实现的MVC设计模式的请求驱动类型的轻量级Web框架，采用MVC架构模式的思想，将Web层进行职责解耦。基于请求驱动指的是请求-响应模型，该框架的目的是简化开发过程。、</li>
+<li>Spring ：Spring是分层的Java SE/EE full-stack轻量级开源框架，以IoC（Inverse of Control，控制反转）和 AOP（Aspect Oriented Programming，面向切面编程）为内核，使用基本的 JavaBean 完成以前只可能由 EJB 完成的工作，取代了 EJB 臃肿和低效的开发模式。Spring 的用途不仅仅限于服务器端的开发。从简单性、可测试性和松耦合性角度而言，绝大部分 Java 应用可以从 Spring 中受益。</li>
+<li>MyBatis：MyBatis 是支持定制化 SQL、存储过程以及高级映射的优秀的持久层框架。MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集。MyBatis 可以对配置和原生 Map 使用简单的 XML 或注解，将接口和 Java 的 POJO（Plain Old Java Object，普通的 Java 对象）映射成数据库中的记录。</li>
+<li>Servlet：Spring MVC 的底层就是以 Servlet 技术进行构建的。Servlet 是基于 Java 技术的Web 组件，由容器管理并产生动态的内容。Servlet 与客户端通过 Servlet 容器实现的请求/响应模型进行交互</li>
+</ol>
+<h4 id="2ssm">2.SSM 框架代码的执行流程和审计思路<a class="headerlink" href="#2ssm" title="Permanent link">&para;</a></h4>
+<p>代码审计的核心思想是<strong>追踪参数</strong>，而追踪参数的步骤就是程序执行的步骤。因此，代码审计是一个跟踪程序执行步骤的过程，了解了 SSM 框架的执行流程自然会了解如何如跟踪一个参数，剩下的就是观察在参数传递的过程中有没有一些常见的漏洞点。</p>
+<p>这里通过创建一个简单的 Demo 来描述基于SSM 框架搭建的项目完成用户请求的具体流程，以及观察程序对参数的过滤是如何处理的。下图展示了一个简单的图书管理程序的目录结构，主要功能是对图书名称的增、删、查、改。无<strong>论是审计一个普通项目或者是 Tomcat 所加载的项目，通常都从 web.xml 配置文件开始入手。Servlet 3.0 以上版本提供一些新注解来达到与配置 web.xml相同的效果。但是在实际项目中主流的配置方法仍然是 web.xml。</strong></p>
+<p><img alt="截图" src="68fb16e4d357862aa6ef811542a5f95e.png" /></p>
+<p>web.xml 文件的主要工作包括以下几个部分。</p>
+<ul>
+<li>web.xml 启动 Spring 容器。</li>
+<li>DispathcherServlet 的声明。</li>
+<li>其余工作是 session 过期、字符串编码等。</li>
+</ul>
+<p>首先是生成 DispatcherServlet 类。<strong>DispatcherServlet是前端控制器设计模式的实现，提供 Spring Web MVC 的集中访问点（也就是把前端请求分发到目标Controller），而且与 Spring IoC 容器无缝集成，从而可以利用 Spring 的所有优点。</strong></p>
+<p>简单地理解就是，<strong>将用户的请求转发至 Spring MVC 中，交由 Spring MVC 的 Controller 进行更多处理。</strong></p>
+<p><init-param>子标签是生成DispatcherServlet时的初始化参数 <code>contextConfigLocation</code>，Spring 会根据该参数加载所有逗号分隔的 xml 文件。如果没有这个参数， Spring 默认加载<code>WEB-INF/DispatcherServlet-servlet.xml</code>文件。</p>
+<p>如下图所示，<servlet-mapping>标签中还有一个子标签<url-pattern>，其中 value是“/”代表拦截所有请求。下图中还包含<filter>标签，具体功能会在后面进行介绍。</p>
+<p><img alt="截图" src="e54fd0382a06885c0da887948d01e8b1.png" /></p>
+<h4 id="3spring-applicationcontextxml">3.Spring 核心配置文件 applicationContext.xml<a class="headerlink" href="#3spring-applicationcontextxml" title="Permanent link">&para;</a></h4>
+<p>我们可以根据加载顺序查看 applicationContext.xml</p>
+<p><img alt="截图" src="65c8c62ffb6a207f5da192afdf1f8f82.png" /></p>
+<p>applicationContext.xml 中包含 3 个配置文件，它们是 Spring 用来整合 Spring MVC和 MyBaits 的配置文件，文件中的内容都可以直接写入 applicationContext.xml 中，因为 applicationContext.xml 是 Spring 的核心配置文件，例如生成 Bean，配置连接池，生成 sqlSessionFactory。但是为了便于理解，这些配置分别写在 3 个配置文件中，由applicationContext.xml 将 3 个 xml 进行关联。由下图我们可以清晰地看到applicationContext.xml 将这 3 个配置文件关联了起来。</p>
+<p><img alt="截图" src="6b0c7df41c22d74176852d812530bd7c.png" /></p>
+<p>数据经由 DispatcherServlet 派发至 Spring-mvc.xml 的 Controller 层。我们先看Spring-mvc.xml 配置文件</p>
+<p><img alt="截图" src="d1dbed1d78bf0365485129811edbf027.png" /></p>
+<h5 id="1">（1）<mvc:annotation-driven />标签。<a class="headerlink" href="#1" title="Permanent link">&para;</a></h5>
+<p>如果在 web.xml 中 servlet-mapping 的 url-pattern 设置的是/，而不是.do，表示将所有的文件包含静态资源文件都交给 Spring MVC 处理，这时需要用到<mvc:annotation-driven />。如果不加，则 DispatcherServlet 无法区分请求是资源文件还是 MVC 的注解，而导致 Controller 的请求报 404 错误。</p>
+<h5 id="2">（2）<mvc:default-servlet-handler/>标签。<a class="headerlink" href="#2" title="Permanent link">&para;</a></h5>
+<p>在 Spring-mvc.xml 中配置<mvc:default-servlet-handler/>后，会在 Spring MVC 上下文中定义一个 org.springframework.web.servlet.resource.DefaultServletHttp-RequestHandler，它会像检查员一样对进入 DispatcherServlet 的 URL 进行筛查。如果是静态资源的请求，就将该请求转由 Web 应用服务器默认的 Servlet 处理；如果不是静态资源的请求，则交由 DispatcherServlet 继续处理。</p>
+<p>其余两项之一是指定了返回的 view 所在的路径，另一个是指定 Spring MVC 注解的扫描路径，可以发现该配置文件中都是与 Spring-mvc 相关的配置。</p>
+<h4 id="4ssm-spring-mvc">4.SSM 之 Spring MVC 执行流程<a class="headerlink" href="#4ssm-spring-mvc" title="Permanent link">&para;</a></h4>
+<p>接下来就是 Spring MVC Controller 层接受前台传入的数据。以下通过 DEMO 运行以方便演示和讲解，首页如图所示。</p>
+<p><img alt="截图" src="1377381d9069bd536d452a3a1d1dae2b.png" /></p>
+<p>查看首页的页面源码</p>
+<p><img alt="截图" src="6959bc87f0d80751893eeb0a32705801.png" /></p>
+<p>可以看到 a 标签的超链接是 <code>http://localhost:8080/SSMFrameWorkTest_war/ book/allbook</code>。</p>
+<p><code>${pageContext.request.contextPath}</code>是 JSP 取得<strong>绝对路径</strong>的方法, 也就是取出部署的应用程序名或者是当前的项目名称，避免在把项目部署到生产环境中时出错。</p>
+<p>此时后台收到的请求路径为<code>/book/allBook</code>。<strong><em>Spring MVC 在项目启动时会首先去扫描我们指定的路径，即 <code>com.ssm_project.controller</code> 路径下的所有类。</em></strong><code>BookController</code>类的代码如图所示。</p>
+<p><strong>Spring MVC 会扫描该类中的所有注解，看到@Controller 时会生成该 Controller的 Bean，扫描到@RequestMappting 注解时会将@RequestMappting 中的 URI 与下面的方法形成映射。所以我们请求的 URI 是“/book/allBool”，Spring MVC 会将数据交由 BookController 类的 list 方法来处理。</strong></p>
+<blockquote>
+<p><strong>在Spring框架中，Bean是一个被Spring IoC容器管理的对象。简单地说，Bean就是应用程序中的对象，由Spring容器负责实例化、装配和管理。通过Spring的依赖注入机制，Bean可以被自动装配到需要它的地方。</strong></p>
+<p>在Spring MVC中，@Controller注解用于标识一个类作为控制器，而@RequestMapping注解则用于将HTTP请求映射到相应的处理方法上。当Spring容器扫描到被@Controller注解标识的类时，会创建该类的实例作为一个Bean，并将其放入IoC容器中管理。同时，当扫描到被@RequestMapping注解标识的方法时，Spring会建立请求路径和方法之间的映射关系，以便根据请求路径找到对应的方法进行处理。</p>
+<p>因此，在你提到的例子中，当请求URI为"/book/allBook"时，Spring MVC会查找与该URI匹配的控制器方法，然后调用相应的方法处理该请求。在这个过程中，<strong>BookController类会被实例化为一个Bean</strong>，<strong>并且其中的list方法会被映射为处理请求"/book/allBook"的方法</strong>。Bean的存在使得Spring能够更加灵活地管理和组织应用程序中的组件，并实现依赖注入和控制反转等特性。</p>
+</blockquote>
+<p><img alt="截图" src="293d07adfce0b4787c5c1b811313906b.png" /></p>
+<p>仔细观察 list 方法，其中调用了 bookService 参数的 queryAllBook 方法，这里使用了两个注解：@Autowired 和@Qualifier。这两个注解的作用简单介绍如下。</p>
+<p>@Autowired：<u>可以用于自动装配 bean，即将符合类型的 bean 注入到标注了 @Autowired 的字段、构造方法或方法参数中。</u>当容器中存在多个满足条件的 bean 时，@Autowired 会根据类型进行自动装配。如果存在多个匹配的 bean，Spring 将会抛出异常，除非在多个候选 bean 上使用 @Primary 注解来指定优先级。</p>
+<p>@Qualifier：当存在多个相同类型的 bean 时，@Qualifier 注解可以与 @Autowired 一起使用，通过指定 bean 的名称来精确地选择要注入的 bean。<u>在使用 @Qualifier 注解时，通常与 bean 的 id 或名称一起使用，以便精确指定要注入的 bean。</u>如果在没有使用 @Qualifier 注解的情况下存在多个满足条件的 bean，Spring 将会抛出 NoUniqueBeanDefinitionException 异常。因此，@Qualifier 主要用于解决多个候选 bean 的歧义性问题。</p>
+<p>由此可以看到 <code>bookService</code> 参数的类型是 <code>BookService</code> 类型，通过注解自动注入的 Bean 的 id 叫作 <code>BookServiceImpl</code>。</p>
+<blockquote>
+<p><strong>@Qualifier("BookServiceImpl")的作用：</strong></p>
+<p>将 BookServiceImpl 注入到一个类中通常表示该类依赖于 BookServiceImpl，即该类需要使用 BookServiceImpl 提供的功能或服务。</p>
+<p>假设有一个类 SomeClass，它需要使用 BookServiceImpl 提供的一些功能来完成自己的任务。通过将 BookServiceImpl 注入到 SomeClass 中，SomeClass 就可以在需要时直接调用 BookServiceImpl 中的方法，而不需要自己去创建 BookServiceImpl 的实例。这样做的好处包括：解耦合：SomeClass 不需要直接依赖于 BookServiceImpl 的具体实现，而是依赖于 BookService 接口，从而实现了解耦合。这样，在将来如果需要替换 BookServiceImpl 的具体实现，只需要修改配置，而不需要修改 SomeClass 的代码</p>
+<p><strong>在 Spring 中，可以使用 @Autowired 注解来自动注入 BookServiceImpl。具体方法取决于你想要注入的地方：是在另一个 Bean 中，还是在 Spring MVC 的控制器中，或者其他地方。</strong></p>
+<p><strong>假设你有一个类 SomeClass 需要注入 BookServiceImpl，可以按照以下步骤进行注入</strong>：</p>
+<p>1.在 SomeClass 类中声明一个 BookService 类型的字段，并使用 @Autowired 注解进行注入：</p>
+<p>public class SomeClass {</p>
+<p>@Autowired
+private BookService bookService;</p>
+<p>// 其他方法}</p>
+<p>在上面的代码中，@Autowired 注解用于将 BookServiceImpl 注入到 SomeClass 的 bookService 字段中。</p>
+<p>2.确保 BookServiceImpl 类被 Spring 扫描到并注册为一个 Bean。你可以在 BookServiceImpl 类上添加 @Service 注解，或者在配置文件中使用 XML 进行配置。</p>
+<p>import org.springframework.stereotype.Service;</p>
+<p>@Service
+public class BookServiceImpl implements BookService {
+    // 实现 BookService 接口的方法
+}</p>
+<p>3.在 Spring 的配置文件中配置组件扫描，以便 Spring 能够扫描到并注册 SomeClass 和 BookServiceImpl。</p>
+<p><context:component-scan base-package="com.example.package"/></p>
+<p>这样，当 Spring 启动时，它会自动扫描指定的包，并将 SomeClass 和 BookServiceImpl 注册为 Spring 的 Bean，并且自动将 BookServiceImpl 注入到 SomeClass 中的 bookService 字段中。</p>
+</blockquote>
+<h4 id="5ssm-spring">5.SSM 之 Spring 执行流程<a class="headerlink" href="#5ssm-spring" title="Permanent link">&para;</a></h4>
+<p><strong><em>这里我们就要从 Spring MVC 的部分过渡到 Spring 的部分，所谓的过渡就是我们从 Spring MVC 的 Controller 层去调用 Service 层，而 Service 层就是我们使用 Spring进行 IoC 控制和 AOP 编程的地方。</em></strong></p>
+<p>首先我们需要查看配置文件 spring-service.xml，如图</p>
+<p><img alt="截图" src="6d65b22ef7f7968198e9393bb9b1fe84.png" /></p>
+<p>这里我们发现 id 为 BookServiceImpl 的 bean，该 bean 的 class 路径是 <code>com.ssm_ project.service.BookServiceImpl</code>。<strong><bean>这个标签涉及 Spring 一大核心功能点，即 IoC。</strong>本来编写一个项目需要我们自己手动去创建一个实例，在使用了 Spring 以后只需要生成的那个类的绝对路径，以及创建一个实例时需要传入的参数。传入参数的方法可以是通过构造方法，也可以通过 set 方法。用户还可以为这个 bean 设置一个名称方便调用（如果不设置 id 参数名，则 bean 的名称默认为类名开头的小写字母，比如BookServiceImpl，如不特别指定，则生成的 bean 的名称是 bookServiceImpl）。<strong>Spring会在启动时将用户指定好的类生成的实例放入 IoC 容器中供用户使用。通俗地说就是本来由用户手动生成实例的过程交由 Spring 来处理，这就是所谓的控制反转。</strong></p>
+<p>接下来查看 BookServiceImpl 类的详细信息，如图</p>
+<p><img alt="截图" src="96ee3ea1120b3897a5b25f6270ef136a.png" /></p>
+<p>首先看到该类实现了 BookService 接口，查看该接口，如图</p>
+<p><img alt="截图" src="006a1e470d934036771b958d6b104ed8.png" /></p>
+<p>可以看到该接口中定义了 4 种方法，为了方便理解，这些方法的名字对应着日常项目中常用的操作数据库的 4 个方法，即增、删、改、查。</p>
+<p>接下来查看接口的实现类 BookServiceImpl，如图</p>
+<p>实现了 BookService 接口，自然也需要实现该接口下的所有方法，找到queryAllBook 方法，发现 queryAllBook 调用了 bookMapper 参数的 queryAllBook 方法，而 bookMapper 是 BookMapper 类型的参数。</p>
+<p><img alt="截图" src="5c59b29a8aa65f76063f2bbd42f579c4.png" /></p>
+<p>回过头来查看 spring-service.xml 中的配置。前面介绍了这一配置是将BookServiceImpl 类生成一个 bean 并放入 Spring 的 IoC 容器中。<property>标签的意思是通过该类提供的 set 方法在 bean 生成时向指定的参数注入 value，name 属性就是指定的参数的名称。可以看到 BookServiceImpl 中确实有一个私有参数，名为bookMapper，并且提供了该属性的 set 方法。ref 属性是指要注入的 value 是其他的Bean 类型，如果传入的是一些基本类型或者 String 类型，则不需要使用 ref ，只需将 ref 改成 value，如图</p>
+<p><img alt="截图" src="34b11ea849716a920d0fde4477322daa.png" /></p>
+<p><strong><em>这里通过 ref 属性向 BookServiceImpl 类中的 bookMapper 参数注入了一个 value，这个 value 是一个其他的 bean 类型，该 bean 的 id 为 bookMapper。此时 Service 层的BookServiceImpl 的 queryAllBook 方法的实现方式其实就是调用了 id 为 bookMapper的 bean 的 queryAllBook 方法，因此这个 id 为 bookMapper 的 bean 就是程序执行的下一步。</em></strong></p>
+<blockquote>
+<p><code>&lt;bean id="userServiceimpl" class="com.zc.Service.UserServiceimpl"&gt;--&gt;
+  &lt;property name="UserMapper" ref="userMapper"/&gt;--&gt;
+&lt;/bean&gt;</code>以上代码实现了什么功能，举例说明:</p>
+<p>这段代码是一个典型的Spring配置，它实现了将一个名为"userServiceimpl"的bean注入到Spring容器中，并指定了它的类为"com.zc.Service.UserServiceimpl"。同时，通过元素，它注入了一个名为"userMapper"的属性，属性值是另一个在Spring容器中定义的bean，其名称为"userMapper"。property</p>
+<p>简单来说，这段代码的功能是将一个名为"userMapper"的bean注入到名为"userServiceimpl"的bean中的"UserMapper"属性中。<strong><em>这通常用于实现依赖注入，即在"UserServiceimpl"类中可以直接使用"userMapper"这个属性，而无需在类内部手动创建或获取"userMapper"对象。</em></strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>public class UserServiceimpl {
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    private UserMapper userMapper;
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>// 省略其他代码
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>public void setUserMapper(UserMapper userMapper) {
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    this.userMapper = userMapper;
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>}
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>// 其他方法使用了 userMapper
+</code></pre></div>
+<p>在Spring的配置文件中，通过以上的配置，Spring容器会实例化类，并自动将名为"userMapper"的bean注入到其属性中。这样，在中就可以直接使用属性了，而不需要手动创建或者通过其他方式获取"userMapper"对象。</p>
+</blockquote>
+<h4 id="6ssm-mybatis">6.SSM 之 MyBatis 执行流程<a class="headerlink" href="#6ssm-mybatis" title="Permanent link">&para;</a></h4>
+<p>接下来就是 Web 三层架构的数据访问层，也就是 MyBaits 负责的部分，通常这一部分的包名叫作 xxxdao，也就是开发过程中经常提及的 DAO 层，该包下面的类和接口通常叫作 xxxDao 或者 xxxMapper。<strong>此时用户的请求将从 Spring 负责的业务层过渡到 MyBatis 负责的数据层，但是 MyBaits 和 Spring 之间不像 Spring MVC 和 Spring一样可以无缝衔接，所以我们需要通过配置文件将 MyBatis 与 Spring 关联起来。</strong>这里我们来查看一下 pom.xml，如图</p>
+<p>1</p>
+<p>可以看到我们导入的包除了 MyBatis 本身，还导入了一个 mybatis-spring 包，目的就是为了整合 MyBatis 和 Spring。spring-dao.xml 是用来整合 Spring 和 MyBatis 的配置文件。</p>
+<p><strong><em>刚才我们看到 Spring 启动加载 bean 时会注入一个 id 为 bookMapper 的 bean，但是我们并未在之前的任何配置文件包括注解中看到这个 bean 的相关信息，所以我们接下来要查看 spring-dao.xml 中有没有与这个 bean 有关的信息</em></strong>，如图</p>
+<p><img alt="截图" src="e4ca6e62a9c209710de0d64ab63317f4.png" /></p>
+<p><img alt="截图" src="e5463584477c1048ac1645421a1d98a6.png" /></p>
+<p>每项配置的作用基本都用注释的方式标明。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;context:property-placeholder location=&quot;classpath:database.properties&quot;/&gt;
+</code></pre></div>
+<p>这里关联了一个 properties 文件，如图所示，里面是连接数据库和配置连接池时需要的信息。</p>
+<p><img alt="截图" src="106569ce0516ca437833fec0c5b55a13.png" /></p>
+<p>重点查看这个配置，如图</p>
+<p><img alt="截图" src="e0ef1e44170b43fc5151191614403a86.png" /></p>
+<p><strong>该配置通过生成 MapperScannerConfigurer 的 bean 来实现自动扫描 com.ssm_ project.dao 下面的接口包，然后动态注入 Spring IoC 容器中</strong>，同样动态注入的 bean的 id 默认为类名（开头字母小写），目录下包含的文件如图</p>
+<p><img alt="截图" src="d8a5b40351599caed365d749665b8722.png" /></p>
+<p>我们看到有一个叫作 BookMapper 的接口文件，说明之前生成 BookServiceImpl这个 bean 是通过<property>（BookServiceImpl 类中的 setBookMapper()方法）注入的bookMapper，是由我们配置了 MapperScannerConfigurer 这个 bean 后，这个 bean 扫描 dao 包下的接口文件并生成 bean。然后再注入 Spring 的 IoC 容器中，所以我们才可以在 BookServiceImpl 这个 bean 中通过<property>标签注入 bookmapper 这个 bean。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>public void setBookMapper(BookMapper bookMapper) { 
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>this.bookMapper = bookMapper; 
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>}
+</code></pre></div>
+<blockquote>
+<p>如何理解上面那段话的意思？</p>
+<p><strong>BookMapper接口文件</strong>： 这是一个接口文件，可能定义了一系列操作书籍相关信息的方法，比如增删改查等。它属于数据访问层（DAO），用于与数据库交互。</p>
+<p><strong>BookServiceImpl bean</strong>： 这是一个服务层（Service）的bean，可能包含了一些业务逻辑，比如处理图书信息的增删改查等。在这段描述中，<em>提到了BookServiceImpl bean是通过注入bookMapper属性来实现对数据访问层的操作的</em>。</p>
+<p><strong>bookMapper属性注入</strong>： 在BookServiceImpl类中，可能有一个名为setBookMapper的方法，用于注入BookMapper实例。这是通过Spring的依赖注入功能实现的。也就是说，<em>BookServiceImpl类会从Spring容器中获取BookMapper的实例，并将其注入到setBookMapper方法中</em>。</p>
+<p><strong>MapperScannerConfigurer bean配置</strong>： 在Spring的配置文件中，可能有一个名为MapperScannerConfigurer的bean配置，它会扫描指定包下的接口文件，如DAO接口文件，并将其注册为bean。这样，BookMapper接口文件就会被扫描并注册为一个Spring bean。</p>
+<p><strong>IoC容器中的管理</strong>： 通过上述配置，Spring容器会管理BookMapper实例和BookServiceImpl实例。BookMapper实例会被MapperScannerConfigurer扫描并注册到容器中，而BookServiceImpl实例会通过配置文件中的<property>标签注入bookMapper实例，使得BookServiceImpl可以使用BookMapper提供的数据访问功能，而不需要直接依赖于具体的数据访问实现。</p>
+</blockquote>
+<p>然后查看该配置，如图</p>
+<p><img alt="截图" src="4f491e6a5f3436fc18fb32ae39b6f537.png" /></p>
+<p>这里生成一个 id 为 SqlSessionFactory 的 bean，涉及 MyBatis 中的两个关键对象即 SqlSessionFactory 和 SqlSession。</p>
+<p>两个对象简单介绍如下。</p>
+<h5 id="1sqlsessionfactory">（1）SqlSessionFactory。<a class="headerlink" href="#1sqlsessionfactory" title="Permanent link">&para;</a></h5>
+<p>SqlSessionFactory 是 MyBatis 的关键对象，它是单个数据库映射关系经过编译后的内存镜像。SqlSessionFactory 对象的实例可以通过 SqlSessionBuilder 对象获得，而SqlSessionBuilder 则可以从 xml 配置文件或一个预先定制的 Configuration 的实例构建出 SqlSessionFactory 的实例。SqlSessionFactory 是创建 SqlSession 的工厂</p>
+<h5 id="2sqlsession">（2）SqlSession。<a class="headerlink" href="#2sqlsession" title="Permanent link">&para;</a></h5>
+<p>SqlSession 是执行持久化操作的对象，类似于 JDBC 中的 Connection。它是应用程序与持久存储层之间执行交互操作的一个单线程对象。SqlSession 对象完全包括以数据库为背景的所有执行 SQL 操作的方法，它的底层封装了 JDBC 连接，可以用SqlSession 实例来直接执行已映射的 SQL 语句。</p>
+<p>SqlSessionFactory 和 SqlSession 的实现过程如下。
+MyBatis 框架主要是围绕着 SqlSessionFactory 进行的，实现过程大概如下。</p>
+<ul>
+<li>定义一个 Configuration 对象，其中包含数据源、事务、mapper 文件资源以及影响数据库行为属性设置 settings。</li>
+<li>通过配置对象，则可以创建一个 SqlSessionFactoryBuilder 对象。</li>
+<li>通过 SqlSessionFactoryBuilder 获得 SqlSessionFactory 的实例。</li>
+<li>SqlSessionFactory 的实例可以获得操作数据的 SqlSession 实例，通过这个实例对数据库进行。</li>
+</ul>
+<p>如果是 Spring 和 MyBaits 整合之后的配置文件，一般以这种方式实现SqlSessionFactory 的创建，示例代码如下。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&lt;bean id=&quot;sqlSessionFactory&quot;class=&quot;org.mybatis.spring. 
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>SqlSessionFactoryBean&quot;&gt; 
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>&lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;&gt;&lt;/property&gt; 
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>&lt;property name=&quot;mapperLocations&quot; value=&quot;classpath:com/cn/mapper/*.xml&quot;&gt; 
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>&lt;/property&gt; 
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>&lt;/bean&gt;}
+</code></pre></div>
+<p>SqlSessionFactoryBean 是一个工厂 Bean，根据配置来创建 SqlSessionFactory。手动创建 SqlSessionFactory 和 SqlSession 的流程如图</p>
+<p><img alt="截图" src="eedec4ecbfa11df2cade45ca41e91ed7.png" /></p>
+<p>我们同时注意到<property>标签的 value 属性是“classpath:mybatis-config.xml”，这里又引入了一个 xml 配置文件，即 mybatis-config.xml，是 MyBatis 的配置文件。</p>
+<p><img alt="截图" src="081a0fb0bcefb3119246f3536e8f3068.png" /></p>
+<p><strong>程序刚才执行到 BookServiceImpl 类的 queryAllBook 方法，然后该方法又调用了bookMapper 的 queryAllBook 方法。我们发现 bookMapper 的类型是 BookMapper，并且从 sping-dao.xml 的配置文件中看到了该文件位于 com.ssm_project.dao 路径下。</strong>现在打开 BookMapper.java 文件进行查看，如图</p>
+<p><img alt="截图" src="a3a2bb4bae6a56e662e526e08208f2e7.png" /></p>
+<p><u>我们注意到这只是一个接口，众所周知，接口不能进行实例化，只是提供一个规范，因此这里的问题是调用的 BookMapper 的 queryAllBook 是怎样执行的？</u></p>
+<p>仔细查看 dao 目录下的文件，如图</p>
+<p><img alt="截图" src="87f051c40718acdb77928de592fadd1f.png" /></p>
+<p>其中有一个名称与 BookMapper.java 名称相同的 xml 文件，其内容如图</p>
+<p><img alt="截图" src="ea599e6b2364fbf0be7bd50d8731734e.png" /></p>
+<p>看到这个文件，虽然我们对 MyBatis 的了解并不多，但是可以大概了解为什么BookMapper 明明只是接口，我们却可以实例化生成 BookMapper 的 bean，并且可以调用它的方法。</p>
+<p>但是 BookMapper.java 和 BookMapper.xml 显然不是 MyBatis 的全部，两个文件之间此时除了名字相同以外还没有什么直接联系，所以我们还需要将它们关联起来。查看 mybatis-config.xml 的配置文件，如图</p>
+<p><img alt="截图" src="fc38828838a2f39528b3863deb693048.png" /></p>
+<p>可以发现<code>&lt;mappers&gt;</code>标签的 resource 属性的 value 就是 <code>BookMapper.xml</code>的路径MyBatis，是基于 SQL 映射配置的框架。<strong>SQL 语句都写在 Mapper 配置文件中，构建 SqlSession 类后，需要去读取 Mapper 配置文件中的 SQL 配置。而<code>&lt;mappers&gt;</code>标签就是用来配置需要加载的 SQL 映射配置文件路径的。</strong></p>
+<p>也就是说，最<strong>终由 Spring 生成 BookMapper 的代理对象，然后由 MyBaits 通过<code>&lt;mappers&gt;</code>标签将BookMapper代理对象中的方法与BookMapper.xml中的配置进行一一映射，并最终执行其中的 SQL 语句。</strong></p>
+<p>可以发现此次请求最终调用了 BookMapper 的 queryAllBook 方法，这时我们需要去 BookMapper.xml 中寻找与之对应的 SQL 语句，如图</p>
+<p><img alt="截图" src="d2805c0b83631c4f100f63c1ef7b188c.png" /></p>
+<p>我们看到最后执行的 SQL 语句如下。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>SELECT * from ssmbuild.books
+</code></pre></div>
+<p><strong>至此我们的请求已经完成，从一开始的由 DispatcherServlet 前端控制器派发给Spring MVC，并最终通过 MyBatis 执行我们需要对数据库进行的操作。</strong></p>
+<p>生产环境的业务代码肯定会比这个 DEMO 复杂，但是整体的执行流程和思路并不会有太大的变化，所以审计思路也是如此。</p>
+<p>SSM 框架有 3 种配置方式，即全局采用 xml 配置文件的形式，全局采取注解的配置方式，或者注解与 xml 配置文件配合使用的方式，区别只是在于写法不同，执行流程不会因此发生太多改变。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 hypnotic
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["header.autohide", "navigation.instant", "navigation.tracking", "content.code.annotate", "toc.integrate", "toc.follow", "navigation.path", "navigation.top", "navigation.tabs", "navigation.prune", "navigation.footer", "navigation.tabs.sticky", "navigation.sections", "content.code.copy", "navigation.indexes", "search.share", "search.suggest", "search.highlight"], "search": "../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../../javascripts/extra.js"></script>
+      
+        <script src="../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

